@@ -1,19 +1,9 @@
 'use client';
 
-import { Post } from "@/interfaces";
 import { useState } from "react";
-import {
-  IoSendOutline,
-} from "react-icons/io5";
-import {
-  LuBookmark,
-  LuCalendar,
-  LuHeart,
-  LuMap,
-  LuMessageCircle,
-  LuShare,
-  LuUsers
-} from "react-icons/lu";
+import { Post } from "@/interfaces";
+import { Bookmark, Calendar, Map, MessageCircle, Share, ThumbsUp, Users } from "lucide-react";
+import { IoSendOutline } from "react-icons/io5";
 
 interface Props {
   post: Post;
@@ -59,7 +49,7 @@ const getStatusText = (status: string) => {
 
 export const FeedGridItem = ({ post }: Props) => {
   const [showComments, setShowComments] = useState(false);
-
+  const [interested, setInterested] = useState(false);
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
       {/* Header */}
@@ -95,18 +85,18 @@ export const FeedGridItem = ({ post }: Props) => {
         )}
       </div>
 
-      <div className="p-4">
-        <div className="mb-3">
+      <div className="mt-2 p-4">
+        <div className="mb-6">
           <h2 className="text-xl font-bold text-gray-900 mb-2">{post.title}</h2>
           <p className="text-gray-700 mb-3">{post.content}</p>
         </div>
         <div className="flex items-center text-gray-600 text-sm space-x-4">
           <div className="flex items-center space-x-1">
-            <LuMap size={16} />
+            <Map size={16} />
             <span>{post.location}</span>
           </div>
           <div className="flex items-center space-x-1">
-            <LuCalendar size={16} />
+            <Calendar size={16} />
             <span>{formatDate(post.eventDate)}</span>
           </div>
         </div>
@@ -115,38 +105,38 @@ export const FeedGridItem = ({ post }: Props) => {
       {/* Actions */}
       <div className="px-4 py-3 border-t border-gray-100">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-2">
             <button
-              /* onClick={() => onLike(post.id)} */
-              className={`flex items-center space-x-2 px-3 py-2 rounded-full transition-all duration-200 }`}
+              onClick={() => setInterested(!interested)}
+              className={`cursor-pointer flex items-center gap-2 p-2 rounded-full transition ${interested ? "" : "hover:bg-gray-100"
+                }`}
             >
-              <LuHeart className={`w-5 h-5 ${post.isLiked ? 'fill-current' : ''}`} />
-              <span className="text-sm font-medium">Interesados ({post.likes})</span>
+              <ThumbsUp
+                className={`w-5 h-5 transition ${interested ? "fill-yellow-500 text-yellow-500" : "text-gray-500"}`}
+              />
+              <span className="text-gray-500">{interested ? "Interesado" : "Estoy interesado"} (5)</span>
             </button>
 
             <button
-              /* onClick={() => onLike(post.id)} */
-              className={`flex items-center space-x-2 px-3 py-2 rounded-full transition-all duration-200 }`}
+              className={`cursor-pointer flex items-center gap-2 p-2 rounded-full transition ${post.isLiked ? "bg-yellow-100 text-yellow-600" : "hover:bg-gray-100"
+                }`}
             >
-              <LuUsers className={`w-5 h-5 ${post.isLiked ? 'fill-current' : ''}`} />
-              <span className="text-sm font-medium">Asistiré ({post.likes})</span>
+              <Users className={`w-5 h-5 transition ${post.isLiked ? "fill-yellow-500 text-yellow-500" : "text-gray-500"}`}
+              />
+              <span className="text-gray-500">{post.isLiked ? "Asistiré" : "Asistir"} ({post.likes})</span>
             </button>
 
             <button
               /* onClick={() => setShowComments(!showComments)} */
               className="flex items-center space-x-2 px-3 py-2 rounded-full text-gray-500 hover:text-blue-500 hover:bg-blue-50 transition-all duration-200"
             >
-              <LuMessageCircle className="w-5 h-5" />
+              <MessageCircle className="w-5 h-5" />
               <span className="text-sm font-medium">{post.comments.length}</span>
-            </button>
-
-            <button className="flex items-center space-x-2 px-3 py-2 rounded-full text-gray-500 hover:text-green-500 hover:bg-green-50 transition-all duration-200">
-              <LuShare className="w-5 h-5" />
             </button>
           </div>
 
           <button className="p-2 text-gray-500 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-all duration-200">
-            <LuBookmark className="w-5 h-5" />
+            <Bookmark className="w-5 h-5" />
           </button>
         </div>
       </div>
