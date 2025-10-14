@@ -6,12 +6,14 @@ export default function FeedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-gray-50">
 
       <Sidebar activeSection="false" notificationCount={10} />
 
-      <div className="px-0 sm:px-10">
-        {children}
+      <div className="ml-64 p-6">
+        <div className="max-w-4xl mx-auto">
+          {children}
+        </div>
       </div>
 
     </main>
