@@ -2,7 +2,15 @@
 
 import { Post } from "@/interfaces";
 import { useState } from "react";
-import { IoBookmarkOutline, IoHeartCircle, IoSendOutline, IoShareOutline, IoSwapHorizontalOutline } from "react-icons/io5";
+import {
+  IoBookmarkOutline,
+  IoCalendarOutline,
+  IoHeartCircle,
+  IoMapOutline,
+  IoSendOutline,
+  IoShareOutline,
+  IoSwapHorizontalOutline
+} from "react-icons/io5";
 
 interface Props {
   post: Post;
@@ -70,26 +78,43 @@ export const FeedGridItem = ({ post }: Props) => {
       </div>
 
       {/* Content */}
-      <div className="px-4 pb-3">
+      {/* <div className="px-4 pb-3">
         <p className="text-gray-800 leading-relaxed">{post.content}</p>
-      </div>
+      </div> */}
 
       {/* Media */}
-      <div className="px-4 pb-4">
+      <div className="relative bg-gray-100">
         {post.mediaType === 'image' ? (
           <img
             src={post.mediaUrl}
             alt="Post content"
-            className="w-full rounded-xl object-cover max-h-96 cursor-pointer hover:opacity-95 transition-opacity duration-200"
+            className="w-full object-cover max-h-96 cursor-pointer transition-transform duration-300 hover:scale-105"
           />
         ) : (
           <video
             src={post.mediaUrl}
             controls
-            className="w-full rounded-xl object-cover max-h-96"
+            className="w-full object-cover max-h-96"
             poster="https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg?auto=compress&cs=tinysrgb&w=800"
           />
         )}
+      </div>
+
+      <div className="p-4">
+        <div className="mb-3">
+          <h2 className="text-xl font-bold text-gray-900 mb-2">{post.title}</h2>
+          <p className="text-gray-700 mb-3">{post.content}</p>
+        </div>
+        <div className="flex items-center text-gray-600 text-sm space-x-4">
+          <div className="flex items-center space-x-1">
+            <IoMapOutline size={16} />
+            <span>{post.location}</span>
+          </div>
+          <div className="flex items-center space-x-1">
+            <IoCalendarOutline size={16} />
+            <span>{formatDate(post.eventDate)}</span>
+          </div>
+        </div>
       </div>
 
       {/* Actions */}

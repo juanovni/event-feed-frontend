@@ -28,11 +28,14 @@ export const mockPosts: Post[] = [
   {
     id: '1',
     user: mockUsers[0],
+    title: 'Exposición de Arte Contemporáneo',
     content: '¡Capturé esta increíble puesta de sol en la montaña! 🌅 La luz dorada creaba sombras perfectas.',
     mediaType: 'image',
     mediaUrl: 'https://images.pexels.com/photos/355863/pexels-photo-355863.jpeg?auto=compress&cs=tinysrgb&w=800',
     likes: 234,
     isLiked: false,
+    location: 'Avenida Reforma, Ciudad de México',
+    eventDate: new Date('2025-01-08T16:45:00'),
     timestamp: new Date('2025-01-08T18:30:00'),
     comments: [
       {
@@ -54,11 +57,14 @@ export const mockPosts: Post[] = [
   {
     id: '2',
     user: mockUsers[1],
+    title: 'Maratón Benéfico 10K',
     content: 'Trabajando en mi nuevo proyecto de desarrollo. ¡La programación nunca duerme! 💻',
     mediaType: 'video',
     mediaUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
     likes: 189,
     isLiked: true,
+    location: 'Avenida Reforma, Ciudad de México',
+    eventDate: new Date('2025-01-08T16:45:00'),
     timestamp: new Date('2025-01-08T16:45:00'),
     comments: [
       {
@@ -73,11 +79,14 @@ export const mockPosts: Post[] = [
   {
     id: '3',
     user: mockUsers[2],
+    title: 'Maratón Benéfico 10K',
     content: 'Descubriendo sabores únicos en este mercado local. La gastronomía es arte puro 🍜',
     mediaType: 'image',
     mediaUrl: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800',
     likes: 156,
     isLiked: false,
+    location: 'Avenida Reforma, Ciudad de México',
+    eventDate: new Date('2025-01-08T16:45:00'),
     timestamp: new Date('2025-01-08T14:20:00'),
     comments: []
   }
