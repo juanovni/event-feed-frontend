@@ -3,14 +3,17 @@
 import { Post } from "@/interfaces";
 import { useState } from "react";
 import {
-  IoBookmarkOutline,
-  IoCalendarOutline,
-  IoHeartCircle,
-  IoMapOutline,
   IoSendOutline,
-  IoShareOutline,
-  IoSwapHorizontalOutline
 } from "react-icons/io5";
+import {
+  LuBookmark,
+  LuCalendar,
+  LuHeart,
+  LuMap,
+  LuMessageCircle,
+  LuShare,
+  LuUsers
+} from "react-icons/lu";
 
 interface Props {
   post: Post;
@@ -72,15 +75,7 @@ export const FeedGridItem = ({ post }: Props) => {
             <p className="text-sm text-gray-500">@{post.user.username} · {formatTime(post.timestamp)}</p>
           </div>
         </div>
-        <button className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200">
-          <IoSwapHorizontalOutline className="w-5 h-5 text-gray-500" />
-        </button>
       </div>
-
-      {/* Content */}
-      {/* <div className="px-4 pb-3">
-        <p className="text-gray-800 leading-relaxed">{post.content}</p>
-      </div> */}
 
       {/* Media */}
       <div className="relative bg-gray-100">
@@ -107,11 +102,11 @@ export const FeedGridItem = ({ post }: Props) => {
         </div>
         <div className="flex items-center text-gray-600 text-sm space-x-4">
           <div className="flex items-center space-x-1">
-            <IoMapOutline size={16} />
+            <LuMap size={16} />
             <span>{post.location}</span>
           </div>
           <div className="flex items-center space-x-1">
-            <IoCalendarOutline size={16} />
+            <LuCalendar size={16} />
             <span>{formatDate(post.eventDate)}</span>
           </div>
         </div>
@@ -123,30 +118,35 @@ export const FeedGridItem = ({ post }: Props) => {
           <div className="flex items-center space-x-6">
             <button
               /* onClick={() => onLike(post.id)} */
-              className={`flex items-center space-x-2 px-3 py-2 rounded-full transition-all duration-200 ${post.isLiked
-                ? 'text-red-500 bg-red-50 hover:bg-red-100'
-                : 'text-gray-500 hover:text-red-500 hover:bg-red-50'
-                }`}
+              className={`flex items-center space-x-2 px-3 py-2 rounded-full transition-all duration-200 }`}
             >
-              <IoHeartCircle className={`w-5 h-5 ${post.isLiked ? 'fill-current' : ''}`} />
-              <span className="text-sm font-medium">{post.likes}</span>
+              <LuHeart className={`w-5 h-5 ${post.isLiked ? 'fill-current' : ''}`} />
+              <span className="text-sm font-medium">Interesados ({post.likes})</span>
+            </button>
+
+            <button
+              /* onClick={() => onLike(post.id)} */
+              className={`flex items-center space-x-2 px-3 py-2 rounded-full transition-all duration-200 }`}
+            >
+              <LuUsers className={`w-5 h-5 ${post.isLiked ? 'fill-current' : ''}`} />
+              <span className="text-sm font-medium">Asistiré ({post.likes})</span>
             </button>
 
             <button
               /* onClick={() => setShowComments(!showComments)} */
               className="flex items-center space-x-2 px-3 py-2 rounded-full text-gray-500 hover:text-blue-500 hover:bg-blue-50 transition-all duration-200"
             >
-              {/* <MessageCircle className="w-5 h-5" /> */}
+              <LuMessageCircle className="w-5 h-5" />
               <span className="text-sm font-medium">{post.comments.length}</span>
             </button>
 
             <button className="flex items-center space-x-2 px-3 py-2 rounded-full text-gray-500 hover:text-green-500 hover:bg-green-50 transition-all duration-200">
-              <IoShareOutline className="w-5 h-5" />
+              <LuShare className="w-5 h-5" />
             </button>
           </div>
 
           <button className="p-2 text-gray-500 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-all duration-200">
-            <IoBookmarkOutline className="w-5 h-5" />
+            <LuBookmark className="w-5 h-5" />
           </button>
         </div>
       </div>
