@@ -86,7 +86,7 @@ export const FeedGridItem = ({ post }: Props) => {
       </div>
 
       <div className="mt-2 p-4">
-        <div className="mb-6">
+        <div className="mb-4">
           <h2 className="text-xl font-bold text-gray-900 mb-2">{post.title}</h2>
           <p className="text-gray-700 mb-3">{post.content}</p>
         </div>

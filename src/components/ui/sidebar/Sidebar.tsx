@@ -1,14 +1,16 @@
 'use client';
 
+import Link from 'next/link';
 import {
-  IoCalendarOutline,
-  IoHomeOutline,
-  IoNotificationsOutline,
-  IoPersonAddOutline,
-  IoPulseOutline,
-  IoSettingsOutline,
-  IoTrendingUpOutline
-} from 'react-icons/io5';
+  Activity,
+  Bell,
+  Calendar1Icon,
+  HomeIcon,
+  Settings,
+  TrendingUp,
+  UserPlus
+} from 'lucide-react';
+import { SidebarItem } from './SidebarItem';
 
 interface Props {
   activeSection: string;
@@ -20,30 +22,30 @@ export const Sidebar = ({ activeSection, notificationCount }: Props) => {
 
   const menuItems = [
     {
-      id: 'feed',
       label: 'Inicio',
-      icon: <IoHomeOutline />
+      path: '/feeds',
+      icon: <HomeIcon />
     },
     {
-      id: 'events',
       label: 'Eventos',
-      icon: <IoCalendarOutline />
+      path: '/events',
+      icon: <Calendar1Icon />
     },
     {
-      id: 'notifications',
       label: 'Notificaciones',
-      icon: <IoNotificationsOutline />,
+      path: '/notifications',
+      icon: <Bell />,
       count: notificationCount
     },
     {
-      id: 'trending',
       label: 'Tendencias',
-      icon: <IoTrendingUpOutline />
+      path: '/trending',
+      icon: <TrendingUp />
     },
     {
-      id: 'profile',
       label: 'Perfil',
-      icon: <IoPersonAddOutline />
+      path: '/profile',
+      icon: <UserPlus />
     },
   ];
 
@@ -59,29 +61,13 @@ export const Sidebar = ({ activeSection, notificationCount }: Props) => {
       <nav className="p-4">
         <ul className="space-y-2">
           {menuItems.map((item) => (
-            <li key={item.id}>
-              <button
-                /* onClick={() => onSectionChange(item.id)} */
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${activeSection === item.id
-                  ? 'bg-blue-50 text-blue-600 shadow-sm'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  }`}
-              >
-                {item.icon}
-                <span className="font-medium">{item.label}</span>
-                {item.count && item.count > 0 && (
-                  <span className="ml-auto bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {item.count}
-                  </span>
-                )}
-              </button>
-            </li>
+            <SidebarItem key={item.path} {...item} />
           ))}
         </ul>
 
         <div className="mt-8 pt-6 border-t border-gray-200">
           <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200">
-            <IoPulseOutline className="w-5 h-5" />
+            <Activity className="w-5 h-5" />
             <span className="font-medium">Crear Post</span>
           </button>
         </div>
@@ -91,7 +77,7 @@ export const Sidebar = ({ activeSection, notificationCount }: Props) => {
             /* onClick={() => onSectionChange('settings')} */
             className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
           >
-            <IoSettingsOutline className='w-5 h-5' />
+            <Settings className='w-5 h-5' />
             <span className="font-medium">Configuración</span>
           </button>
         </div>
