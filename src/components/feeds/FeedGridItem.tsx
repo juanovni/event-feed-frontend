@@ -50,6 +50,8 @@ const getStatusText = (status: string) => {
 export const FeedGridItem = ({ post }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [interested, setInterested] = useState(false);
+  const [assist, setAssist] = useState(false);
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
       {/* Header */}
@@ -90,14 +92,14 @@ export const FeedGridItem = ({ post }: Props) => {
           <h2 className="text-xl font-bold text-gray-900 mb-2">{post.title}</h2>
           <p className="text-gray-700 mb-3">{post.content}</p>
         </div>
-        <div className="flex items-center text-gray-600 text-sm space-x-4">
+        <div className="text-gray-600 text-sm space-y-2">
           <div className="flex items-center space-x-1">
             <Map size={16} />
             <span>{post.location}</span>
           </div>
           <div className="flex items-center space-x-1">
             <Calendar size={16} />
-            <span>{formatDate(post.eventDate)}</span>
+            <span>{formatDate(post.eventDate)}</span><span className="font-bold"> • {formatTime(post.eventDate)}</span>
           </div>
         </div>
       </div>
@@ -112,23 +114,24 @@ export const FeedGridItem = ({ post }: Props) => {
                 }`}
             >
               <ThumbsUp
-                className={`w-5 h-5 transition ${interested ? "fill-yellow-500 text-yellow-500" : "text-gray-500"}`}
+                className={`w-5 h-5 transition ${interested ? "fill-blue-500 text-blue-500" : "text-gray-500"}`}
               />
               <span className="text-gray-500">{interested ? "Interesado" : "Estoy interesado"} (5)</span>
             </button>
 
             <button
-              className={`cursor-pointer flex items-center gap-2 p-2 rounded-full transition ${post.isLiked ? "bg-yellow-100 text-yellow-600" : "hover:bg-gray-100"
+              onClick={() => setAssist(!assist)}
+              className={`cursor-pointer flex items-center gap-2 p-2 rounded-full transition ${assist ? "" : "hover:bg-gray-100"
                 }`}
             >
-              <Users className={`w-5 h-5 transition ${post.isLiked ? "fill-yellow-500 text-yellow-500" : "text-gray-500"}`}
+              <Users className={`w-5 h-5 transition ${assist ? "fill-blue-500 text-blue-500" : "text-gray-500"}`}
               />
-              <span className="text-gray-500">{post.isLiked ? "Asistiré" : "Asistir"} ({post.likes})</span>
+              <span className="text-gray-500">{assist ? "Asistiré" : "Quiero Asistir"} ({post.likes})</span>
             </button>
 
             <button
-              /* onClick={() => setShowComments(!showComments)} */
-              className="flex items-center space-x-2 px-3 py-2 rounded-full text-gray-500 hover:text-blue-500 hover:bg-blue-50 transition-all duration-200"
+              onClick={() => setShowComments(!showComments)}
+              className="cursor-pointer flex items-center space-x-2 px-3 py-2 rounded-full text-gray-500 hover:text-blue-500 hover:bg-blue-50 transition-all duration-200"
             >
               <MessageCircle className="w-5 h-5" />
               <span className="text-sm font-medium">{post.comments.length}</span>

@@ -1,6 +1,4 @@
-'use client';
 
-import Link from 'next/link';
 import {
   Activity,
   Bell,
@@ -12,13 +10,7 @@ import {
 } from 'lucide-react';
 import { SidebarItem } from './SidebarItem';
 
-interface Props {
-  activeSection: string;
-  /* onSectionChange: (section: string) => void; */
-  notificationCount: number;
-}
-
-export const Sidebar = ({ activeSection, notificationCount }: Props) => {
+export const Sidebar = () => {
 
   const menuItems = [
     {
@@ -35,7 +27,6 @@ export const Sidebar = ({ activeSection, notificationCount }: Props) => {
       label: 'Notificaciones',
       path: '/notifications',
       icon: <Bell />,
-      count: notificationCount
     },
     {
       label: 'Tendencias',
@@ -74,7 +65,6 @@ export const Sidebar = ({ activeSection, notificationCount }: Props) => {
 
         <div className="mt-4">
           <button
-            /* onClick={() => onSectionChange('settings')} */
             className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
           >
             <Settings className='w-5 h-5' />
