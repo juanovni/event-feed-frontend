@@ -7,6 +7,7 @@ import { IoSendOutline } from "react-icons/io5";
 import { GalleryPopup } from "../ui/gallery/GalleryPopup";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import { Badge } from "../ui/badge";
 
 interface Props {
   post: Post;
@@ -112,6 +113,7 @@ export const FeedGridItem = ({ post }: Props) => {
             poster="https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg?auto=compress&cs=tinysrgb&w=800"
           />
         )}
+        <Badge variant="secondary" className="absolute right-3 top-3">{post.category}</Badge>
       </div>
 
       <div className="mt-2 p-4">

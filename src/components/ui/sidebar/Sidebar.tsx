@@ -26,7 +26,7 @@ export const Sidebar = () => {
       path: '/events',
       icon: <Calendar1Icon />
     },
-    {
+/*     {
       label: 'Notificaciones',
       path: '/notifications',
       icon: <Bell />,
@@ -35,7 +35,7 @@ export const Sidebar = () => {
       label: 'Tendencias',
       path: '/trending',
       icon: <TrendingUp />
-    },
+    }, */
     {
       label: 'Perfil',
       path: '/profile',
