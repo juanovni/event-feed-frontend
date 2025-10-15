@@ -35,7 +35,7 @@ export const mockPosts: Post[] = [
     likes: 234,
     isLiked: false,
     location: 'Avenida Reforma, Ciudad de México',
-    eventDate: new Date('2025-01-08T16:45:00'),
+    eventDate: new Date('2025-01-08T06:45:00'),
     timestamp: new Date('2025-01-08T18:30:00'),
     comments: [
       {
@@ -69,7 +69,7 @@ export const mockPosts: Post[] = [
     likes: 189,
     isLiked: true,
     location: 'Avenida Reforma, Ciudad de México',
-    eventDate: new Date('2025-01-08T16:45:00'),
+    eventDate: new Date('2025-01-08T10:45:00'),
     timestamp: new Date('2025-01-08T16:45:00'),
     comments: [
       {
