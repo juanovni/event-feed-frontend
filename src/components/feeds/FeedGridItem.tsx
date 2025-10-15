@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { Post } from "@/interfaces";
-import { Bookmark, Calendar, Map, MessageCircle, Share, ThumbsUp, Users } from "lucide-react";
+import { Bookmark, Calendar, DollarSign, Map, MessageCircle, Share, ThumbsUp, UserPlus, Users } from "lucide-react";
 import { IoSendOutline } from "react-icons/io5";
 import { GalleryPopup } from "../ui/gallery/GalleryPopup";
+import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 interface Props {
   post: Post;
@@ -56,6 +58,12 @@ export const FeedGridItem = ({ post }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [interested, setInterested] = useState(false);
   const [assist, setAssist] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  const handleFollow = () => {
+    setIsFollowing(!isFollowing)
+    //onFollow?.(event.publisherId)
+  }
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
@@ -72,6 +80,15 @@ export const FeedGridItem = ({ post }: Props) => {
             <p className="text-sm text-gray-500">@{post.user.username} · {formatTime(post.timestamp)}</p>
           </div>
         </div>
+
+        <Button
+          variant={isFollowing ? "secondary" : "outline"}
+          size="sm"
+          onClick={handleFollow}>
+          <UserPlus className="mr-1.5 h-4 w-4" />
+          {isFollowing ? "Siguiendo" : "Seguir"}
+        </Button>
+
       </div>
 
       {/* Media */}
@@ -99,17 +116,30 @@ export const FeedGridItem = ({ post }: Props) => {
 
       <div className="mt-2 p-4">
         <div className="mb-4">
-          <h2 className="text-xl font-bold text-gray-900 mb-2">{post.title}</h2>
-          <p className="text-gray-700 mb-3">{post.content}</p>
+          <h2 className="text-xl font-bold text-balance">{post.title}</h2>
+          <p className="mt-1.5 text-sm text-muted-foreground text-pretty">{post.content}</p>
         </div>
-        <div className="text-gray-600 text-sm space-y-2">
-          <div className="flex items-center space-x-1">
-            <Map size={16} />
-            <span>{post.location}</span>
+        <div className="text-sm space-y-2">
+          <div className="flex items-center gap-2 text-sm">
+            <Map size={16} className="h-4 w-4 shrink-0 text-blue-800 font-bold" />
+            <span className="font-medium">{post.location}</span>
           </div>
-          <div className="flex items-center space-x-1">
-            <Calendar size={16} />
-            <span>{formatDate(post.eventDate)}</span><span className="font-bold"> • {formatTime(post.eventDate)}</span>
+          <div className="flex items-center gap-2 text-sm">
+            <Calendar size={16} className="h-4 w-4 shrink-0 text-blue-800 font-bold" />
+            <span className="font-medium">{formatDate(post.eventDate)}</span><span className="font-medium"> • {formatTime(post.eventDate)}</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <DollarSign size={16} className="h-4 w-4 shrink-0 text-blue-800 font-bold" />
+            <p className="font-medium">
+              {post.cost === 0 ? "Entrada gratuita" : `${post.cost} ${post.currency}`}
+            </p>
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <Users size={16} className="h-4 w-4 shrink-0 text-blue-800 font-bold" />
+            <p className="text-muted-foreground">
+              <span className="font-medium text-foreground">122</span> asistirán •{" "}
+              <span className="font-medium text-foreground">30</span> interesados
+            </p>
           </div>
         </div>
       </div>
@@ -118,40 +148,59 @@ export const FeedGridItem = ({ post }: Props) => {
       <div className="px-4 py-3 border-t border-gray-100">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <button
+            <Button
               onClick={() => setInterested(!interested)}
-              className={`cursor-pointer flex items-center gap-2 p-2 rounded-full transition ${interested ? "" : "hover:bg-gray-100"
-                }`}
-            >
-              <ThumbsUp
-                className={`w-5 h-5 transition ${interested ? "fill-blue-500 text-blue-500" : "text-gray-500"}`}
-              />
-              <span className="text-gray-500">{interested ? "Interesado" : "Estoy interesado"} (5)</span>
-            </button>
+              variant={interested ? "secondary" : "outline"}
+              className="flex-1"
+              size="lg"
 
-            <button
+            >
+              <ThumbsUp className={cn("mr-2 h-4 w-4", interested && "fill-current")} />
+              <span>{interested ? "Interesado" : "Me interesa"}</span>
+            </Button>
+
+            <Button
               onClick={() => setAssist(!assist)}
-              className={`cursor-pointer flex items-center gap-2 p-2 rounded-full transition ${assist ? "" : "hover:bg-gray-100"
-                }`}
-            >
-              <Users className={`w-5 h-5 transition ${assist ? "fill-blue-500 text-blue-500" : "text-gray-500"}`}
-              />
-              <span className="text-gray-500">{assist ? "Asistiré" : "Asistir"} ({post.likes})</span>
-            </button>
+              variant={assist ? "secondary" : "outline"}
+              className="flex-1"
+              size="lg"
 
-            <button
-              onClick={() => setShowComments(!showComments)}
-              className="cursor-pointer flex items-center space-x-2 px-3 py-2 rounded-full text-gray-500 hover:text-blue-500 hover:bg-blue-50 transition-all duration-200"
             >
-              <MessageCircle className="w-5 h-5" />
-              <span className="text-sm font-medium">{post.comments.length}</span>
-            </button>
+              <Users className={cn("mr-2 h-4 w-4", assist && "fill-current")} />
+              <span>{assist ? "Confirmado" : "Asistiré"}</span>
+            </Button>
+
+            <Button
+              onClick={() => setShowComments(!showComments)}
+              variant="outline"
+              size="lg"
+            >
+              <MessageCircle />{post.comments.length}
+            </Button>
+
           </div>
 
-          <button className="p-2 text-gray-500 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-all duration-200">
-            <Bookmark className="w-5 h-5" />
-          </button>
+          <Button
+            variant="outline"
+            size="lg"
+            className="p-2 text-gray-500 rounded-full transition-all duration-200"
+          >
+            <Bookmark />
+          </Button>
+
         </div>
+
+        <div className="flex w-full gap-2 py-4">
+          <Button
+            variant="outline"
+            size="lg"
+            className="w-full bg-blue-600 text-white hover:bg-blue-500 hover:text-white transition-colors duration-200"
+          /* onClick={() => setShowPaymentModal(true)} */
+          >
+            Pagar y Confirmar Asistencia
+          </Button>
+        </div>
+
       </div>
 
       {/* Comments Section */}

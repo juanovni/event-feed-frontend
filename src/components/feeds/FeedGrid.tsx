@@ -9,7 +9,7 @@ export const FeedGrid = ({ posts }: Props) => {
   return (
     <div className="grid grid-cols-1 gap-10 mb-10">
       {posts.map(post => (
-        <FeedGridItem post={post} />
+        <FeedGridItem key={post.id} post={post} />
       ))}
     </div>
   )

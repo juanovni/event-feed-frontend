@@ -10,6 +10,8 @@ export interface Post {
   mediaUrl: string;
   likes: number;
   isLiked: boolean;
+  cost: number;
+  currency: string;
   comments: Comment[];
   gallery?: string[];
   location: string;

@@ -16,7 +16,7 @@ export const SidebarItem = ({ label, icon, path }: Props) => {
       <Link
         href={path}
         className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${currentPath === path
-          ? 'bg-blue-50 text-blue-600 shadow-sm'
+          ? 'text-blue-600'
           : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
           }`}
       >
