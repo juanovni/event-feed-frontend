@@ -192,17 +192,16 @@ export const FeedGridItem = ({ post }: Props) => {
 
         </div>
 
-        <div className="flex w-full gap-2 py-4">
+        {post.cost > 0 && (
           <Button
             variant="outline"
             size="lg"
-            className="w-full bg-blue-600 text-white hover:bg-blue-500 hover:text-white transition-colors duration-200"
+            className="w-full mt-4 bg-blue-600 text-white hover:bg-blue-500 hover:text-white transition-colors duration-200"
           /* onClick={() => setShowPaymentModal(true)} */
           >
             Pagar y Confirmar Asistencia
           </Button>
-        </div>
-
+        )}
       </div>
 
       {/* Comments Section */}
