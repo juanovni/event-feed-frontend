@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { geistMono, geistSans, poppinsFont } from "@/config/fonts";
+import { poppinsFont } from "@/config/fonts";
 
 import "./globals.css";
 

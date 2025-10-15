@@ -132,7 +132,7 @@ export const FeedGridItem = ({ post }: Props) => {
             >
               <Users className={`w-5 h-5 transition ${assist ? "fill-blue-500 text-blue-500" : "text-gray-500"}`}
               />
-              <span className="text-gray-500">{assist ? "Asistiré" : "Quiero Asistir"} ({post.likes})</span>
+              <span className="text-gray-500">{assist ? "Asistiré" : "Asistir"} ({post.likes})</span>
             </button>
 
             <button
