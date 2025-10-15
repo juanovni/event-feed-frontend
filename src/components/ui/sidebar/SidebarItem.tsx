@@ -21,7 +21,7 @@ export const SidebarItem = ({ label, icon, path }: Props) => {
           }`}
       >
         {icon}
-        <span className="font-medium">{label}</span>
+        <span className="font-bold">{label}</span>
         {/* {item.count && item.count > 0 && (
           <span className="ml-auto bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
             {item.count}
