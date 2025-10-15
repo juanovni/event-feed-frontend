@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Post } from "@/interfaces";
 import { Bookmark, Calendar, Map, MessageCircle, Share, ThumbsUp, Users } from "lucide-react";
 import { IoSendOutline } from "react-icons/io5";
+import { GalleryPopup } from "../ui/gallery/GalleryPopup";
 
 interface Props {
   post: Post;
@@ -72,11 +73,16 @@ export const FeedGridItem = ({ post }: Props) => {
       {/* Media */}
       <div className="relative bg-gray-100">
         {post.mediaType === 'image' ? (
-          <img
-            src={post.mediaUrl}
-            alt="Post content"
-            className="w-full object-cover max-h-96 cursor-pointer transition-transform duration-300 hover:scale-105"
-          />
+          <>
+            <img
+              src={post.mediaUrl}
+              alt="Post content"
+              className="w-full object-cover max-h-96 cursor-pointer transition-transform duration-300 hover:scale-105"
+            />
+            {post.gallery && post.gallery.length > 1 && (
+              <GalleryPopup images={post.gallery} />
+            )}
+          </>
         ) : (
           <video
             src={post.mediaUrl}

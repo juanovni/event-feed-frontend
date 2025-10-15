@@ -52,6 +52,11 @@ export const mockPosts: Post[] = [
         timestamp: new Date('2025-01-08T19:15:00'),
         likes: 8
       }
+    ],
+    gallery: [
+      'https://images.pexels.com/photos/355863/pexels-photo-355863.jpeg?auto=compress&cs=tinysrgb&w=800',
+      'https://images.pexels.com/photos/355863/pexels-photo-355863.jpeg?auto=compress&cs=tinysrgb&w=800',
+      'https://images.pexels.com/photos/355863/pexels-photo-355863.jpeg?auto=compress&cs=tinysrgb&w=800'
     ]
   },
   {
@@ -74,6 +79,11 @@ export const mockPosts: Post[] = [
         timestamp: new Date('2025-01-08T17:00:00'),
         likes: 5
       }
+    ],
+    gallery: [
+      'https://images.pexels.com/photos/355863/pexels-photo-355863.jpeg?auto=compress&cs=tinysrgb&w=800',
+      'https://images.pexels.com/photos/355863/pexels-photo-355863.jpeg?auto=compress&cs=tinysrgb&w=800',
+      'https://images.pexels.com/photos/355863/pexels-photo-355863.jpeg?auto=compress&cs=tinysrgb&w=800'
     ]
   },
   {
@@ -88,6 +98,11 @@ export const mockPosts: Post[] = [
     location: 'Avenida Reforma, Ciudad de México',
     eventDate: new Date('2025-01-08T16:45:00'),
     timestamp: new Date('2025-01-08T14:20:00'),
-    comments: []
+    comments: [],
+    gallery: [
+      'https://images.pexels.com/photos/355863/pexels-photo-355863.jpeg?auto=compress&cs=tinysrgb&w=800',
+      'https://images.pexels.com/photos/355863/pexels-photo-355863.jpeg?auto=compress&cs=tinysrgb&w=800',
+      'https://images.pexels.com/photos/355863/pexels-photo-355863.jpeg?auto=compress&cs=tinysrgb&w=800'
+    ]
   }
 ];

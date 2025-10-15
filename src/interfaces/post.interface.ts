@@ -11,6 +11,7 @@ export interface Post {
   likes: number;
   isLiked: boolean;
   comments: Comment[];
+  gallery?: string[];
   location: string;
   eventDate: Date;
   timestamp: Date;
