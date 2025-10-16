@@ -5,7 +5,7 @@ export interface Event {
   id: string;
   user: User;
   title: string;
-  content: string;
+  description: string;
   mediaType: MediaType;
   mediaUrl: string;
   likes: number;

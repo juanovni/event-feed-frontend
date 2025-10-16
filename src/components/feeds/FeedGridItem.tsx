@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Event } from "@/interfaces";
-import { Bookmark, Calendar, DollarSign, Map, MessageCircle, Share, ThumbsUp, UserPlus, Users } from "lucide-react";
+import { Bookmark, Calendar, CreditCard, DollarSign, Map, MessageCircle, Share, ThumbsUp, UserPlus, Users } from "lucide-react";
 import { IoSendOutline } from "react-icons/io5";
 import { GalleryPopup } from "../ui/gallery/GalleryPopup";
 import { Button } from "../ui/button";
@@ -119,7 +119,7 @@ export const FeedGridItem = ({ event }: Props) => {
       <div className="mt-2 p-4">
         <div className="mb-4">
           <h2 className="text-xl font-bold text-balance">{event.title}</h2>
-          <p className="mt-1.5 text-sm text-muted-foreground text-pretty">{event.content}</p>
+          <p className="mt-1.5 text-sm text-muted-foreground text-pretty">{event.description}</p>
         </div>
         <div className="text-sm space-y-2">
           <div className="flex items-center gap-2 text-sm">
@@ -196,9 +196,10 @@ export const FeedGridItem = ({ event }: Props) => {
           <Button
             variant="outline"
             size="lg"
-            className="w-full mt-4 bg-blue-600 text-white hover:bg-blue-500 hover:text-white transition-colors duration-200"
+            className="flex-1 w-full mt-4 bg-blue-600 text-white hover:bg-blue-500 hover:text-white transition-colors duration-200"
           /* onClick={() => setShowPaymentModal(true)} */
           >
+            <CreditCard />
             Pagar y Confirmar Asistencia
           </Button>
         )}
