@@ -2,58 +2,23 @@
 
 import { useState } from "react";
 import { Event } from "@/interfaces";
-import { Bookmark, Calendar, CreditCard, DollarSign, Map, MessageCircle, Share, ThumbsUp, UserPlus, Users } from "lucide-react";
+import {
+  Bookmark,
+  Calendar,
+  CreditCard,
+  DollarSign,
+  Map, MessageCircle, Share, ThumbsUp, UserPlus, Users
+} from "lucide-react";
 import { IoSendOutline } from "react-icons/io5";
 import { GalleryPopup } from "../ui/gallery/GalleryPopup";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
+import { formatDate, formatTime } from "@/utils";
 
 interface Props {
   event: Event;
 }
-
-const formatDate = (date: Date) => {
-  return date.toLocaleDateString('es-ES', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-};
-
-const formatTime = (date: Date) => {
-  return date
-    .toLocaleTimeString('es-ES', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
-    })
-    .replace('a. m.', 'AM')
-    .replace('p. m.', 'PM');
-};
-
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case 'attending':
-      return 'bg-green-600 hover:bg-green-700 text-white';
-    case 'interested':
-      return 'bg-yellow-600 hover:bg-yellow-700 text-white';
-    default:
-      return 'bg-gray-100 hover:bg-gray-200 text-gray-700';
-  }
-};
-
-const getStatusText = (status: string) => {
-  switch (status) {
-    case 'attending':
-      return 'Asistiré';
-    case 'interested':
-      return 'Me interesa';
-    default:
-      return 'Marcar interés';
-  }
-};
 
 export const FeedGridItem = ({ event }: Props) => {
   const [showComments, setShowComments] = useState(false);
