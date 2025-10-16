@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import { Post } from "@/interfaces";
+import { Event } from "@/interfaces";
 import { Bookmark, Calendar, DollarSign, Map, MessageCircle, Share, ThumbsUp, UserPlus, Users } from "lucide-react";
 import { IoSendOutline } from "react-icons/io5";
 import { GalleryPopup } from "../ui/gallery/GalleryPopup";
@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 
 interface Props {
-  post: Post;
+  event: Event;
 }
 
 const formatDate = (date: Date) => {
@@ -55,7 +55,7 @@ const getStatusText = (status: string) => {
   }
 };
 
-export const FeedGridItem = ({ post }: Props) => {
+export const FeedGridItem = ({ event }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [interested, setInterested] = useState(false);
   const [assist, setAssist] = useState(false);
@@ -72,13 +72,13 @@ export const FeedGridItem = ({ post }: Props) => {
       <div className="p-4 flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <img
-            src={post.user.avatar}
-            alt={post.user.name}
+            src={event.user.avatar}
+            alt={event.user.name}
             className="w-12 h-12 rounded-full object-cover ring-2 ring-gray-100"
           />
           <div>
-            <h3 className="font-semibold text-gray-900">{post.user.name}</h3>
-            <p className="text-sm text-gray-500">@{post.user.username} · {formatTime(post.timestamp)}</p>
+            <h3 className="font-semibold text-gray-900">{event.user.name}</h3>
+            <p className="text-sm text-gray-500">@{event.user.username} · {formatTime(event.timestamp)}</p>
           </div>
         </div>
 
@@ -94,46 +94,46 @@ export const FeedGridItem = ({ post }: Props) => {
 
       {/* Media */}
       <div className="relative bg-gray-100">
-        {post.mediaType === 'image' ? (
+        {event.mediaType === 'image' ? (
           <>
             <img
-              src={post.mediaUrl}
+              src={event.mediaUrl}
               alt="Post content"
               className="w-full object-cover max-h-96 cursor-pointer transition-transform duration-300 hover:scale-105"
             />
-            {post.gallery && post.gallery.length > 1 && (
-              <GalleryPopup images={post.gallery} />
+            {event.gallery && event.gallery.length > 1 && (
+              <GalleryPopup images={event.gallery} />
             )}
           </>
         ) : (
           <video
-            src={post.mediaUrl}
+            src={event.mediaUrl}
             controls
             className="w-full object-cover max-h-96"
             poster="https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg?auto=compress&cs=tinysrgb&w=800"
           />
         )}
-        <Badge variant="secondary" className="absolute right-3 top-3">{post.category}</Badge>
+        <Badge variant="secondary" className="absolute right-3 top-3">{event.category}</Badge>
       </div>
 
       <div className="mt-2 p-4">
         <div className="mb-4">
-          <h2 className="text-xl font-bold text-balance">{post.title}</h2>
-          <p className="mt-1.5 text-sm text-muted-foreground text-pretty">{post.content}</p>
+          <h2 className="text-xl font-bold text-balance">{event.title}</h2>
+          <p className="mt-1.5 text-sm text-muted-foreground text-pretty">{event.content}</p>
         </div>
         <div className="text-sm space-y-2">
           <div className="flex items-center gap-2 text-sm">
             <Map size={16} className="h-4 w-4 shrink-0 text-blue-800 font-bold" />
-            <span className="font-medium">{post.location}</span>
+            <span className="font-medium">{event.location}</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <Calendar size={16} className="h-4 w-4 shrink-0 text-blue-800 font-bold" />
-            <span className="font-medium">{formatDate(post.eventDate)}</span><span className="font-medium"> • {formatTime(post.eventDate)}</span>
+            <span className="font-medium">{formatDate(event.eventDate)}</span><span className="font-medium"> • {formatTime(event.eventDate)}</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <DollarSign size={16} className="h-4 w-4 shrink-0 text-blue-800 font-bold" />
             <p className="font-medium">
-              {post.cost === 0 ? "Entrada gratuita" : `${post.cost} ${post.currency}`}
+              {event.cost === 0 ? "Entrada gratuita" : `${event.cost} ${event.currency}`}
             </p>
           </div>
           <div className="flex items-center gap-2 text-sm">
@@ -177,7 +177,7 @@ export const FeedGridItem = ({ post }: Props) => {
               variant="outline"
               size="lg"
             >
-              <MessageCircle />{post.comments.length}
+              <MessageCircle />{event.comments.length}
             </Button>
 
           </div>
@@ -192,7 +192,7 @@ export const FeedGridItem = ({ post }: Props) => {
 
         </div>
 
-        {post.cost > 0 && (
+        {event.cost > 0 && (
           <Button
             variant="outline"
             size="lg"
@@ -208,7 +208,7 @@ export const FeedGridItem = ({ post }: Props) => {
       {showComments && (
         <div className="border-t border-gray-100">
           <div className="p-4 space-y-4">
-            {post.comments.map((comment) => (
+            {event.comments.map((comment) => (
               <div key={comment.id} className="flex space-x-3">
                 <img
                   src={comment.user.avatar}

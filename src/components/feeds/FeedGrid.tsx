@@ -1,15 +1,15 @@
-import { Post } from "@/interfaces";
+import { Event } from "@/interfaces";
 import { FeedGridItem } from "./FeedGridItem";
 
 interface Props {
-  posts: Post[];
+  events: Event[];
 }
 
-export const FeedGrid = ({ posts }: Props) => {
+export const FeedGrid = ({ events }: Props) => {
   return (
     <div className="grid grid-cols-1 gap-10 mb-10">
-      {posts.map(post => (
-        <FeedGridItem key={post.id} post={post} />
+      {events.map(event => (
+        <FeedGridItem key={event.id} event={event} />
       ))}
     </div>
   )
