@@ -6,21 +6,24 @@ export const mockUsers: User[] = [
     name: 'María González',
     username: 'maria_photo',
     avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150',
-    interests: ['Fotografía', 'Viajes', 'Arte']
+    interests: ['Fotografía', 'Viajes', 'Arte'],
+    role: 'user'
   },
   {
     id: '2',
     name: 'Carlos Ruiz',
     username: 'carlos_dev',
     avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150',
-    interests: ['Tecnología', 'Gaming', 'Música']
+    interests: ['Tecnología', 'Gaming', 'Música'],
+    role: 'publisher'
   },
   {
     id: '3',
     name: 'Ana Silva',
     username: 'ana_travel',
     avatar: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150',
-    interests: ['Viajes', 'Gastronomía', 'Fotografía']
+    interests: ['Viajes', 'Gastronomía', 'Fotografía'],
+    role: 'promoter'
   }
 ];
 
@@ -36,7 +39,7 @@ export const mockEvents: Event[] = [
     mediaUrl: 'https://images.pexels.com/photos/355863/pexels-photo-355863.jpeg?auto=compress&cs=tinysrgb&w=800',
     likes: 234,
     isLiked: false,
-    cost: 100.00,
+    cost: 12.87,
     currency: 'USA',
     timestamp: new Date('2025-01-08T18:30:00'),
     category: "restaurant",
@@ -202,7 +205,7 @@ export const mockPosts: Post[] = [
     mediaUrl: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800',
     likes: 156,
     isLiked: false,
-    cost: 100.00,
+    cost: 25.78,
     currency: 'USA',
     location: 'Avenida Reforma, Ciudad de México',
     eventDate: new Date('2025-01-08T16:45:00'),

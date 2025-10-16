@@ -5,4 +5,7 @@ export interface User {
   avatar: string;
   isFollowing?: boolean;
   interests: string[];
+  role: UserRole
 }
+
+export type UserRole = "user" | "publisher" | "promoter";
