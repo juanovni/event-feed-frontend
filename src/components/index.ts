@@ -10,4 +10,4 @@ export * from './ui/widgets/NavigationWidget';
 export * from './ui/widgets/AvatarsFriendsWidget';
 
 
-export * from './payment/PaymentModel';
+export * from './payment/PaymentModal';
