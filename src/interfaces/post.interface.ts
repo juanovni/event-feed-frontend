@@ -6,7 +6,6 @@ export interface Post {
   user: User;
   title: string;
   content: string;
-  mediaType: MediaType;
   mediaUrl: string;
   likes: number;
   isLiked: boolean;
@@ -17,23 +16,4 @@ export interface Post {
   location: string;
   eventDate: Date;
   timestamp: Date;
-  category: EventCategory;
 }
-
-export type EventCategory =
-  | "restaurant"
-  | "music"
-  | "bar"
-  | "discotheque"
-  | "sports"
-  | "art"
-  | "theater"
-  | "technology"
-  | "fashion"
-  | "networking"
-  | "festival"
-  | "food"
-  | "cinema"
-  | "education"
-  | "wellness";
-export type MediaType = 'image' | 'video';
