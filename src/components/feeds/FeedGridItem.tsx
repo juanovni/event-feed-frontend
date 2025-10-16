@@ -42,6 +42,14 @@ export const FeedGridItem = ({ event }: Props) => {
     setAssist(true)
   }
 
+  const handleAttend = () => {
+    if (event.cost === 0) {
+      setAssist(!assist)
+    } else {
+      setShowPaymentModal(true)
+    }
+  }
+
   return (
     <>
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
@@ -142,7 +150,7 @@ export const FeedGridItem = ({ event }: Props) => {
               </Button>
 
               <Button
-                onClick={() => setAssist(!assist)}
+                onClick={handleAttend}
                 variant={assist ? "secondary" : "outline"}
                 className="flex-1"
                 size="lg"
