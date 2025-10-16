@@ -7,7 +7,10 @@ import {
   Calendar,
   CreditCard,
   DollarSign,
-  Map, MessageCircle, Share, ThumbsUp, UserPlus, Users
+  Map, MessageCircle,
+  ThumbsUp,
+  UserPlus,
+  Users
 } from "lucide-react";
 import { IoSendOutline } from "react-icons/io5";
 import { GalleryPopup } from "../ui/gallery/GalleryPopup";
@@ -15,7 +18,7 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 import { formatDate, formatTime } from "@/utils";
-import { AvatarIcon, AvatarProfile } from "@/components";
+import { AvatarProfile, AvatarsFriendsWidget, NavigationWidget } from "@/components";
 
 interface Props {
   event: Event;
@@ -26,7 +29,7 @@ export const FeedGridItem = ({ event }: Props) => {
   const [interested, setInterested] = useState(false);
   const [assist, setAssist] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
-
+  const distanceKm = 4;
   const handleFollow = () => {
     setIsFollowing(!isFollowing)
     //onFollow?.(event.publisherId)
@@ -106,7 +109,13 @@ export const FeedGridItem = ({ event }: Props) => {
               <span className="font-medium text-foreground">30</span> interesados
             </p>
           </div>
+
+          <AvatarsFriendsWidget />
+
         </div>
+
+        <NavigationWidget distanceKm={distanceKm} />
+
       </div>
 
       {/* Actions */}
