@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { SidebarItem } from './SidebarItem';
 import { Avatar, AvatarFallback, AvatarImage } from '../avatar';
+import { AvatarIcon, AvatarProfile } from '@/components';
 
 export const Sidebar = () => {
   const user = true;
@@ -26,16 +27,16 @@ export const Sidebar = () => {
       path: '/events',
       icon: <Calendar1Icon />
     },
-/*     {
-      label: 'Notificaciones',
-      path: '/notifications',
-      icon: <Bell />,
-    },
-    {
-      label: 'Tendencias',
-      path: '/trending',
-      icon: <TrendingUp />
-    }, */
+    /*     {
+          label: 'Notificaciones',
+          path: '/notifications',
+          icon: <Bell />,
+        },
+        {
+          label: 'Tendencias',
+          path: '/trending',
+          icon: <TrendingUp />
+        }, */
     {
       label: 'Perfil',
       path: '/profile',
@@ -54,20 +55,12 @@ export const Sidebar = () => {
 
       {user && (
         <div className="border-b border-sidebar-border p-4">
-          <div className="flex items-center gap-3">
-            <Avatar className="h-10 w-10">
-              <AvatarImage
-                src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150"
-                alt="Juan Constanitne"
-                className='w-12 h-12 rounded-full object-cover ring-2 ring-gray-100'
-              />
-              <AvatarFallback>{"JuanConstanitne".charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div className="flex-1 overflow-hidden">
-              <p className="truncate text-sm font-semibold text-sidebar-foreground">Juan Constantine</p>
-              <p className="truncate text-xs text-muted-foreground">@juanovni</p>
-            </div>
-          </div>
+          <AvatarProfile
+            name="Juan Constantine"
+            username='juanovni'
+            image="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150"
+            className='h-10 w-10'
+          />
         </div>
       )}
 

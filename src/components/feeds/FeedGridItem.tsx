@@ -15,6 +15,7 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 import { formatDate, formatTime } from "@/utils";
+import { AvatarIcon, AvatarProfile } from "@/components";
 
 interface Props {
   event: Event;
@@ -35,17 +36,14 @@ export const FeedGridItem = ({ event }: Props) => {
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
       {/* Header */}
       <div className="p-4 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <img
-            src={event.user.avatar}
-            alt={event.user.name}
-            className="w-12 h-12 rounded-full object-cover ring-2 ring-gray-100"
-          />
-          <div>
-            <h3 className="font-semibold text-gray-900">{event.user.name}</h3>
-            <p className="text-sm text-gray-500">@{event.user.username} · {formatTime(event.timestamp)}</p>
-          </div>
-        </div>
+
+        <AvatarProfile
+          name={event.user.name}
+          username={event.user.username}
+          image={event.user.avatar}
+          timesamp={event.timestamp}
+          className='h-12 w-12'
+        />
 
         <Button
           variant={isFollowing ? "secondary" : "outline"}
