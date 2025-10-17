@@ -13,12 +13,11 @@ import {
   Users
 } from "lucide-react";
 import { IoSendOutline } from "react-icons/io5";
-import { GalleryPopup } from "../ui/gallery/GalleryPopup";
-import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-import { Badge } from "../ui/badge";
 import { formatDate, formatTime } from "@/utils";
-import { AvatarProfile, AvatarsFriendsWidget, NavigationWidget, PaymentModal } from "@/components";
+import { AvatarProfile, AvatarsFriendsWidget, GalleryPopup, NavigationWidget, PaymentModal } from "@/components";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 interface Props {
   event: Event;

@@ -1,34 +1,18 @@
-'use client';
-
-import { Notification } from "@/interfaces";
+import { NotificationGrid } from "@/components";
 import { mockNotifications } from "@/data/mockData";
-import { useState } from "react";
-import { NotificationPanel } from "@/components";
 
 export default function NotificationPage() {
-  const [notifications, setNotifications] = useState<Notification[]>(mockNotifications);
-
-  const handleMarkNotificationAsRead = (notificationId: string) => {
-    setNotifications(prevNotifications =>
-      prevNotifications.map(notification =>
-        notification.id === notificationId
-          ? { ...notification, read: true }
-          : notification
-      )
-    );
-  };
-
-  const handleDismissNotification = (notificationId: string) => {
-    setNotifications(prevNotifications =>
-      prevNotifications.filter(notification => notification.id !== notificationId)
-    );
-  };
-
   return (
-    <NotificationPanel
-      notifications={notifications}
-      onMarkAsRead={handleMarkNotificationAsRead}
-      onDismiss={handleDismissNotification}
-    />
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold text-gray-900">Notificaciones</h2>
+        <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+          Marcar todas como leídas
+        </button>
+      </div>
+      <NotificationGrid
+        notificationsData={mockNotifications}
+      />
+    </div>
   );
 }
