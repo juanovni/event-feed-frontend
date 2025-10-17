@@ -4,18 +4,15 @@ import { useState } from "react";
 import { Event } from "@/interfaces";
 import {
   Bookmark,
-  Calendar,
   CreditCard,
-  DollarSign,
-  Map, MessageCircle,
+  MessageCircle,
   ThumbsUp,
-  UserPlus,
   Users
 } from "lucide-react";
 import { IoSendOutline } from "react-icons/io5";
 import { cn } from "@/lib/utils";
-import { formatDate, formatTime } from "@/utils";
-import { AvatarProfile, AvatarsFriendsWidget, Button, GalleryPopup, NavigationWidget, PaymentModal } from "@/components";
+import { formatTime } from "@/utils";
+import { AvatarProfile, Button, EventInformation, FollowerButton, GalleryPopup, PaymentModal } from "@/components";
 import { Badge } from "@/components/ui/badge";
 
 interface Props {
@@ -32,8 +29,7 @@ export const EventGridItem = ({ event }: Props) => {
 
 
   const handleFollow = () => {
-    setIsFollowing(!isFollowing)
-    //onFollow?.(event.publisherId)
+    setIsFollowing(!isFollowing);
   }
 
   const handlePaymentSuccess = () => {
@@ -62,13 +58,10 @@ export const EventGridItem = ({ event }: Props) => {
             className='h-12 w-12'
           />
 
-          <Button
-            variant={isFollowing ? "secondary" : "outline"}
-            size="sm"
-            onClick={handleFollow}>
-            <UserPlus className="mr-1.5 h-4 w-4" />
-            {isFollowing ? "Siguiendo" : "Seguir"}
-          </Button>
+          <FollowerButton
+            isFollowing={isFollowing}
+            handleFollow={handleFollow}
+          />
 
         </div>
 
@@ -96,41 +89,8 @@ export const EventGridItem = ({ event }: Props) => {
           <Badge variant="secondary" className="absolute right-3 top-3">{event.category}</Badge>
         </div>
 
-        <div className="mt-2 p-4">
-          <div className="mb-4">
-            <h2 className="text-xl font-bold text-balance">{event.title}</h2>
-            <p className="mt-1.5 text-sm text-muted-foreground text-pretty">{event.description}</p>
-          </div>
-          <div className="text-sm space-y-2">
-            <div className="flex items-center gap-2 text-sm">
-              <Map size={16} className="h-4 w-4 shrink-0 text-blue-800 font-bold" />
-              <span className="font-medium">{event.location}</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <Calendar size={16} className="h-4 w-4 shrink-0 text-blue-800 font-bold" />
-              <span className="font-medium">{formatDate(event.eventDate)}</span><span className="font-medium"> • {formatTime(event.eventDate)}</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <DollarSign size={16} className="h-4 w-4 shrink-0 text-blue-800 font-bold" />
-              <p className="font-medium">
-                {event.cost === 0 ? "Entrada gratuita" : `${event.cost} ${event.currency}`}
-              </p>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <Users size={16} className="h-4 w-4 shrink-0 text-blue-800 font-bold" />
-              <p className="text-muted-foreground">
-                <span className="font-medium text-foreground">{event.attendees}</span> asistirán •{" "}
-                <span className="font-medium text-foreground">{event.interested}</span> interesados
-              </p>
-            </div>
-
-            <AvatarsFriendsWidget />
-
-          </div>
-
-          <NavigationWidget distanceKm={distanceKm} />
-
-        </div>
+        {/* Informations */}
+        <EventInformation event={event} />
 
         {/* Actions */}
         <div className="px-4 py-3 border-t border-gray-100">
