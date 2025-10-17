@@ -1,3 +1,4 @@
+export * from './events/hader-buttom/HeaderButton';
 export * from './events/event-grid/EventGrid';
 export * from './events/event-grid/EventGridItem';
 export * from './notifications/notification-grid/NotificationGrid';

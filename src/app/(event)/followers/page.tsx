@@ -2,7 +2,7 @@
 import { EventGrid, HeaderButton, Title } from "@/components";
 import { mockEvents } from "@/data/mockData";
 
-export default function EventsPage() {
+export default function FollowersPage() {
   return (
     <div className="space-y-4">
 
