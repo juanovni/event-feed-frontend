@@ -121,8 +121,8 @@ export const FeedGridItem = ({ event }: Props) => {
             <div className="flex items-center gap-2 text-sm">
               <Users size={16} className="h-4 w-4 shrink-0 text-blue-800 font-bold" />
               <p className="text-muted-foreground">
-                <span className="font-medium text-foreground">122</span> asistirán •{" "}
-                <span className="font-medium text-foreground">30</span> interesados
+                <span className="font-medium text-foreground">{event.attendees}</span> asistirán •{" "}
+                <span className="font-medium text-foreground">{event.interested}</span> interesados
               </p>
             </div>
 
@@ -168,6 +168,18 @@ export const FeedGridItem = ({ event }: Props) => {
                 <MessageCircle />{event.comments.length}
               </Button>
 
+              {event.cost > 0 && (
+                <Button
+                  variant="outline"
+                  size="icon-lg"
+                  className="w-96 font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
+                  onClick={() => setShowPaymentModal(true)}
+                >
+                  <CreditCard />
+                  Pagar y Confirmar Asistencia
+                </Button>
+              )}
+
             </div>
 
             <Button
@@ -179,18 +191,6 @@ export const FeedGridItem = ({ event }: Props) => {
             </Button>
 
           </div>
-
-          {event.cost > 0 && (
-            <Button
-              variant="outline"
-              size="lg"
-              className="flex-1 w-full mt-4 bg-blue-600 text-white hover:bg-blue-500 hover:text-white transition-colors duration-200"
-              onClick={() => setShowPaymentModal(true)}
-            >
-              <CreditCard />
-              Pagar y Confirmar Asistencia
-            </Button>
-          )}
         </div>
 
         {/* Comments Section */}
