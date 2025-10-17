@@ -11,7 +11,7 @@ const bottonLinks: { label: string; variant: ButtonVariant }[] = [
   },
   {
     label: 'Siguiendo',
-    variant: "default",
+    variant: "outline",
   }
 ];
 
