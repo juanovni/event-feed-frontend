@@ -2,23 +2,16 @@ import { poppinsFont } from '@/config/fonts';
 
 interface Props {
   title: string;
-  subtitle?: string;
-  className?: string;
+  children: React.ReactNode;
 }
 
-export const Title = ({ title, subtitle, className }: Props) => {
+export const Title = ({ title, children }: Props) => {
   return (
-    <div className={`mt-3 ${className}`}>
-      <h1 className={`${poppinsFont.className} antialiased text-3xl font-semibold my-2`}>
+    <div className="flex items-center justify-between">
+      <h1 className={`${poppinsFont.className} text-2xl font-bold text-gray-900`}>
         {title}
       </h1>
-
-      {
-        subtitle && (
-          <h3 className="text-xl mb-5">{subtitle}</h3>
-        )
-      }
-
+      {children}
     </div>
   )
 }
