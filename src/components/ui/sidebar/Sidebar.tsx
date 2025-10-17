@@ -10,8 +10,7 @@ import {
   UserPlus
 } from 'lucide-react';
 import { SidebarItem } from './SidebarItem';
-import { Avatar, AvatarFallback, AvatarImage } from '../avatar';
-import { AvatarIcon, AvatarProfile } from '@/components';
+import { AvatarProfile } from '@/components';
 
 export const Sidebar = () => {
   const user = true;
