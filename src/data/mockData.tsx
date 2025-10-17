@@ -1,4 +1,4 @@
-import { Post, User, Event } from "@/interfaces";
+import { Post, User, Event, Notification } from "@/interfaces";
 
 export const mockUsers: User[] = [
   {
@@ -184,5 +184,33 @@ export const mockPosts: Post[] = [
     isLiked: false,
     timestamp: new Date('2025-01-08T14:20:00'),
     comments: []
+  }
+];
+
+export const mockNotifications: Notification[] = [
+  {
+    id: '1',
+    type: 'event_reminder',
+    title: 'Recordatorio de Evento',
+    message: 'El Workshop de Fotografía Nocturna comienza en 24 horas',
+    timestamp: new Date('2025-01-08T19:00:00'),
+    read: false,
+    eventId: '1'
+  },
+  {
+    id: '2',
+    type: 'comment',
+    title: 'Nuevo comentario',
+    message: 'Carlos comentó en tu publicación',
+    timestamp: new Date('2025-01-08T18:45:00'),
+    read: false
+  },
+  {
+    id: '3',
+    type: 'like',
+    title: 'Le gustó tu publicación',
+    message: 'A Ana le gustó tu foto de la puesta de sol',
+    timestamp: new Date('2025-01-08T18:30:00'),
+    read: true
   }
 ];

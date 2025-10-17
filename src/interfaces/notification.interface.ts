@@ -1,10 +1,9 @@
 export interface Notification {
-  id: string
-  userId: string
-  type: "event_reminder" | "new_event" | "event_update" | "photo_approval"
-  title: string
-  message: string
-  eventId?: string
-  read: boolean
-  createdAt: string
+  id: string;
+  type: 'event_reminder' | 'event_update' | 'comment' | 'like';
+  title: string;
+  message: string;
+  timestamp: Date;
+  read: boolean;
+  eventId?: string;
 }

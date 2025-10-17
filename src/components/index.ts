@@ -11,3 +11,5 @@ export * from './ui/widgets/AvatarsFriendsWidget';
 
 
 export * from './payment/PaymentModal';
+
+export * from './notifications/NotificationPanel';

@@ -20,16 +20,16 @@ export const Sidebar = () => {
       path: '/',
       icon: <HomeIcon />
     },
-    /*     {
-          label: 'Notificaciones',
-          path: '/notifications',
-          icon: <Bell />,
-        },
-        {
-          label: 'Tendencias',
-          path: '/trending',
-          icon: <TrendingUp />
-        }, */
+    {
+      label: 'Notificaciones',
+      path: '/notifications',
+      icon: <Bell />,
+    },
+    /* {
+      label: 'Tendencias',
+      path: '/trending',
+      icon: <TrendingUp />
+    }, */
     {
       label: 'Perfil',
       path: '/profile',
