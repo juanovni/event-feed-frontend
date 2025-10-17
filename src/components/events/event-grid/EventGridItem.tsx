@@ -15,8 +15,7 @@ import {
 import { IoSendOutline } from "react-icons/io5";
 import { cn } from "@/lib/utils";
 import { formatDate, formatTime } from "@/utils";
-import { AvatarProfile, AvatarsFriendsWidget, GalleryPopup, NavigationWidget, PaymentModal } from "@/components";
-import { Button } from "@/components/ui/button";
+import { AvatarProfile, AvatarsFriendsWidget, Button, GalleryPopup, NavigationWidget, PaymentModal } from "@/components";
 import { Badge } from "@/components/ui/badge";
 
 interface Props {
