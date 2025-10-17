@@ -11,7 +11,9 @@ export const Title = ({ title, children }: Props) => {
       <h1 className={`${poppinsFont.className} text-2xl font-bold text-gray-900`}>
         {title}
       </h1>
-      {children}
+      <div className="flex space-x-2">
+        {children}
+      </div>
     </div>
   )
 }
