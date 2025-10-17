@@ -23,7 +23,7 @@ interface Props {
   event: Event;
 }
 
-export const FeedGridItem = ({ event }: Props) => {
+export const EventGridItem = ({ event }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [interested, setInterested] = useState(false);
   const [assist, setAssist] = useState(false);

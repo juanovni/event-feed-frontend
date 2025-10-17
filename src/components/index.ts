@@ -1,5 +1,5 @@
-export * from './feeds/feed-grid/FeedGrid';
-export * from './feeds/feed-grid/FeedGridItem';
+export * from './events/event-grid/EventGrid';
+export * from './events/event-grid/EventGridItem';
 export * from './notifications/notification-grid/NotificationGrid';
 export * from './notifications/notification-grid/NotificationGridItem';
 export * from './payment/PaymentModal';

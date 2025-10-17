@@ -1,6 +1,6 @@
 
+import { EventGrid, Title } from "@/components";
 import { mockEvents } from "@/data/mockData";
-import { FeedGrid, Title } from "@/components";
 
 export default function EventsPage() {
   return (
@@ -19,7 +19,7 @@ export default function EventsPage() {
         </div>
       </div>
 
-      <FeedGrid events={mockEvents} />
+      <EventGrid events={mockEvents} />
 
     </div>
   )
