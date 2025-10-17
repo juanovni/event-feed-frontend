@@ -8,7 +8,7 @@ export default function FeedLayout({
   return (
     <main className="min-h-screen bg-gray-50">
 
-      <Sidebar activeSection="false" notificationCount={10} />
+      <Sidebar />
 
       <div className="ml-64 p-6">
         <div className="max-w-4xl mx-auto">

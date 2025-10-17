@@ -1,9 +1,8 @@
 
-import { mockPosts } from "@/data/mockData";
-import { Title } from "@/components";
-import { PostGrid } from "@/components/posts/PostGrid";
+import { mockEvents } from "@/data/mockData";
+import { FeedGrid, Title } from "@/components";
 
-export default function FeedsPage() {
+export default function EventsPage() {
   return (
     <div className="space-y-10">
       <div className="flex items-center justify-between">
@@ -20,7 +19,7 @@ export default function FeedsPage() {
         </div>
       </div>
 
-      <PostGrid posts={mockPosts} />
+      <FeedGrid events={mockEvents} />
 
     </div>
   )

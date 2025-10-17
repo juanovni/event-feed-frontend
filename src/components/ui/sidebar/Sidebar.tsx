@@ -3,7 +3,6 @@
 import {
   Activity,
   Bell,
-  Calendar1Icon,
   HomeIcon,
   LogOut,
   Settings,
@@ -19,13 +18,8 @@ export const Sidebar = () => {
   const menuItems = [
     {
       label: 'Inicio',
-      path: '/feeds',
+      path: '/',
       icon: <HomeIcon />
-    },
-    {
-      label: 'Eventos',
-      path: '/events',
-      icon: <Calendar1Icon />
     },
     /*     {
           label: 'Notificaciones',
