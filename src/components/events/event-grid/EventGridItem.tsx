@@ -3,19 +3,26 @@
 import { useState } from "react";
 import { Event } from "@/interfaces";
 import {
-  Bookmark,
   CreditCard,
   MessageCircle,
   ThumbsUp,
-  UserPlus,
   Users
 } from "lucide-react";
 import { IoSendOutline } from "react-icons/io5";
 import { cn } from "@/lib/utils";
 import { formatTime } from "@/utils";
-import { AvatarProfile, Button, EventInformation, GalleryPopup, PaymentModal } from "@/components";
+import {
+  AvatarProfile,
+  Button,
+  EventInformation,
+  FavoriteButton,
+  FollowerButton,
+  InterestedButton,
+  GalleryPopup,
+  PaymentModal
+} from "@/components";
 import { Badge } from "@/components/ui/badge";
-import { useEventsStore, useFavoritesStore, useFollowStore } from "@/store";
+import { useEventsStore } from "@/store";
 
 interface Props {
   event: Event;
@@ -26,15 +33,6 @@ export const EventGridItem = ({ event }: Props) => {
   const [assist, setAssist] = useState(false);
   const distanceKm = 4;
   const [showPaymentModal, setShowPaymentModal] = useState(false)
-
-  const { toggleFollow, isFollowing } = useFollowStore();
-  const following = isFollowing(event.user.id);
-
-  const { toggleInterested, isInterested } = useEventsStore();
-  const interested = isInterested(event.id);
-
-  const { toggleFavorite, isFavorite } = useFavoritesStore();
-  const favorite = isFavorite(event.id);
 
   const handlePaymentSuccess = () => {
     setAssist(true)
@@ -62,14 +60,7 @@ export const EventGridItem = ({ event }: Props) => {
             className='h-12 w-12'
           />
 
-          <Button
-            variant={following ? "secondary" : "outline"}
-            size="sm"
-            onClick={() => toggleFollow(event.user.id)}
-          >
-            <UserPlus className="mr-1.5 h-4 w-4" />
-            {following ? "Siguiendo" : "Seguir"}
-          </Button>
+          <FollowerButton userId={event.user.id} />
 
         </div>
 
@@ -105,15 +96,7 @@ export const EventGridItem = ({ event }: Props) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
 
-              <Button
-                onClick={() => toggleInterested(event.id)}
-                variant={interested ? "secondary" : "outline"}
-              >
-                <ThumbsUp
-                  className={cn("mr-2 h-4 w-4", interested && "fill-current")}
-                />
-                {interested ? "Interesado" : "Me interesa"}
-              </Button>
+              <InterestedButton event={event} />
 
               <Button
                 onClick={handleAttend}
@@ -148,16 +131,7 @@ export const EventGridItem = ({ event }: Props) => {
 
             </div>
 
-            <Button
-              onClick={() => toggleFavorite(event)}
-              variant={favorite ? "secondary" : "outline"}
-              size="icon-lg"
-              className={`p-2 rounded-full transition-all duration-200 ${favorite ? "text-black font-extrabold" : "fill-transparent"}`}
-            >
-              <Bookmark
-                className={`h-4 w-4 ${favorite ? "fill-white" : "fill-transparent"}`}
-              />
-            </Button>
+            <FavoriteButton event={event} />
 
           </div>
         </div>
@@ -232,8 +206,6 @@ export const EventGridItem = ({ event }: Props) => {
         onOpenChange={setShowPaymentModal}
         onSuccess={handlePaymentSuccess}
       />
-
     </>
-
   )
 }
