@@ -19,11 +19,11 @@ export const useFollowStore = create<FollowState>()(
         const { following } = get();
         const isAlreadyFollowing = following.includes(userId);
 
-        const updatedList = isAlreadyFollowing
-          ? following.filter((id) => id !== userId) // dejar de seguir
-          : [...following, userId]; // seguir
-
-        set({ following: updatedList });
+        set({
+          following: isAlreadyFollowing
+            ? following.filter((id) => id !== userId)
+            : [...following, userId],
+        });
       },
 
       isFollowing: (userId) => get().following.includes(userId),

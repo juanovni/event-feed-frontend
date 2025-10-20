@@ -7,6 +7,7 @@ export const mockUsers: User[] = [
     username: 'maria_photo',
     avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150',
     interests: ['Fotografía', 'Viajes', 'Arte'],
+    isFollowing: false,
     role: 'user'
   },
   {
@@ -15,6 +16,7 @@ export const mockUsers: User[] = [
     username: 'nicanorec',
     avatar: 'https://pbs.twimg.com/profile_images/1443429332496621572/OJ5JizFo_400x400.jpg',
     interests: ['Restaurante', 'Música'],
+    isFollowing: true,
     role: 'publisher'
   },
   {
@@ -23,6 +25,7 @@ export const mockUsers: User[] = [
     username: 'ana_travel',
     avatar: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150',
     interests: ['Viajes', 'Gastronomía', 'Fotografía'],
+    isFollowing: false,
     role: 'promoter'
   }
 ];
