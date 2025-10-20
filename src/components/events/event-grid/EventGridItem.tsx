@@ -13,9 +13,9 @@ import {
 import { IoSendOutline } from "react-icons/io5";
 import { cn } from "@/lib/utils";
 import { formatTime } from "@/utils";
-import { AvatarProfile, Button, EventInformation, FollowerButton, GalleryPopup, PaymentModal } from "@/components";
+import { AvatarProfile, Button, EventInformation, GalleryPopup, PaymentModal } from "@/components";
 import { Badge } from "@/components/ui/badge";
-import { useFollowStore } from "@/store";
+import { useEventsStore, useFollowStore } from "@/store";
 
 interface Props {
   event: Event;
@@ -23,15 +23,15 @@ interface Props {
 
 export const EventGridItem = ({ event }: Props) => {
   const [showComments, setShowComments] = useState(false);
-  const [interested, setInterested] = useState(false);
   const [assist, setAssist] = useState(false);
-  /*  const [isFollowing, setIsFollowing] = useState(false); */
   const distanceKm = 4;
   const [showPaymentModal, setShowPaymentModal] = useState(false)
 
-
   const { toggleFollow, isFollowing } = useFollowStore();
   const following = isFollowing(event.user.id);
+
+  const { toggleInterested, isInterested } = useEventsStore();
+  const interested = isInterested(event.id);
 
   const handlePaymentSuccess = () => {
     setAssist(true)
@@ -58,12 +58,6 @@ export const EventGridItem = ({ event }: Props) => {
             timesamp={event.timestamp}
             className='h-12 w-12'
           />
-
-          {/* <FollowerButton
-            userId={event.user.id}
-            isFollowing={isFollowing}
-            handleFollow={handleFollow}
-          /> */}
 
           <Button
             variant={following ? "secondary" : "outline"}
@@ -107,15 +101,15 @@ export const EventGridItem = ({ event }: Props) => {
         <div className="px-4 py-3 border-t border-gray-100">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <Button
-                onClick={() => setInterested(!interested)}
-                variant={interested ? "secondary" : "outline"}
-                className="flex-1"
-                size="lg"
 
+              <Button
+                onClick={() => toggleInterested(event.id)}
+                variant={interested ? "secondary" : "outline"}
               >
-                <ThumbsUp className={cn("mr-2 h-4 w-4", interested && "fill-current")} />
-                <span>{interested ? "Interesado" : "Me interesa"}</span>
+                <ThumbsUp
+                  className={cn("mr-2 h-4 w-4", interested && "fill-current")}
+                />
+                {interested ? "Interesado" : "Me interesa"}
               </Button>
 
               <Button
