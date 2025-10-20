@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 import { formatTime } from "@/utils";
 import { AvatarProfile, Button, EventInformation, GalleryPopup, PaymentModal } from "@/components";
 import { Badge } from "@/components/ui/badge";
-import { useEventsStore, useFollowStore } from "@/store";
+import { useEventsStore, useFavoritesStore, useFollowStore } from "@/store";
 
 interface Props {
   event: Event;
@@ -32,6 +32,9 @@ export const EventGridItem = ({ event }: Props) => {
 
   const { toggleInterested, isInterested } = useEventsStore();
   const interested = isInterested(event.id);
+
+  const { toggleFavorite, isFavorite } = useFavoritesStore();
+  const favorite = isFavorite(event.id);
 
   const handlePaymentSuccess = () => {
     setAssist(true)
@@ -146,11 +149,14 @@ export const EventGridItem = ({ event }: Props) => {
             </div>
 
             <Button
-              variant="outline"
-              size="lg"
-              className="p-2 text-gray-500 rounded-full transition-all duration-200"
+              onClick={() => toggleFavorite(event)}
+              variant={favorite ? "secondary" : "outline"}
+              size="icon-lg"
+              className={`p-2 rounded-full transition-all duration-200 ${favorite ? "text-black font-extrabold" : "fill-transparent"}`}
             >
-              <Bookmark />
+              <Bookmark
+                className={`h-4 w-4 ${favorite ? "fill-white" : "fill-transparent"}`}
+              />
             </Button>
 
           </div>
