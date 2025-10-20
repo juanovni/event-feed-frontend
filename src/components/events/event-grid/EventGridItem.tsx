@@ -7,6 +7,7 @@ import {
   CreditCard,
   MessageCircle,
   ThumbsUp,
+  UserPlus,
   Users
 } from "lucide-react";
 import { IoSendOutline } from "react-icons/io5";
@@ -14,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { formatTime } from "@/utils";
 import { AvatarProfile, Button, EventInformation, FollowerButton, GalleryPopup, PaymentModal } from "@/components";
 import { Badge } from "@/components/ui/badge";
+import { useFollowStore } from "@/store";
 
 interface Props {
   event: Event;
@@ -23,14 +25,13 @@ export const EventGridItem = ({ event }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [interested, setInterested] = useState(false);
   const [assist, setAssist] = useState(false);
-  const [isFollowing, setIsFollowing] = useState(false);
+  /*  const [isFollowing, setIsFollowing] = useState(false); */
   const distanceKm = 4;
   const [showPaymentModal, setShowPaymentModal] = useState(false)
 
 
-  const handleFollow = () => {
-    setIsFollowing(!isFollowing);
-  }
+  const { toggleFollow, isFollowing } = useFollowStore();
+  const following = isFollowing(event.user.id);
 
   const handlePaymentSuccess = () => {
     setAssist(true)
@@ -58,10 +59,20 @@ export const EventGridItem = ({ event }: Props) => {
             className='h-12 w-12'
           />
 
-          <FollowerButton
+          {/* <FollowerButton
+            userId={event.user.id}
             isFollowing={isFollowing}
             handleFollow={handleFollow}
-          />
+          /> */}
+
+          <Button
+            variant={following ? "secondary" : "outline"}
+            size="sm"
+            onClick={() => toggleFollow(event.user.id)}
+          >
+            <UserPlus className="mr-1.5 h-4 w-4" />
+            {following ? "Siguiendo" : "Seguir"}
+          </Button>
 
         </div>
 
