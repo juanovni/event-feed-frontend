@@ -130,7 +130,7 @@ export const EventGridItem = ({ event }: Props) => {
                 <Button
                   variant="outline"
                   size="icon-lg"
-                  className="w-96 font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
+                  className="w-60 font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
                   onClick={() => setShowPaymentModal(true)}
                 >
                   <CreditCard />

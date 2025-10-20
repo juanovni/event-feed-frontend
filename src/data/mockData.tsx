@@ -11,10 +11,10 @@ export const mockUsers: User[] = [
   },
   {
     id: '2',
-    name: 'Carlos Ruiz',
-    username: 'carlos_dev',
-    avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150',
-    interests: ['Tecnología', 'Gaming', 'Música'],
+    name: 'NICANOR • CASA DE BEBIDAS •',
+    username: 'nicanorec',
+    avatar: 'https://pbs.twimg.com/profile_images/1443429332496621572/OJ5JizFo_400x400.jpg',
+    interests: ['Restaurante', 'Música'],
     role: 'publisher'
   },
   {
@@ -30,13 +30,13 @@ export const mockUsers: User[] = [
 export const mockEvents: Event[] = [
   {
     id: '1',
-    user: mockUsers[0],
-    title: 'Workshop de Fotografía Nocturna',
-    description: 'Aprende técnicas avanzadas para capturar la ciudad de noche. Incluye equipo profesional y guía experto.',
+    user: mockUsers[1],
+    title: 'Noche de Week y Bebidas',
+    description: 'Este año ha sido el año de los recuerdos, para Negroni Week, seguimos la ruta. Los 3 Negronis más queridos de nuestras 3 primeras celebraciones junto una nueva forma de armar tu propio Negroni: AL AZAR 🎲 🎲 ⭕️',
     location: 'Plaza Mayor, Centro Histórico',
     eventDate: new Date('2025-01-08T06:45:00'),
     mediaType: 'image',
-    mediaUrl: 'https://images.pexels.com/photos/355863/pexels-photo-355863.jpeg?auto=compress&cs=tinysrgb&w=800',
+    mediaUrl: 'https://scontent.cdninstagram.com/v/t51.82787-15/554396372_18063879602584200_8012309436171417339_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ig_cache_key=MzcyODgwOTQ2OTc0OTg3OTg1MA%3D%3D.3-ccb1-7&ccb=1-7&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTM1MC5zZHIuQzMifQ%3D%3D&_nc_ohc=gfaaJ9nWDg0Q7kNvwH0TJEA&_nc_oc=Adl6IV2B7-dS3LqG0EeRMNQzkBScr7CUickiwjZliTRu8kTU5TmBKuyDydJrndA3q70&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=q6u-RHV99Vh4U9yPcb08rg&oh=00_AfcPDjo8MTImrjm7rV_heeMqTDhn56WVDnC6dqsIgopGBQ&oe=68F880AE',
     likes: 234,
     isLiked: false,
     cost: 12.87,
