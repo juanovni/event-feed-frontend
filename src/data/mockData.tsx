@@ -1,4 +1,4 @@
-import { Post, User, Event, Notification } from "@/interfaces";
+import { Post, User, Event, Notification, Ticket } from "@/interfaces";
 
 export const mockUsers: User[] = [
   {
@@ -130,6 +130,36 @@ export const mockEvents: Event[] = [
     ]
   }
 ];
+
+export const mockTickets: Ticket[] = [
+  {
+    id: "1",
+    event: mockEvents[2],
+    cost: 1500,
+    ticketNumber: "ROCK2025-001234",
+    section: "VIP",
+    seat: "A-15",
+    createdAt: new Date('2025-01-08T14:20:00'),
+  },
+  {
+    id: "2",
+    event: mockEvents[2],
+    cost: 850,
+    ticketNumber: "ELEC2025-005678",
+    section: "General",
+    createdAt: new Date('2025-01-08T14:20:00'),
+  },
+  {
+    id: "3",
+    event: mockEvents[2],
+    cost: 1200,
+    ticketNumber: "JAZZ2025-009012",
+    section: "Preferente",
+    seat: "B-22",
+    createdAt: new Date('2025-01-08T14:20:00'),
+  },
+];
+
 
 export const mockPosts: Post[] = [
   {

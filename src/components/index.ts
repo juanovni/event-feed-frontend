@@ -8,6 +8,8 @@ export * from './events/hader-buttom/HeaderButton';
 export * from './notifications/notification-grid/NotificationGrid';
 export * from './notifications/notification-grid/NotificationGridItem';
 export * from './payment/PaymentModal';
+export * from './ticket/ticket-grid/TicketGrid';
+export * from './ticket/ticket-grid/TicketGridItem';
 export * from './ui/avatar-profile/AvatarIcon';
 export * from './ui/avatar-profile/AvatarProfile';
 export * from './ui/custom-icon/button';

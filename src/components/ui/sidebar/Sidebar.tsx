@@ -6,7 +6,7 @@ import {
   HomeIcon,
   LogOut,
   Settings,
-  TrendingUp,
+  TicketCheckIcon,
   UserPlus
 } from 'lucide-react';
 import { SidebarItem } from './SidebarItem';
@@ -25,11 +25,11 @@ export const Sidebar = () => {
       path: '/notifications',
       icon: <Bell />,
     },
-    /* {
-      label: 'Tendencias',
-      path: '/trending',
-      icon: <TrendingUp />
-    }, */
+    {
+      label: 'Tickets',
+      path: '/tickets',
+      icon: <TicketCheckIcon />
+    },
     {
       label: 'Perfil',
       path: '/profile',
