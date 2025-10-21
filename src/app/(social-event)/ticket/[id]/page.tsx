@@ -1,10 +1,8 @@
-'use client';
-
-import { redirect } from "next/navigation";
+import Link from "next/link";
+import { ArrowLeft, Calendar, Clock, MapPin, Ticket, CreditCard } from "lucide-react";
 import { Button } from "@/components";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { formatDate, formatTime } from "@/utils";
-import { ArrowLeft, Calendar, Clock, MapPin, Ticket, CreditCard } from "lucide-react";
 
 import QRCode from "react-qr-code";
 import { mockTickets } from "@/data/mockData";
@@ -25,9 +23,13 @@ export default async function TicketPage({ params }: Props) {
         <Card className="max-w-md w-full">
           <CardContent className="pt-6 text-center">
             <p className="text-lg text-muted-foreground mb-4">Entrada no encontrada</p>
-            <Button onClick={() => redirect("/")} variant="default">
-              Volver a mis entradas
-            </Button>
+            <Link href="/">
+              <Button
+                variant="default">
+                Volver a mis entradas
+              </Button>
+            </Link>
+
           </CardContent>
         </Card>
       </div>
@@ -53,14 +55,15 @@ export default async function TicketPage({ params }: Props) {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-4 left-4 bg-background/80 backdrop-blur-sm hover:bg-background/90"
-          onClick={() => redirect("/tickets/")}
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </Button>
+        <Link href="/tickets">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-4 left-4 bg-background/80 backdrop-blur-sm hover:bg-background/90"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+        </Link>
       </div>
 
       <div className="max-w-2xl mx-auto px-4 -mt-12 pb-8 space-y-4">

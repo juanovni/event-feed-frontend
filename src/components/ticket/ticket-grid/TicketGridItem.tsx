@@ -1,7 +1,7 @@
 'use client';
 
 import { redirect } from "next/navigation";
-import { Calendar, MapPin, Clock, CreditCard, Map, DollarSign } from "lucide-react";
+import { Calendar, Clock, CreditCard, Map, DollarSign } from "lucide-react";
 import { Ticket } from "@/interfaces";
 import { formatDate, formatTime } from "@/utils";
 import { Card, CardContent } from "@/components/ui/card";
