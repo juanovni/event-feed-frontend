@@ -5,7 +5,6 @@ import { Event } from "@/interfaces";
 import {
   CreditCard,
   MessageCircle,
-  ThumbsUp,
   Users
 } from "lucide-react";
 import { IoSendOutline } from "react-icons/io5";
@@ -22,7 +21,6 @@ import {
   PaymentModal
 } from "@/components";
 import { Badge } from "@/components/ui/badge";
-import { useEventsStore } from "@/store";
 
 interface Props {
   event: Event;
