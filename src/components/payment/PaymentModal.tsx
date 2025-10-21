@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Event } from "@/interfaces"
+import { useTicketStore } from "@/store"
 
 
 interface PaymentModalProps {
@@ -29,6 +30,7 @@ interface PaymentModalProps {
 export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentModalProps) {
   const [isProcessing, setIsProcessing] = useState(false)
   const [paymentSuccess, setPaymentSuccess] = useState(false)
+  const generateTicket = useTicketStore((state) => state.generateTicket);
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,6 +41,10 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
 
     setIsProcessing(false)
     setPaymentSuccess(true)
+
+    const ticket = generateTicket(event, 25, "A12", "VIP");
+    console.log("✅ Ticket generado:", ticket);
+
 
     // Close modal after success
     setTimeout(() => {

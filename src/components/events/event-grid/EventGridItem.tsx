@@ -33,14 +33,14 @@ export const EventGridItem = ({ event }: Props) => {
   const [showPaymentModal, setShowPaymentModal] = useState(false)
 
   const handlePaymentSuccess = () => {
-    setAssist(true)
+    setAssist(true);
   }
 
   const handleAttend = () => {
     if (event.cost === 0) {
-      setAssist(!assist)
+      setAssist(!assist);
     } else {
-      setShowPaymentModal(true)
+      setShowPaymentModal(true);
     }
   }
 
