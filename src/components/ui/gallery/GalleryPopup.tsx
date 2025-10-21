@@ -91,7 +91,7 @@ export const GalleryPopup: React.FC<GalleryPopupProps> = ({ images }) => {
               <div className="flex justify-between items-center mb-8">
                 <h1 className="text-4xl font-bold text-white">Galería de Fotos</h1>
                 <button
-                  onClick={() => window.location.reload()}
+                  onClick={() => setIsOpen(false)}
                   className="cursor-pointer text-white hover:text-gray-300 transition-colors"
                 >
                   <X size={32} />
