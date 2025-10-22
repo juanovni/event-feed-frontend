@@ -13,7 +13,7 @@ interface Props {
 export const TicketGridItem = ({ ticket }: Props) => {
   return (
     <Card
-      className="overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-[var(--shadow-glow)] backdrop-blur-sm bg-gradient-to-br from-card/50 to-card/30 border-border/50"
+      className="py-0 overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-[var(--shadow-glow)] backdrop-blur-sm bg-gradient-to-br from-card/50 to-card/30 border-border/50"
       onClick={() => redirect(`/ticket/${ticket.id}`)}
     >
       <div className="relative h-48 overflow-hidden">
@@ -28,7 +28,7 @@ export const TicketGridItem = ({ ticket }: Props) => {
         </div>
       </div>
 
-      <CardContent className="text-sm space-y-2">
+      <CardContent className="text-sm space-y-2 py-4">
         <div className="flex items-center gap-2 text-smtext-muted-foreground">
           <Map size={16} className="h-4 w-4 shrink-0 text-primary font-bold" />
           <span className="font-medium">{ticket.event.location}</span>
@@ -42,7 +42,7 @@ export const TicketGridItem = ({ ticket }: Props) => {
 
         <div className="flex items-center justify-between pt-2 border-t border-border/50">
           <div className="flex items-center gap-2 text-sm">
-            <CreditCard className="w-4 h-4 text-accent" />
+            <CreditCard className="w-4 h-4 text-primary" />
             <span className="text-muted-foreground">Ticket:</span>
             <span className="font-mono text-xs text-foreground">{ticket.ticketNumber}</span>
           </div>

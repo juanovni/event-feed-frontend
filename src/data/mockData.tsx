@@ -134,14 +134,14 @@ export const mockEvents: Event[] = [
 export const mockTickets: Ticket[] = [
   {
     id: "1",
-    event: mockEvents[2],
-    cost: 1500,
+    event: mockEvents[0],
+    cost: 12.87,
     ticketNumber: "ROCK2025-001234",
     section: "VIP",
     seat: "A-15",
     createdAt: new Date('2025-01-08T14:20:00'),
   },
-/*   {
+  {
     id: "2",
     event: mockEvents[2],
     cost: 850,
@@ -157,7 +157,7 @@ export const mockTickets: Ticket[] = [
     section: "Preferente",
     seat: "B-22",
     createdAt: new Date('2025-01-08T14:20:00'),
-  }, */
+  },
 ];
 
 

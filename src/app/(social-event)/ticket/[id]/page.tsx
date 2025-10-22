@@ -54,7 +54,7 @@ export default async function TicketPage({ params }: Props) {
           alt={ticket.event.title}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/25 to-background" />
         <Link href="/tickets">
           <Button
             variant="ghost"
@@ -68,9 +68,9 @@ export default async function TicketPage({ params }: Props) {
 
       <div className="max-w-2xl mx-auto px-4 -mt-12 pb-8 space-y-4">
         {/* QR Code Card */}
-        <Card className="backdrop-blur-sm bg-gradient-to-br from-card/80 to-card/60 border-border/50 shadow-[var(--shadow-card)]">
+        <Card className="backdrop-blur-sm from-card/60 to-card/60 border-border/50 shadow-[var(--shadow-card)]">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <CardTitle className="text-2xl text-black from-primary to-secondary bg-clip-text">
               {ticket.event.title}
             </CardTitle>
           </CardHeader>
@@ -88,7 +88,7 @@ export default async function TicketPage({ params }: Props) {
             {/* Ticket Number */}
             <div className="w-full text-center space-y-1">
               <p className="text-sm text-muted-foreground">Número de Ticket</p>
-              <p className="text-xl font-mono font-bold tracking-wider bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              <p className="text-xl font-mono font-bold tracking-wider bg-gradient-to-r from-primary to-secondary bg-clip-text">
                 {ticket.ticketNumber}
               </p>
             </div>
@@ -120,7 +120,7 @@ export default async function TicketPage({ params }: Props) {
             </div>
 
             <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-secondary mt-0.5" />
+              <MapPin className="w-5 h-5 text-primary mt-0.5" />
               <div>
                 <p className="font-medium text-foreground">{ticket.event.location}</p>
                 {/* <p className="text-sm text-muted-foreground">{ticket.location}</p> */}
@@ -129,7 +129,7 @@ export default async function TicketPage({ params }: Props) {
 
             {(ticket.section || ticket.seat) && (
               <div className="flex items-start gap-3">
-                <Ticket className="w-5 h-5 text-accent mt-0.5" />
+                <Ticket className="w-5 h-5 text-primary mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground">
                     {ticket.section && `Sección: ${ticket.section}`}
@@ -142,11 +142,11 @@ export default async function TicketPage({ params }: Props) {
             )}
 
             <div className="flex items-start gap-3 pt-4 border-t border-border/50">
-              <CreditCard className="w-5 h-5 text-accent mt-0.5" />
+              <CreditCard className="w-5 h-5 text-primary mt-0.5" />
               <div className="flex-1">
                 <p className="text-sm text-muted-foreground">Precio pagado</p>
                 <p className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  ${ticket.cost.toLocaleString("es-MX")} MXN
+                  ${ticket.cost} {ticket.event.currency}
                 </p>
               </div>
             </div>
