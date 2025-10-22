@@ -1,5 +1,6 @@
 export const formatDate = (date: Date) => {
-  return date.toLocaleDateString('es-ES', {
+  const dateFromDb = new Date(date);
+  return dateFromDb.toLocaleDateString('es-ES', {
     weekday: 'long',
     year: 'numeric',
     month: 'long',

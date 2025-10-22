@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { poppinsFont } from "@/config/fonts";
+import { Providers } from "@/components";
 
 import "./globals.css";
 
@@ -21,7 +22,7 @@ export default function RootLayout({
       <body
         className={`${poppinsFont} antialiased`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

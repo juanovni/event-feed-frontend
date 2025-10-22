@@ -107,13 +107,13 @@ export const EventGridItem = ({ event }: Props) => {
                 <span>{assist ? "Confirmado" : "Asistiré"}</span>
               </Button>
 
-              <Button
+              {/* <Button
                 onClick={() => setShowComments(!showComments)}
                 variant="outline"
                 size="lg"
               >
                 <MessageCircle />{event.comments.length}
-              </Button>
+              </Button> */}
 
               {event.cost > 0 && (
                 <Button
