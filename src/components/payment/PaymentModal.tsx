@@ -1,6 +1,4 @@
-"use client"
-
-import type React from "react"
+"use client";
 
 import { useState } from "react"
 import { CreditCard, Lock, Check } from "lucide-react"
@@ -18,7 +16,7 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Event } from "@/interfaces"
 import { useTicketStore } from "@/store"
-
+import { formatDate } from "@/utils"
 
 interface PaymentModalProps {
   event: Event;
@@ -69,17 +67,13 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
               <div className="rounded-lg bg-muted p-4 space-y-2">
                 <h4 className="font-semibold text-sm">{event.title}</h4>
                 <p className="text-xs text-muted-foreground">
-                  {new Date(event.eventDate).toLocaleDateString("es-MX", {
-                    weekday: "long",
-                    day: "numeric",
-                    month: "long",
-                  })}
+                  {formatDate(event.eventDate)}
                 </p>
                 <Separator className="my-2" />
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium">Total a pagar</span>
                   <span className="text-lg font-bold">
-                    {event.cost} {event.currency}
+                    ${event.cost} {event.currency}
                   </span>
                 </div>
               </div>
@@ -115,11 +109,11 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
                   <span>Pago seguro y encriptado</span>
                 </div>
 
-                <DialogFooter className="gap-2 sm:gap-0">
+                <DialogFooter className="space-x-2 gap-2 sm:gap-0">
                   <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isProcessing}>
                     Cancelar
                   </Button>
-                  <Button type="submit" disabled={isProcessing} className="bg-accent hover:bg-accent/90">
+                  <Button type="submit" variant="default" disabled={isProcessing} className="hover:bg-gray-500">
                     {isProcessing ? "Procesando..." : `Pagar ${event.cost} ${event.currency}`}
                   </Button>
                 </DialogFooter>
