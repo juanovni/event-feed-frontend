@@ -10,5 +10,6 @@ export const useEvents = () => {
       const { data } = await eventApi.get("/events");
       return data;
     },
+    staleTime: 1000 * 60 * 5, // 5 minutos
   });
 };
