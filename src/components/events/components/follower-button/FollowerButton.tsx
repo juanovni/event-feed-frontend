@@ -5,6 +5,7 @@ import { Button } from "@/components";
 import { useFollow } from "@/hooks";
 import { Event } from "@/interfaces";
 import { useFollowStore } from "@/store";
+import { cn } from "@/lib/utils";
 
 interface Props {
   event: Event;
@@ -26,10 +27,10 @@ export const FollowerButton = ({ event }: Props) => {
   return (
     <Button
       variant={event.isFollowing ? "secondary" : "outline"}
-      size="sm"
       onClick={handleFollow}
     >
-      <UserPlus className="mr-1.5 h-4 w-4" />
+      <UserPlus className={cn("mr-2 h-4 w-4", event.isFollowing && "fill-current")}
+      />
       {event.isFollowing ? "Siguiendo" : "Seguir"}
     </Button>
   )
