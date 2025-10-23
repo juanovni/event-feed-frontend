@@ -20,6 +20,7 @@ export interface Event {
   category: EventCategory;
   attendees: number;
   interested: number;
+  isFollowing: boolean;
   userStatus: 'attending' | 'interested' | 'none';
 }
 

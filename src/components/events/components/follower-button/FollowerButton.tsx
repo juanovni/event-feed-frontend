@@ -1,25 +1,36 @@
 'use client';
 
-import { Button } from "@/components";
-import { useFollowStore } from "@/store";
 import { UserPlus } from "lucide-react";
+import { Button } from "@/components";
+import { useFollow } from "@/hooks";
+import { Event } from "@/interfaces";
+import { useFollowStore } from "@/store";
 
 interface Props {
-  userId: string;
+  event: Event;
 }
 
-export const FollowerButton = ({ userId }: Props) => {
-  const { toggleFollow, isFollowing } = useFollowStore();
-  const following = isFollowing(userId);
+export const FollowerButton = ({ event }: Props) => {
+
+  const { toggleFollow, isPending } = useFollow();
+  const { toggleLocalFollow } = useFollowStore();
+
+  const handleFollow = () => {
+    toggleFollow(event.user.id, {
+      onSuccess: (data) => {
+        toggleLocalFollow(event.user.id, data.isFollowing);
+      },
+    });
+  };
 
   return (
     <Button
-      variant={following ? "secondary" : "outline"}
+      variant={event.isFollowing ? "secondary" : "outline"}
       size="sm"
-      onClick={() => toggleFollow(userId)}
+      onClick={handleFollow}
     >
       <UserPlus className="mr-1.5 h-4 w-4" />
-      {following ? "Siguiendo" : "Seguir"}
+      {event.isFollowing ? "Siguiendo" : "Seguir"}
     </Button>
   )
 }

@@ -1,39 +1,18 @@
-// store/useFollowStore.ts
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
 interface FollowState {
-  following: string[]; // array de IDs de usuarios seguidos
-  toggleFollow: (userId: string) => void;
-  isFollowing: (userId: string) => boolean;
-  setFollowing: (users: string[]) => void;
-  clearFollowing: () => void;
+  followingIds: Set<string>;
+  toggleLocalFollow: (id: string, isFollowing: boolean) => void;
 }
 
-export const useFollowStore = create<FollowState>()(
-  persist(
-    (set, get) => ({
-      following: [],
+export const useFollowStore = create<FollowState>((set) => ({
+  followingIds: new Set(),
 
-      toggleFollow: (userId) => {
-        const { following } = get();
-        const isAlreadyFollowing = following.includes(userId);
-
-        set({
-          following: isAlreadyFollowing
-            ? following.filter((id) => id !== userId)
-            : [...following, userId],
-        });
-      },
-
-      isFollowing: (userId) => get().following.includes(userId),
-
-      setFollowing: (users) => set({ following: users }),
-
-      clearFollowing: () => set({ following: [] }),
+  toggleLocalFollow: (id, isFollowing) =>
+    set((state) => {
+      const newSet = new Set(state.followingIds);
+      if (isFollowing) newSet.add(id);
+      else newSet.delete(id);
+      return { followingIds: newSet };
     }),
-    {
-      name: "follow-storage", // se guarda en localStorage
-    }
-  )
-);
+}));

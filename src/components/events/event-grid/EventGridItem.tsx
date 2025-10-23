@@ -58,7 +58,7 @@ export const EventGridItem = ({ event }: Props) => {
             className='h-12 w-12'
           />
 
-          <FollowerButton userId={event.user.id} />
+          <FollowerButton event={event} />
 
         </div>
 
