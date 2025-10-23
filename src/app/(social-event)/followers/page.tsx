@@ -1,17 +1,20 @@
+'use client';
 
 import { EventGrid, HeaderButton, Title } from "@/components";
-import { mockEvents } from "@/data/mockData";
+import { useEvents } from "@/hooks";
 
 export default function FollowersPage() {
+  const { data: events, isLoading, isError } = useEvents(true);
+
+  if (isLoading) return <p>Cargando eventos...</p>;
+  if (isError) return <p>Error al cargar los eventos.</p>;
+
   return (
     <div className="space-y-4">
-
       <Title title="Eventos">
         <HeaderButton />
       </Title>
-
-      <EventGrid events={mockEvents} />
-
+      <EventGrid events={events} />
     </div>
   )
 }

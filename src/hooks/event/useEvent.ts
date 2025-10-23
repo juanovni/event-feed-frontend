@@ -1,15 +1,14 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { eventApi } from "@/api/event.api";
+import { getEvents } from "@/actions";
 
-export const useEvents = () => {
+export const useEvents = (
+  isFollowing?: boolean
+) => {
   return useQuery({
-    queryKey: ["events"],
-    queryFn: async () => {
-      const { data } = await eventApi.get("/events");
-      return data;
-    },
+    queryKey: ["events", { isFollowing }],
+    queryFn: () => getEvents(isFollowing),
     staleTime: 1000 * 60 * 5, // 5 minutos
   });
 };
