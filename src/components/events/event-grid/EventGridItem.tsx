@@ -69,7 +69,7 @@ export const EventGridItem = ({ event }: Props) => {
               <img
                 src={event.mediaUrl}
                 alt="Post content"
-                className="w-full object-cover max-h-96 cursor-pointer transition-transform duration-300 hover:scale-105"
+                className="w-full object-contain max-h-96 cursor-pointer transition-transform duration-300 hover:scale-105"
               />
               {event.gallery && event.gallery.length > 1 && (
                 <GalleryPopup images={event.gallery} />
@@ -100,38 +100,35 @@ export const EventGridItem = ({ event }: Props) => {
                 onClick={handleAttend}
                 variant={assist ? "secondary" : "outline"}
                 className="flex-1"
-                size="lg"
-
               >
                 <Users className={cn("mr-2 h-4 w-4", assist && "fill-current")} />
                 <span>{assist ? "Confirmado" : "Asistiré"}</span>
               </Button>
-
-              {/* <Button
+{/* 
+              <Button
                 onClick={() => setShowComments(!showComments)}
                 variant="outline"
-                size="lg"
               >
                 <MessageCircle />{event.comments.length}
               </Button> */}
 
-              {event.cost > 0 && (
-                <Button
-                  variant="outline"
-                  size="icon-lg"
-                  className="w-60 font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
-                  onClick={() => setShowPaymentModal(true)}
-                >
-                  <CreditCard />
-                  Pagar y Confirmar Asistencia
-                </Button>
-              )}
 
             </div>
 
             <FavoriteButton event={event} />
 
           </div>
+          {event.cost > 0 && (
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full mt-3 font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
+              onClick={() => setShowPaymentModal(true)}
+            >
+              <CreditCard />
+              Pagar y Confirmar Asistencia
+            </Button>
+          )}
         </div>
 
         {/* Comments Section */}

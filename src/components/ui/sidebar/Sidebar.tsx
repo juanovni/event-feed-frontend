@@ -11,9 +11,13 @@ import {
 } from 'lucide-react';
 import { SidebarItem } from './SidebarItem';
 import { AvatarProfile } from '@/components';
+import { useAuthStore } from '@/store';
 
 export const Sidebar = () => {
-  const user = true;
+  const { user, logout } = useAuthStore();
+
+  /* if (!user) return null; */
+
   const menuItems = [
     {
       label: 'Inicio',
@@ -49,9 +53,9 @@ export const Sidebar = () => {
       {user && (
         <div className="border-b border-sidebar-border p-4">
           <AvatarProfile
-            name="Juan Constantine"
-            username='juanovni'
-            image="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150"
+            name={user.name}
+            username={user.username}
+            image={user.avatar}
             className='h-10 w-10'
           />
         </div>
@@ -80,7 +84,8 @@ export const Sidebar = () => {
           </button>
 
           <button
-            className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
+            onClick={logout}
+            className="cursor-pointer w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
           >
             <LogOut className="h-5 w-5" />
             <span className="font-medium">Cerrar Sesión</span>
