@@ -8,8 +8,6 @@ export interface Event {
   description: string;
   mediaType: MediaType;
   mediaUrl: string;
-  likes: number;
-  isLiked: boolean;
   cost: number;
   currency: string;
   comments: Comment[];
@@ -21,6 +19,7 @@ export interface Event {
   attendees: number;
   interested: number;
   isFollowing: boolean;
+  isInterested: boolean;
   userStatus: 'attending' | 'interested' | 'none';
 }
 

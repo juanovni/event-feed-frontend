@@ -40,14 +40,11 @@ export const mockEvents: Event[] = [
     eventDate: new Date('2025-01-08T06:45:00'),
     mediaType: 'image',
     mediaUrl: 'https://scontent.cdninstagram.com/v/t51.82787-15/554396372_18063879602584200_8012309436171417339_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ig_cache_key=MzcyODgwOTQ2OTc0OTg3OTg1MA%3D%3D.3-ccb1-7&ccb=1-7&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTM1MC5zZHIuQzMifQ%3D%3D&_nc_ohc=gfaaJ9nWDg0Q7kNvwH0TJEA&_nc_oc=Adl6IV2B7-dS3LqG0EeRMNQzkBScr7CUickiwjZliTRu8kTU5TmBKuyDydJrndA3q70&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=q6u-RHV99Vh4U9yPcb08rg&oh=00_AfcPDjo8MTImrjm7rV_heeMqTDhn56WVDnC6dqsIgopGBQ&oe=68F880AE',
-    likes: 234,
-    isLiked: false,
     cost: 12.87,
     currency: 'USA',
     timestamp: new Date('2025-01-08T18:30:00'),
     category: "restaurant",
     attendees: 2,
-    interested: 10,
     userStatus: "interested",
     comments: [
       {
@@ -80,14 +77,11 @@ export const mockEvents: Event[] = [
     eventDate: new Date('2025-01-08T10:45:00'),
     mediaType: 'video',
     mediaUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-    likes: 189,
-    isLiked: true,
     cost: 0,
     currency: 'USA',
     timestamp: new Date('2025-01-08T16:45:00'),
     category: "art",
     attendees: 200,
-    interested: 1000,
     userStatus: "attending",
     comments: [
       {

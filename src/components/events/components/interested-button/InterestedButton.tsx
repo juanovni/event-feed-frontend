@@ -1,28 +1,34 @@
 'use client';
 
 import { Button } from "@/components";
-import { useEventsStore } from "@/store";
+import { useEventsStore, useInterestStore } from "@/store";
 import { ThumbsUp } from "lucide-react";
 import { Event } from "@/interfaces";
 import { cn } from "@/lib/utils";
+import { useToggleInterest } from "@/hooks";
 
 interface Props {
   event: Event;
 }
 
 export const InterestedButton = ({ event }: Props) => {
-  const { toggleInterested, isInterested } = useEventsStore();
-  const interested = isInterested(event.id);
+  const { mutate: toggleInterest, isPending } = useToggleInterest();
+  const { toggleLocalInterest } = useInterestStore();
+
+  const handleClick = () => {
+    toggleLocalInterest(event.id);
+    toggleInterest(event.id);
+  };
 
   return (
     <Button
-      onClick={() => toggleInterested(event.id)}
-      variant={interested ? "secondary" : "outline"}
+      onClick={handleClick}
+      variant={event.isInterested ? "secondary" : "outline"}
     >
       <ThumbsUp
-        className={cn("mr-2 h-4 w-4", interested && "fill-current")}
+        className={cn("mr-2 h-4 w-4", event.isInterested && "fill-current")}
       />
-      {interested ? "Interesado" : "Me interesa"}
+      {event.isInterested ? "Interesado" : "Me interesa"}
     </Button>
   )
 }
