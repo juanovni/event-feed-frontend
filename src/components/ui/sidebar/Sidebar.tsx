@@ -12,11 +12,17 @@ import {
 import { SidebarItem } from './SidebarItem';
 import { AvatarProfile } from '@/components';
 import { useAuthStore } from '@/store';
+import { redirect } from 'next/navigation';
 
 export const Sidebar = () => {
   const { user, logout } = useAuthStore();
 
-  /* if (!user) return null; */
+  const handleLogout = () => {
+    logout();
+    redirect('/auth/login')
+  }
+
+  if (!user) return null;
 
   const menuItems = [
     {
@@ -84,7 +90,7 @@ export const Sidebar = () => {
           </button>
 
           <button
-            onClick={logout}
+            onClick={handleLogout}
             className="cursor-pointer w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
           >
             <LogOut className="h-5 w-5" />
