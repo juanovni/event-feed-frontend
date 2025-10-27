@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "@/store";
 
 export const eventApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 // Interceptor opcional para token
@@ -25,7 +25,7 @@ eventApi.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      localStorage.getItem("refreshToken")
+      localStorage.getItem("auth-storage")
     ) {
       originalRequest._retry = true;
       await useAuthStore.getState().refreshAccessToken();

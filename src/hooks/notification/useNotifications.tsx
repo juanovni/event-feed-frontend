@@ -36,6 +36,11 @@ export function useNotifications(userId?: string, token?: string) {
       });
     });
 
+    socket.on("notification:count", (payload: { userId: number; count: number }) => {
+      queryClient.setQueryData(["notifications_count", userId], payload.count);
+    });
+
+
 
     return () => {
       socket?.emit("leave_user", userId);
