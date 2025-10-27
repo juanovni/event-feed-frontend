@@ -1,5 +1,6 @@
 import { AvatarIcon } from "@/components"
 import { formatTime } from "@/utils";
+import { LucideBadgeCheck } from "lucide-react";
 
 interface Props {
   name: string;
@@ -18,7 +19,12 @@ export const AvatarProfile = ({ name, image, username, timesamp, className }: Pr
         className={className}
       />
       <div>
-        <h3 className="font-semibold text-gray-900">{name}</h3>
+        <h3 className="font-semibold text-gray-900">
+          <div className="flex items-center gap-1">
+            <span>{name}</span>
+            {/* <LucideBadgeCheck size={18} className="text-black font-extrabold" /> */}
+          </div>
+        </h3>
         <p className="text-sm text-gray-500">@{username}
           {timesamp && (
             <>

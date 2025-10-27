@@ -29,7 +29,6 @@ interface Props {
 export const EventGridItem = ({ event }: Props) => {
   const [showComments, setShowComments] = useState(false);
   const [assist, setAssist] = useState(false);
-  const distanceKm = 4;
   const [showPaymentModal, setShowPaymentModal] = useState(false)
 
   const handlePaymentSuccess = () => {
