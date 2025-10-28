@@ -3,11 +3,14 @@
 import { useEffect } from "react";
 import { io, Socket } from "socket.io-client";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useNotificationStore } from "@/store";
 
 let socket: Socket | null = null;
 
 export function useNotifications(userId?: string, token?: string) {
   const queryClient = useQueryClient();
+  const { addNotification } = useNotificationStore();
 
   useEffect(() => {
     if (!userId) return;
@@ -33,6 +36,19 @@ export function useNotifications(userId?: string, token?: string) {
         const exists = old.some((n) => n.id === notification.id);
         if (exists) return old;
         return [notification, ...old];
+      });
+
+
+      // ✅ Actualiza contador global (Zustand)
+      addNotification(notification);
+
+      // ✅ Muestra toast visual (Sonner)
+      toast(notification.title, {
+        description: notification.message,
+        action: {
+          label: "Ver",
+          onClick: () => (window.location.href = "/notifications"),
+        },
       });
     });
 
