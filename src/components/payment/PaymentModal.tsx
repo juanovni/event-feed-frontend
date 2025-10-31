@@ -10,13 +10,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/custom-icon/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Event } from "@/interfaces"
 import { useTicketStore } from "@/store"
 import { formatDate } from "@/utils"
+import { Button } from "../ui/button";
 
 interface PaymentModalProps {
   event: Event;

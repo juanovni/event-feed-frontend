@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 import { formatTime } from "@/utils";
 import {
   AvatarProfile,
-  Button,
   EventInformation,
   FavoriteButton,
   FollowerButton,
@@ -21,6 +20,7 @@ import {
   PaymentModal
 } from "@/components";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   event: Event;

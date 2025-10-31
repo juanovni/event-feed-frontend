@@ -10,7 +10,7 @@ import { format } from "date-fns";
 import { CalendarIcon, Upload, X, ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { Button } from "../ui/custom-icon/button";
+import { Button } from "../ui/button";
 
 interface CreateEventDialogProps {
   open: boolean;

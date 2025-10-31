@@ -1,11 +1,11 @@
 'use client';
 
 import { UserPlus } from "lucide-react";
-import { Button } from "@/components";
 import { useFollow } from "@/hooks";
 import { Event } from "@/interfaces";
 import { useFollowStore } from "@/store";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   event: Event;

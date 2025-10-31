@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components";
+import { Button } from "@/components/ui/button";
 
 const bottonLinks: { label: string; path: string }[] = [
   {

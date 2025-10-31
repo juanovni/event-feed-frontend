@@ -3,8 +3,8 @@
 import { Bookmark } from "lucide-react";
 import { Event } from "@/interfaces";
 import { useFavoritesStore } from "@/store";
-import { Button } from "@/components";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   event: Event;

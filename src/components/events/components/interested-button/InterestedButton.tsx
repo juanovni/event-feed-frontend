@@ -1,11 +1,11 @@
 'use client';
 
-import { Button } from "@/components";
-import { useEventsStore, useInterestStore } from "@/store";
+import { useInterestStore } from "@/store";
 import { ThumbsUp } from "lucide-react";
 import { Event } from "@/interfaces";
 import { cn } from "@/lib/utils";
 import { useToggleInterest } from "@/hooks";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   event: Event;

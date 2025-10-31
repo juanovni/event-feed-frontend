@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  Activity,
   Bell,
   HomeIcon,
   LogOut,
@@ -11,11 +10,10 @@ import {
   UserPlus
 } from 'lucide-react';
 import { SidebarItem } from './SidebarItem';
-import { AvatarProfile } from '@/components';
+import { AvatarProfile, CreateEventDialog } from '@/components';
 import { useAuthStore } from '@/store';
 import { redirect } from 'next/navigation';
 import { useState } from 'react';
-import { CreateEventDialog } from '@/components/events/CreateEventDialog';
 
 export const Sidebar = () => {
   const { user, logout } = useAuthStore();

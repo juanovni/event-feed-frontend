@@ -1,3 +1,6 @@
+export * from './events/add-event-step/CreateEventDialog';
+export * from './events/add-event-step/EventDetailsStep';
+export * from './events/add-event-step/MediaUploadStep';
 export * from './events/components/favorite-button/FavoriteButton';
 export * from './events/components/follower-button/FollowerButton';
 export * from './events/components/interested-button/InterestedButton';
@@ -14,7 +17,6 @@ export * from './ticket/ticket-grid/TicketGrid';
 export * from './ticket/ticket-grid/TicketGridItem';
 export * from './ui/avatar-profile/AvatarIcon';
 export * from './ui/avatar-profile/AvatarProfile';
-export * from './ui/custom-icon/button';
 export * from './ui/gallery/GalleryPopup';
 export * from './ui/sidebar/Sidebar';
 export * from './ui/sidebar/SidebarItem';
