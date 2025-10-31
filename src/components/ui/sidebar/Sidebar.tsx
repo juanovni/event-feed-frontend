@@ -5,6 +5,7 @@ import {
   Bell,
   HomeIcon,
   LogOut,
+  Plus,
   Settings,
   TicketCheckIcon,
   UserPlus
@@ -13,9 +14,12 @@ import { SidebarItem } from './SidebarItem';
 import { AvatarProfile } from '@/components';
 import { useAuthStore } from '@/store';
 import { redirect } from 'next/navigation';
+import { useState } from 'react';
+import { CreateEventDialog } from '@/components/events/CreateEventDialog';
 
 export const Sidebar = () => {
   const { user, logout } = useAuthStore();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -75,9 +79,11 @@ export const Sidebar = () => {
         </ul>
 
         <div className="mt-8 pt-6 border-t border-gray-200">
-          <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200">
-            <Activity className="w-5 h-5" />
-            <span className="font-medium">Crear Post</span>
+          <button
+            onClick={() => setIsDialogOpen(true)}
+            className="w-full flex items-center space-x-3 px-4 py-3 cursor-pointer rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200">
+            <Plus className="w-5 h-5" />
+            <span className="font-medium">Crear Evento</span>
           </button>
         </div>
 
@@ -98,6 +104,7 @@ export const Sidebar = () => {
           </button>
         </div>
       </nav>
+      <CreateEventDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} />
     </div>
   )
 }
