@@ -28,6 +28,11 @@ export function EventDetailsStep() {
         <Textarea {...register("description", { required: true })} placeholder="Describe tu evento..." />
       </div>
 
+      <div className="space-y-2">
+        <Label htmlFor="location">Agregar ubicación</Label>
+        <Input {...register("location", { required: true })} id="title" placeholder="Ej: Urdesa Central, Guayaquil, Ecuador" />
+      </div>
+
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="category">Categoría</Label>

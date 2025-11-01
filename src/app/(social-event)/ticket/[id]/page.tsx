@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { ArrowLeft, Calendar, Clock, MapPin, Ticket, CreditCard } from "lucide-react";
-import { Button } from "@/components";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { formatDate, formatTime } from "@/utils";
 
 import QRCode from "react-qr-code";
 import { mockTickets } from "@/data/mockData";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   params: Promise<{

@@ -20,9 +20,9 @@ export interface Event {
   interested: number;
   isFollowing: boolean;
   isInterested: boolean;
-  userStatus: 'attending' | 'interested' | 'none';
+  userStatus: UserStatus;
 }
-
+export type UserStatus = 'attending' | 'interested' | 'none';
 export type EventCategory =
   | "restaurant"
   | "music"

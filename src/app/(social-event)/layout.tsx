@@ -1,4 +1,5 @@
-import { Button, Sidebar } from "@/components";
+import { Sidebar } from "@/components";
+import { Button } from "@/components/ui/button";
 
 export default function FeedLayout({
   children
@@ -21,7 +22,7 @@ export default function FeedLayout({
           <div className="w-full max-w-2xl">{children}</div>
 
           {/* Columna de sugerencias */}
-{/*           <aside className="hidden lg:block w-80">
+          {/* <aside className="hidden lg:block w-80">
             <h2 className="px-1 py-2 font-semibold text-gray-800 mb-4">
               Sugerencias para ti
             </h2>

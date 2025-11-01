@@ -15,17 +15,10 @@ export const Providers = ({ children }: Props) => {
     <QueryClientProvider client={client}>
       {children}
       <Toaster
-        position="top-right"
+        position="bottom-right"
         richColors
         closeButton
-/*         toastOptions={{
-          style: {
-            background: "#1f2937", // gris oscuro elegante
-            color: "#fff",
-            borderRadius: "10px",
-          },
-        }}
- */      />
+      />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )

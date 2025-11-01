@@ -1,5 +1,3 @@
-"use client";
-
 import { toggleInterest } from "@/actions";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 

@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowLeft, ArrowRight, Check } from "lucide-react";
-import { toast } from "sonner";
-import { cn } from "@/lib/utils";
 import { useForm, FormProvider } from "react-hook-form";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 import { EventDetailsStep, MediaUploadStep } from "@/components";
+import { useCreateEvent } from "@/hooks";
+import { UserStatus } from "@/interfaces";
 
 interface CreateEventDialogProps {
   open: boolean;
@@ -17,37 +19,77 @@ interface CreateEventDialogProps {
 export interface EventFormValues {
   title: string;
   description: string;
-  category: string;
-  cost: number;
+  location: string;
   eventDate: string;
+  mediaType: string;
   eventTime: string;
+  mediaUrl: string,
+  cost: number,
+  currency: string,
+  attendees: number,
+  userStatus: UserStatus;
+  categoryId: string;
   mediaFile?: File | null;
 }
 
 export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps) {
   const [step, setStep] = useState(1);
+  const { mutate, isPending } = useCreateEvent();
 
   const methods = useForm<EventFormValues>({
     defaultValues: {
       title: "",
       description: "",
-      category: "",
+      location: "",
+      eventDate: "2025-12-24T18:00:00Z",
+      mediaType: "image",
+      mediaUrl: "https://scontent.cdninstagram.com/v/t51.82787-15/569176248_18067982831584200_8285398647440749845_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ig_cache_key=Mzc1MDAyODY4MDk3NTE2ODEwMg%3D%3D.3-ccb1-7&ccb=1-7&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTM1MC5zZHIuQzMifQ%3D%3D&_nc_ohc=RwSfuHU776oQ7kNvwF19-NR&_nc_oc=AdkD1ALPRuoWARM5gNm8LpKrIfF2uIr-B4ILfo_7MGTBFOWw-u6BzMYZ4R38BAaSFg8&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=ehnVMZiT0sYZWzERZ7h0KA&oh=00_AfebIvWZps5LqkVa0VOeIa-ub4OcEUwENsE3T6Rg9z_5lg&oe=690B62E3",
       cost: 0,
-      eventDate: "",
-      eventTime: "",
-      mediaFile: null,
+      currency: "USA",
+      attendees: 0,
+      userStatus: "none",
+      categoryId: "cd1bb141-be9b-4979-8a19-bb71a567ef7b"
     },
   });
 
   const { handleSubmit, getValues, setValue } = methods;
 
   const onSubmit = (data: EventFormValues) => {
+    const formData = new FormData();
+    const { ...eventToSave } = data;
+
     if (!data.mediaFile) {
-      toast.error("Por favor sube una imagen o video");
+      toast('Por favor sube una imagen o video"')
       return;
     }
 
-    toast.success("¡Evento creado exitosamente!");
+    /*     formData.append("title", eventToSave.title);
+        formData.append("description", eventToSave.description);
+        formData.append("location", eventToSave.location);
+        formData.append("eventDate", eventToSave.eventDate);
+        formData.append("mediaType", eventToSave.mediaType);
+        formData.append("mediaUrl", eventToSave.mediaUrl);
+        formData.append("cost", eventToSave.cost.toString());
+        formData.append("currency", eventToSave.currency);
+        formData.append("attendees", eventToSave.attendees.toString());
+        formData.append("userStatus", eventToSave.userStatus);
+        formData.append("categoryId", eventToSave.categoryId);
+        console.log(formData) */
+
+    mutate({
+      title: eventToSave.title,
+      description: eventToSave.description,
+      location: eventToSave.location,
+      eventDate: eventToSave.eventDate,
+      mediaType: "image",
+      mediaUrl: eventToSave.mediaUrl,
+      cost: eventToSave.cost.toString(),
+      currency: eventToSave.currency,
+      attendees: eventToSave.attendees.toString(),
+      userStatus: eventToSave.userStatus,
+      categoryId: eventToSave.categoryId,
+    });
+
     console.log("Datos del evento:", data);
     onOpenChange(false);
     methods.reset();
