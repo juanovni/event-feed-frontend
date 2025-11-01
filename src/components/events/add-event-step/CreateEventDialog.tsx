@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { EventDetailsStep, MediaUploadStep } from "@/components";
 import { useCreateEvent } from "@/hooks";
 import { UserStatus } from "@/interfaces";
+import { combineDateAndTime } from "@/utils";
 
 interface CreateEventDialogProps {
   open: boolean;
@@ -57,30 +58,18 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
   const onSubmit = (data: EventFormValues) => {
     const formData = new FormData();
     const { ...eventToSave } = data;
+    const eventDateTime = combineDateAndTime(eventToSave.eventDate, eventToSave.eventTime);
 
     if (!data.mediaFile) {
       toast('Por favor sube una imagen o video"')
       return;
     }
 
-    /*     formData.append("title", eventToSave.title);
-        formData.append("description", eventToSave.description);
-        formData.append("location", eventToSave.location);
-        formData.append("eventDate", eventToSave.eventDate);
-        formData.append("mediaType", eventToSave.mediaType);
-        formData.append("mediaUrl", eventToSave.mediaUrl);
-        formData.append("cost", eventToSave.cost.toString());
-        formData.append("currency", eventToSave.currency);
-        formData.append("attendees", eventToSave.attendees.toString());
-        formData.append("userStatus", eventToSave.userStatus);
-        formData.append("categoryId", eventToSave.categoryId);
-        console.log(formData) */
-
     mutate({
       title: eventToSave.title,
       description: eventToSave.description,
       location: eventToSave.location,
-      eventDate: eventToSave.eventDate,
+      eventDate: eventDateTime.toString(),
       mediaType: "image",
       mediaUrl: eventToSave.mediaUrl,
       cost: eventToSave.cost.toString(),
@@ -90,7 +79,6 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       categoryId: eventToSave.categoryId,
     });
 
-    console.log("Datos del evento:", data);
     onOpenChange(false);
     methods.reset();
     setStep(1);
@@ -108,14 +96,14 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl p-0 overflow-hidden">
-        <DialogHeader className="px-6 pt-6 pb-4 border-b">
+        <DialogHeader className="px-2 pt-2 pb-4 border-b">
           <div className="flex items-center justify-between">
             {step === 2 && (
               <Button variant="ghost" size="icon" onClick={() => setStep(1)} className="h-8 w-8">
                 <ArrowLeft className="h-4 w-4" />
               </Button>
             )}
-            <DialogTitle className={cn("text-xl font-semibold", step === 1 && "mx-auto")}>
+            <DialogTitle className={cn("text-lg font-semibold", step === 1 && "mx-auto")}>
               {step === 1 ? "Sube tu imagen o video" : "Detalles del evento"}
             </DialogTitle>
             {step === 2 && <div className="w-8" />}

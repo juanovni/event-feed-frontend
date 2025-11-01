@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormContext, UseFormSetValue } from "react-hook-form";
-import { Upload, X } from "lucide-react";
+import { ImageUpIcon, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -65,8 +65,8 @@ export function MediaUploadStep({ setValue }: MediaUploadStepProps) {
     >
       <div className="space-y-4">
         <div className="flex justify-center">
-          <div className="h-20 w-20 rounded-full bg-black flex items-center justify-center transition-transform hover:scale-110">
-            <Upload className="h-10 w-10 text-primary-foreground" />
+          <div className="h-28 w-28 rounded-full bg-black flex items-center justify-center transition-transform hover:scale-110">
+            <ImageUpIcon className="h-14 w-14 text-primary-foreground" />
           </div>
         </div>
         <div>
