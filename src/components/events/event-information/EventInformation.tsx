@@ -15,7 +15,9 @@ export const EventInformation = ({ event }: Props) => {
     <div className="mt-2 p-4">
       <div className="mb-4">
         <h2 className="text-xl font-bold text-balance">{event.title}</h2>
-        <p className="mt-1.5 text-sm text-muted-foreground text-pretty">{event.description}</p>
+        <p className="whitespace-pre-line text-sm text-gray-700">
+          {event.description}
+        </p>
       </div>
       <div className="text-sm space-y-2">
         <div className="flex items-center gap-2 text-smtext-muted-foreground">

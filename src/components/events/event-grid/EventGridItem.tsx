@@ -62,13 +62,13 @@ export const EventGridItem = ({ event }: Props) => {
         </div>
 
         {/* Media */}
-        <div className="relative bg-gray-100">
+        <div className="relative bg-black">
           {event.mediaType === 'image' ? (
             <>
               <img
                 src={event.mediaUrl}
                 alt="Post content"
-                className="w-full object-contain max-h-96 cursor-pointer transition-transform duration-300 hover:scale-105"
+                className="w-full object-contain max-h-1/3 cursor-pointer transition-transform duration-300 hover:scale-105"
               />
               {event.gallery && event.gallery.length > 1 && (
                 <GalleryPopup images={event.gallery} />

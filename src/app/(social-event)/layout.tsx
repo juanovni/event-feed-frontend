@@ -19,10 +19,10 @@ export default function FeedLayout({
         {/* Feed + sugerencias */}
         <div className="flex w-full max-w-6xl justify-center gap-10">
           {/* Feed central */}
-          <div className="w-full max-w-2xl">{children}</div>
+          <div className="w-full max-w-xl">{children}</div>
 
           {/* Columna de sugerencias */}
-          {/* <aside className="hidden lg:block w-80">
+          <aside className="hidden lg:block w-80">
             <h2 className="px-1 py-2 font-semibold text-gray-800 mb-4">
               Sugerencias para ti
             </h2>
@@ -58,7 +58,7 @@ export default function FeedLayout({
                 </ul>
               </section>
             </div>
-          </aside> */}
+          </aside>
         </div>
       </div>
 
