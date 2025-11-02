@@ -1,6 +1,6 @@
 import { AvatarsFriendsWidget } from "@/components/ui/widgets/AvatarsFriendsWidget";
 import { NavigationWidget } from "@/components/ui/widgets/NavigationWidget";
-import { formatDate, formatTime } from "@/utils";
+import { currencyFormat, formatDate, formatTime } from "@/utils";
 import { Calendar, Clock, DollarSign, Map, Users } from "lucide-react";
 import { Event } from "@/interfaces";
 
@@ -31,7 +31,7 @@ export const EventInformation = ({ event }: Props) => {
         <div className="flex items-center gap-2 text-sm">
           <DollarSign size={16} className="h-4 w-4 shrink-0 text-primary font-bold" />
           <p className="font-medium">
-            {event.cost === 0 ? "Entrada gratuita" : `${event.cost} ${event.currency}`}
+            {event.cost === 0 ? "Entrada gratuita" : `${currencyFormat(event.cost)} ${event.currency}`}
           </p>
         </div>
         <div className="flex items-center gap-2 text-sm">
