@@ -1,6 +1,6 @@
 'use client';
 
-import { EventGrid, HeaderButton, Title } from "@/components";
+import { EventEmpty, EventGrid, HeaderButton, Title } from "@/components";
 import { useEvents } from "@/hooks";
 
 export default function FollowersPage() {
@@ -14,7 +14,11 @@ export default function FollowersPage() {
       <Title title="Eventos">
         <HeaderButton />
       </Title>
-      <EventGrid events={events} />
+      {events.length === 0 ? (
+        <EventEmpty />
+      ) : (
+        <EventGrid events={events} />
+      )}
     </div>
   )
 }
