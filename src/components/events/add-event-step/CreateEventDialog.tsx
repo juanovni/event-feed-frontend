@@ -49,7 +49,8 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       currency: "USA",
       attendees: 0,
       userStatus: "none",
-      categoryId: "cd1bb141-be9b-4979-8a19-bb71a567ef7b"
+      categoryId: "cd1bb141-be9b-4979-8a19-bb71a567ef7b",
+      mediaFile: null
     },
   });
 
@@ -65,7 +66,31 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       return;
     }
 
-    mutate({
+    console.log(eventToSave)
+
+   /*  formData.append("title", eventToSave.title);
+    formData.append("description", eventToSave.description);
+    formData.append("location", eventToSave.location);
+    formData.append("eventDate", eventDateTime.toISOString());
+    formData.append("mediaType", eventToSave.mediaType);
+    formData.append("mediaUrl", eventToSave.mediaUrl);
+    formData.append("cost", eventToSave.cost.toString());
+    formData.append("currency", eventToSave.currency);
+    formData.append("attendees", eventToSave.attendees.toString());
+    formData.append("userStatus", eventToSave.userStatus);
+    formData.append("categoryId", eventToSave.categoryId);
+    formData.append("mediaFile", data.mediaFile);
+    mutate(formData); */
+    /* 
+         if ( images ) {
+          for ( let i = 0; i < images.length; i++  ) {
+            formData.append('images', images[i]);
+          }
+        } */
+
+    //mutate(formData);
+
+    /* mutate({
       title: eventToSave.title,
       description: eventToSave.description,
       location: eventToSave.location,
@@ -77,7 +102,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       attendees: eventToSave.attendees.toString(),
       userStatus: eventToSave.userStatus,
       categoryId: eventToSave.categoryId,
-    });
+    }); */
 
     onOpenChange(false);
     methods.reset();

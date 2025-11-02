@@ -53,7 +53,18 @@ export function EventDetailsStep() {
 
         <div className="space-y-2">
           <Label htmlFor="cost">Costo</Label>
-          <Input {...register("cost", { required: true })} type="number" placeholder="0.00" />
+          <Input
+            type="number"
+            step="0.01"
+            placeholder="0.00"
+            {...register("cost", {
+              required: "El costo es obligatorio",
+              valueAsNumber: true,
+              validate: (value) =>
+                !isNaN(value) && value >= 0 && /^\d+(\.\d{1,2})?$/.test(value.toString()) ||
+                "Debe ser un número válido con hasta dos decimales",
+            })}
+          />
         </div>
       </div>
 

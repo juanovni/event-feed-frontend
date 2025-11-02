@@ -14,9 +14,11 @@ export interface CreateEventPayload {
   categoryId?: string;
 }
 
-export const createEvent = async (eventData: CreateEventPayload) => {
+export const createEvent = async (formData: FormData) => {
   try {
-    const { data } = await eventApi.post("/events", eventData);
+    const { data } = await eventApi.post("/events", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
 
     return data;
   } catch (error) {

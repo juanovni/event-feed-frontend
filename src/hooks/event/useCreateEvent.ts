@@ -15,7 +15,7 @@ export const useCreateEvent = () => {
       const msg =
         error.response?.data?.message ||
         "Ocurrió un error al crear el evento";
-      //toast.error(msg);
+      toast(msg);
     },
   });
 };
