@@ -65,9 +65,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       toast('Por favor sube una imagen o video"')
       return;
     }
-
-    console.log(eventToSave)
-
+    
     formData.append("title", eventToSave.title);
     formData.append("description", eventToSave.description);
     formData.append("location", eventToSave.location);
@@ -125,12 +123,22 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
 
             <div className="px-6 py-4 border-t bg-muted/30">
               {step === 1 ? (
-                <Button type="button" onClick={handleNextStep} className="w-full" size="lg">
+                <Button
+                  type="button"
+                  onClick={(e) => { e.preventDefault(); handleNextStep(); }}
+                  className="w-full"
+                  size="lg"
+                >
                   Siguiente
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               ) : (
-                <Button type="submit" className="w-full" size="lg">
+                <Button
+                  type="submit"
+                  className="w-full"
+                  size="lg"
+                  disabled={isPending}
+                >
                   Crear evento
                   <Check className="ml-2 h-4 w-4" />
                 </Button>
