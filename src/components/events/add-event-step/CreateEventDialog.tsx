@@ -42,7 +42,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       title: "",
       description: "",
       location: "",
-      eventDate: "2025-12-24T18:00:00Z",
+      eventDate: "",
       mediaType: "image",
       mediaUrl: "https://scontent.cdninstagram.com/v/t51.82787-15/569176248_18067982831584200_8285398647440749845_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ig_cache_key=Mzc1MDAyODY4MDk3NTE2ODEwMg%3D%3D.3-ccb1-7&ccb=1-7&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTM1MC5zZHIuQzMifQ%3D%3D&_nc_ohc=RwSfuHU776oQ7kNvwF19-NR&_nc_oc=AdkD1ALPRuoWARM5gNm8LpKrIfF2uIr-B4ILfo_7MGTBFOWw-u6BzMYZ4R38BAaSFg8&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=ehnVMZiT0sYZWzERZ7h0KA&oh=00_AfebIvWZps5LqkVa0VOeIa-ub4OcEUwENsE3T6Rg9z_5lg&oe=690B62E3",
       cost: 0,
@@ -68,7 +68,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
 
     console.log(eventToSave)
 
-   /*  formData.append("title", eventToSave.title);
+    formData.append("title", eventToSave.title);
     formData.append("description", eventToSave.description);
     formData.append("location", eventToSave.location);
     formData.append("eventDate", eventDateTime.toISOString());
@@ -80,29 +80,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     formData.append("userStatus", eventToSave.userStatus);
     formData.append("categoryId", eventToSave.categoryId);
     formData.append("mediaFile", data.mediaFile);
-    mutate(formData); */
-    /* 
-         if ( images ) {
-          for ( let i = 0; i < images.length; i++  ) {
-            formData.append('images', images[i]);
-          }
-        } */
-
-    //mutate(formData);
-
-    /* mutate({
-      title: eventToSave.title,
-      description: eventToSave.description,
-      location: eventToSave.location,
-      eventDate: eventDateTime.toString(),
-      mediaType: "image",
-      mediaUrl: eventToSave.mediaUrl,
-      cost: eventToSave.cost.toString(),
-      currency: eventToSave.currency,
-      attendees: eventToSave.attendees.toString(),
-      userStatus: eventToSave.userStatus,
-      categoryId: eventToSave.categoryId,
-    }); */
+    mutate(formData);
 
     onOpenChange(false);
     methods.reset();
@@ -147,12 +125,12 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
 
             <div className="px-6 py-4 border-t bg-muted/30">
               {step === 1 ? (
-                <Button onClick={handleNextStep} className="w-full" size="lg" type="button">
+                <Button type="button" onClick={handleNextStep} className="w-full" size="lg">
                   Siguiente
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               ) : (
-                <Button className="w-full" size="lg" type="submit">
+                <Button type="submit" className="w-full" size="lg">
                   Crear evento
                   <Check className="ml-2 h-4 w-4" />
                 </Button>

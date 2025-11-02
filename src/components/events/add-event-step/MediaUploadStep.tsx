@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
+import { useEffect, useState } from "react";
 import { useFormContext, UseFormSetValue } from "react-hook-form";
 import { ImageUpIcon, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { EventFormValues } from "./CreateEventDialog";
 
 interface MediaUploadStepProps {
@@ -16,16 +16,23 @@ export function MediaUploadStep({ setValue }: MediaUploadStepProps) {
   const mediaFile = watch("mediaFile");
   const [preview, setPreview] = useState<string | null>(null);
 
+  // 🔹 Genera el preview automáticamente desde el mediaFile actual
+  useEffect(() => {
+    if (mediaFile instanceof File) {
+      const reader = new FileReader();
+      reader.onloadend = () => setPreview(reader.result as string);
+      reader.readAsDataURL(mediaFile);
+    } else {
+      setPreview(null);
+    }
+  }, [mediaFile]);
+
   const handleFile = (file: File) => {
     if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
       toast.error("Por favor sube una imagen o video");
       return;
     }
-
     setValue("mediaFile", file);
-    const reader = new FileReader();
-    reader.onloadend = () => setPreview(reader.result as string);
-    reader.readAsDataURL(file);
   };
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +42,6 @@ export function MediaUploadStep({ setValue }: MediaUploadStepProps) {
 
   const handleRemove = () => {
     setValue("mediaFile", null);
-    setPreview(null);
   };
 
   if (mediaFile && preview) {
@@ -47,6 +53,7 @@ export function MediaUploadStep({ setValue }: MediaUploadStepProps) {
           <video src={preview} controls className="w-full h-full object-cover" />
         )}
         <Button
+          type="button"
           variant="default"
           size="icon"
           className="absolute top-4 right-4 h-10 w-10 rounded-full shadow-lg"

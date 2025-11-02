@@ -1,6 +1,6 @@
 import { eventApi } from "@/api/event.api";
 
-export interface CreateEventPayload {
+/* export interface CreateEventPayload {
   title: string;
   description: string;
   location?: string;
@@ -12,7 +12,7 @@ export interface CreateEventPayload {
   attendees?: string;
   userStatus?: string;
   categoryId?: string;
-}
+} */
 
 export const createEvent = async (formData: FormData) => {
   try {
