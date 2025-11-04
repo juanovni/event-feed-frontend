@@ -8,7 +8,7 @@ import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { EventDetailsStep, MediaUploadStep } from "@/components";
-import { useCreateEvent } from "@/hooks";
+import { useCategories, useCreateEvent } from "@/hooks";
 import { UserStatus } from "@/interfaces";
 import { combineDateAndTime } from "@/utils";
 
@@ -36,6 +36,7 @@ export interface EventFormValues {
 export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps) {
   const [step, setStep] = useState(1);
   const { mutate, isPending } = useCreateEvent();
+  const { data: categories, isLoading, isError } = useCategories();
 
   const methods = useForm<EventFormValues>({
     defaultValues: {
@@ -49,7 +50,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       currency: "USA",
       attendees: 0,
       userStatus: "none",
-      categoryId: "cd1bb141-be9b-4979-8a19-bb71a567ef7b",
+      categoryId: "",
       mediaFile: null
     },
   });
@@ -65,7 +66,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       toast('Por favor sube una imagen o video"')
       return;
     }
-    
+
     formData.append("title", eventToSave.title);
     formData.append("description", eventToSave.description);
     formData.append("location", eventToSave.location);
@@ -94,6 +95,8 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     setStep(2);
   };
 
+  if (isLoading) return <p>Cargando eventos...</p>;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl p-0 overflow-hidden">
@@ -117,7 +120,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
               {step === 1 ? (
                 <MediaUploadStep setValue={setValue} />
               ) : (
-                <EventDetailsStep />
+                <EventDetailsStep categories={categories} />
               )}
             </div>
 
@@ -139,7 +142,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
                   size="lg"
                   disabled={isPending}
                 >
-                  Crear evento
+                  Crear Evento
                   <Check className="ml-2 h-4 w-4" />
                 </Button>
               )}

@@ -11,10 +11,16 @@ import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
+import { Category } from "@/interfaces";
 
-export function EventDetailsStep() {
+interface Props {
+  categories: Category[];
+}
+
+export function EventDetailsStep({ categories }: Props) {
   const { register, setValue, watch } = useFormContext();
   const eventDate = watch("eventDate");
+  const categoryId = watch("categoryId"); // 👈 observa el valor actual
 
   return (
     <div className="p-6 space-y-6">
@@ -36,17 +42,20 @@ export function EventDetailsStep() {
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="category">Categoría</Label>
-          <Select onValueChange={(v) => setValue("category", v)}>
+          <Select
+            value={categoryId || ""} 
+            onValueChange={(v) => setValue("categoryId", v)} >
             <SelectTrigger>
               <SelectValue placeholder="Selecciona una categoría" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="musica">Música</SelectItem>
-              <SelectItem value="deporte">Deporte</SelectItem>
-              <SelectItem value="arte">Arte</SelectItem>
-              <SelectItem value="tecnologia">Tecnología</SelectItem>
-              <SelectItem value="gastronomia">Gastronomía</SelectItem>
-              <SelectItem value="otro">Otro</SelectItem>
+              {categories.map((category) => (
+                <SelectItem
+                  key={category.id}
+                  value={category.id}>
+                  {category.name}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>

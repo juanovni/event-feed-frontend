@@ -1,4 +1,5 @@
 export * from './auth/useProtectedRoute';
+export * from './category/useCategory';
 export * from './event-interest/useToggleInterest';
 export * from './event/useCreateEvent';
 export * from './event/useEvent';
