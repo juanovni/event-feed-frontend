@@ -75,14 +75,16 @@ export const Sidebar = () => {
           ))}
         </ul>
 
-        <div className="mt-8 pt-6 border-t border-gray-200">
-          <button
-            onClick={openDialog}
-            className="w-full flex items-center space-x-3 px-4 py-3 cursor-pointer rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200">
-            <Plus className="w-5 h-5" />
-            <span className="font-medium">Crear Evento</span>
-          </button>
-        </div>
+        {user.rol === "publisher" && (
+          <div className="mt-8 pt-6 border-t border-gray-200">
+            <button
+              onClick={openDialog}
+              className="w-full flex items-center space-x-3 px-4 py-3 cursor-pointer rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200">
+              <Plus className="w-5 h-5" />
+              <span className="font-medium">Crear Evento</span>
+            </button>
+          </div>
+        )}
 
         <div className="mt-4">
           <button

@@ -70,7 +70,7 @@ export const EventGridItem = ({ event }: Props) => {
                 alt="Post content"
                 className="w-full object-contain max-h-1/3 cursor-pointer transition-transform duration-300 hover:scale-105"
               />
-              {event.gallery && event.gallery.length > 1 && (
+              {event.gallery && (
                 <GalleryPopup images={event.gallery} />
               )}
             </>
@@ -103,7 +103,7 @@ export const EventGridItem = ({ event }: Props) => {
                 <Users className={cn("mr-2 h-4 w-4", assist && "fill-current")} />
                 <span>{assist ? "Confirmado" : "Asistiré"}</span>
               </Button>
-{/* 
+              {/* 
               <Button
                 onClick={() => setShowComments(!showComments)}
                 variant="outline"
