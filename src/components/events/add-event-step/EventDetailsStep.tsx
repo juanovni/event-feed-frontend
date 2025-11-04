@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
@@ -43,19 +43,22 @@ export function EventDetailsStep({ categories }: Props) {
         <div className="space-y-2">
           <Label htmlFor="category">Categoría</Label>
           <Select
-            value={categoryId || ""} 
+            value={categoryId || ""}
             onValueChange={(v) => setValue("categoryId", v)} >
             <SelectTrigger className="w-[100%]">
               <SelectValue placeholder="Selecciona una categoría" />
             </SelectTrigger>
             <SelectContent>
-              {categories.map((category) => (
-                <SelectItem
-                  key={category.id}
-                  value={category.id}>
-                  {category.name}
-                </SelectItem>
-              ))}
+              <SelectGroup>
+                <SelectLabel>Categorías</SelectLabel>
+                {categories.map((category) => (
+                  <SelectItem
+                    key={category.id}
+                    value={category.id}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
             </SelectContent>
           </Select>
         </div>
