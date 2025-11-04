@@ -45,7 +45,7 @@ export function EventDetailsStep({ categories }: Props) {
           <Select
             value={categoryId || ""} 
             onValueChange={(v) => setValue("categoryId", v)} >
-            <SelectTrigger>
+            <SelectTrigger className="w-[100%]">
               <SelectValue placeholder="Selecciona una categoría" />
             </SelectTrigger>
             <SelectContent>
