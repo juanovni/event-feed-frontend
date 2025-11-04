@@ -17,6 +17,7 @@ import { Event } from "@/interfaces"
 import { useTicketStore } from "@/store"
 import { formatDate } from "@/utils"
 import { Button } from "../ui/button";
+import { placeOrder } from "@/actions";
 
 interface PaymentModalProps {
   event: Event;
@@ -27,30 +28,48 @@ interface PaymentModalProps {
 
 export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentModalProps) {
   const [isProcessing, setIsProcessing] = useState(false)
-  const [paymentSuccess, setPaymentSuccess] = useState(false)
-  const generateTicket = useTicketStore((state) => state.generateTicket);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const tickets = useTicketStore((state) => state.tickets);
+  const addTicket = useTicketStore((state) => state.addTicket);
 
   const handlePayment = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsProcessing(true)
+    e.preventDefault();
+    setIsProcessing(true);
 
-    // Simulate payment processing
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    try {
+      // Simular procesamiento
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    setIsProcessing(false)
-    setPaymentSuccess(true)
+      // Construimos el payload del ticket
+      const payload = {
+        items: [
+          {
+            eventId: event.id,
+            quantity: 1,
+            price: event.cost,
+          },
+        ],
+      };
 
-    const ticket = generateTicket(event, 25, "A12", "VIP");
-    console.log("✅ Ticket generado:", ticket);
+      const ticket = await placeOrder(payload);
 
+      // Guardar en store local
+      addTicket(ticket);
 
-    // Close modal after success
+      setPaymentSuccess(true);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsProcessing(false);
+    }
+
+    // Cerrar el modal tras éxito
     setTimeout(() => {
-      onSuccess?.()
-      onOpenChange(false)
-      setPaymentSuccess(false)
-    }, 2000)
-  }
+      onSuccess?.();
+      onOpenChange(false);
+      setPaymentSuccess(false);
+    }, 2000);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

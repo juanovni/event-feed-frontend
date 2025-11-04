@@ -1,33 +1,24 @@
+// src/store/ticket.store.ts
 import { create } from "zustand";
-import { v4 as uuidv4 } from "uuid";
-import { Ticket, Event } from "@/interfaces";
+import { persist } from "zustand/middleware";
+import { Ticket } from "@/interfaces";
 
 interface TicketStore {
   tickets: Ticket[];
-  generateTicket: (event: Event, cost: number, seat?: string, section?: string) => Ticket;
+  addTicket: (ticket: Ticket) => void;
   clearTickets: () => void;
 }
 
-export const useTicketStore = create<TicketStore>((set, get) => ({
-  tickets: [],
-
-  generateTicket: (event, cost, seat, section) => {
-    const newTicket: Ticket = {
-      id: uuidv4(),
-      event,
-      cost,
-      ticketNumber: `T-${Math.floor(Math.random() * 1000000)}`,
-      seat,
-      section,
-      createdAt: new Date(),
-    };
-
-    set((state) => ({
-      tickets: [...state.tickets, newTicket],
-    }));
-
-    return newTicket; // puedes usarlo después para mostrarlo o enviarlo al backend
-  },
-
-  clearTickets: () => set({ tickets: [] }),
-}));
+export const useTicketStore = create<TicketStore>()(
+  persist(
+    (set) => ({
+      tickets: [],
+      addTicket: (ticket) =>
+        set((state) => ({
+          tickets: [...state.tickets, ticket],
+        })),
+      clearTickets: () => set({ tickets: [] }),
+    }),
+    { name: "tickets-storage" }
+  )
+);
