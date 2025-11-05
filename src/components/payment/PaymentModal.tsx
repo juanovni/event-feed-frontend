@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react"
+import { useState } from "react";
 import { CreditCard, Lock, Check } from "lucide-react"
 import {
   Dialog,
@@ -14,10 +14,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Event } from "@/interfaces"
-import { useEventsStore, useTicketStore } from "@/store"
+import { useEventsStore } from "@/store"
 import { formatDate } from "@/utils"
 import { Button } from "../ui/button";
-import { placeOrder } from "@/actions";
 import { useRouter } from "next/navigation";
 import { useCreateTicket } from "@/hooks/ticket/useCreateTicket";
 
@@ -32,8 +31,6 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false)
   const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const tickets = useTicketStore((state) => state.tickets);
-  const addTicket = useTicketStore((state) => state.addTicket);
 
   const { mutateAsync } = useCreateTicket();
   const { updateEventAsPaid } = useEventsStore();
@@ -57,25 +54,23 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
         ],
       };
 
+      setIsProcessing(false)
+      setPaymentSuccess(true)
 
-      //const resp = await placeOrder(payload);
-
-
-      // 👇 Llama al backend con React Query
+      // Llama al backend con React Query
       const resp = await mutateAsync(payload);
-      // ✅ Actualiza el estado global (Zustand)
+      // Actualiza el estado global (Zustand)
       updateEventAsPaid(event.id);
-
-      // ✅ Ejecuta callback (por ejemplo, cerrar modal o actualizar UI local)
-      onSuccess?.();
-      onOpenChange(false);
 
       //router.replace('/ticket/' + resp.ticket?.id);
     } catch (error) {
       console.error(error);
     } finally {
-      setIsProcessing(false);
-
+      setTimeout(() => {
+        onSuccess?.()
+        onOpenChange(false)
+        setPaymentSuccess(false)
+      }, 2000)
     }
   };
 
