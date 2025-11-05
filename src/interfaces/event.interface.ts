@@ -20,6 +20,7 @@ export interface Event {
   interested: number;
   isFollowing: boolean;
   isInterested: boolean;
+  hasPaid: boolean;
   userStatus: UserStatus;
 }
 export type UserStatus = 'attending' | 'interested' | 'none';

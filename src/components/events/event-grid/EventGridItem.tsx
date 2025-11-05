@@ -28,7 +28,7 @@ interface Props {
 
 export const EventGridItem = ({ event }: Props) => {
   const [showComments, setShowComments] = useState(false);
-  const [assist, setAssist] = useState(false);
+  const [assist, setAssist] = useState(event.hasPaid);
   const [showPaymentModal, setShowPaymentModal] = useState(false)
 
   const handlePaymentSuccess = () => {
@@ -39,7 +39,9 @@ export const EventGridItem = ({ event }: Props) => {
     if (event.cost === 0) {
       setAssist(!assist);
     } else {
-      setShowPaymentModal(true);
+      if (!assist) {
+        setShowPaymentModal(true);
+      }
     }
   }
 
@@ -117,7 +119,7 @@ export const EventGridItem = ({ event }: Props) => {
             <FavoriteButton event={event} />
 
           </div>
-          {event.cost > 0 && (
+          {event.cost > 0 && !assist && (
             <Button
               variant="outline"
               size="lg"

@@ -14,10 +14,12 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Event } from "@/interfaces"
-import { useTicketStore } from "@/store"
+import { useEventsStore, useTicketStore } from "@/store"
 import { formatDate } from "@/utils"
 import { Button } from "../ui/button";
 import { placeOrder } from "@/actions";
+import { useRouter } from "next/navigation";
+import { useCreateTicket } from "@/hooks/ticket/useCreateTicket";
 
 interface PaymentModalProps {
   event: Event;
@@ -27,10 +29,14 @@ interface PaymentModalProps {
 }
 
 export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentModalProps) {
+  const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false)
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const tickets = useTicketStore((state) => state.tickets);
   const addTicket = useTicketStore((state) => state.addTicket);
+
+  const { mutateAsync } = useCreateTicket();
+  const { updateEventAsPaid } = useEventsStore();
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,24 +57,26 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
         ],
       };
 
-      const ticket = await placeOrder(payload);
 
-      // Guardar en store local
-      addTicket(ticket);
+      //const resp = await placeOrder(payload);
 
-      setPaymentSuccess(true);
+
+      // 👇 Llama al backend con React Query
+      const resp = await mutateAsync(payload);
+      // ✅ Actualiza el estado global (Zustand)
+      updateEventAsPaid(event.id);
+
+      // ✅ Ejecuta callback (por ejemplo, cerrar modal o actualizar UI local)
+      onSuccess?.();
+      onOpenChange(false);
+
+      //router.replace('/ticket/' + resp.ticket?.id);
     } catch (error) {
       console.error(error);
     } finally {
       setIsProcessing(false);
-    }
 
-    // Cerrar el modal tras éxito
-    setTimeout(() => {
-      onSuccess?.();
-      onOpenChange(false);
-      setPaymentSuccess(false);
-    }, 2000);
+    }
   };
 
   return (

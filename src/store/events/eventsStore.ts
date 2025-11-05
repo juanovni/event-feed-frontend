@@ -10,6 +10,7 @@ interface EventsState {
   toggleInterested: (eventId: string) => void;
   isInterested: (eventId: string) => boolean;
   updateEventInterestCount: (eventId: string, increment: boolean) => void;
+  updateEventAsPaid: (eventId: string) => void;
   clearEvents: () => void;
 }
 
@@ -46,6 +47,16 @@ export const useEventsStore = create<EventsState>()(
                 interested: increment ? e.interested + 1 : e.interested - 1,
                 userStatus: increment ? "interested" : "none",
               }
+              : e
+          ),
+        }));
+      },
+
+      updateEventAsPaid: (eventId) => {
+        set((state) => ({
+          events: state.events.map((e) =>
+            e.id === eventId
+              ? { ...e, hasPaid: true, userStatus: "attending" }
               : e
           ),
         }));
