@@ -12,7 +12,7 @@ export default function EventsLayout({
       {/* Contenido principal */}
       <div className="flex w-full max-w-6xl justify-center gap-x-10">
         {/* Feed central */}
-        <div className="w-full max-w-xl">{children}</div>
+        <div className="w-full max-w-[56%]">{children}</div>
 
 
         {/* Columna de sugerencias */}
