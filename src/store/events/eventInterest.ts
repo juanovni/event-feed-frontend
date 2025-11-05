@@ -3,10 +3,13 @@ import { create } from "zustand";
 interface InterestStore {
   interestedEvents: Set<string>;
   toggleLocalInterest: (eventId: string) => void;
+  reset: () => void;
 }
 
 export const useInterestStore = create<InterestStore>((set, get) => ({
+
   interestedEvents: new Set(),
+
   toggleLocalInterest: (eventId) => {
     const current = new Set(get().interestedEvents);
     if (current.has(eventId)) {
@@ -16,4 +19,7 @@ export const useInterestStore = create<InterestStore>((set, get) => ({
     }
     set({ interestedEvents: current });
   },
+
+  reset: () => set({ interestedEvents: new Set() }),
+
 }));

@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from "next/navigation";
 import {
   Bell,
   HomeIcon,
@@ -11,16 +12,26 @@ import {
 } from 'lucide-react';
 import { SidebarItem } from './SidebarItem';
 import { AvatarProfile, CreateEventDialog } from '@/components';
-import { useAuthStore, useEventDialogStore } from '@/store';
-import { redirect } from 'next/navigation';
+import { useAuthStore, useEventDialogStore, useEventsStore, useInterestStore } from '@/store';
+import { useQueryClient } from "@tanstack/react-query";
 
 export const Sidebar = () => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const { user, logout } = useAuthStore();
   const { openDialog, isOpen, closeDialog } = useEventDialogStore();
 
   const handleLogout = () => {
     logout();
-    redirect('/auth/login')
+    // Limpia Zustand
+    useEventsStore.getState().reset();
+    useInterestStore.getState().reset();
+
+    // Limpia cache de React Query
+    
+    queryClient.clear();
+
+    router.replace('/auth/login');
   }
 
   if (!user) return null;

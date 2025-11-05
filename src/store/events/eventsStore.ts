@@ -12,6 +12,7 @@ interface EventsState {
   updateEventInterestCount: (eventId: string, increment: boolean) => void;
   updateEventAsPaid: (eventId: string) => void;
   clearEvents: () => void;
+  reset: () => void;
 }
 
 export const useEventsStore = create<EventsState>()(
@@ -63,6 +64,15 @@ export const useEventsStore = create<EventsState>()(
       },
 
       clearEvents: () => set({ events: [], interestedEvents: [] }),
+
+      // 👇 Limpia tanto el estado en memoria como el localStorage persistido
+      reset: () => {
+        set({ events: [], interestedEvents: [] });
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("events-storage");
+        }
+      },
+
     }),
     {
       name: "events-storage", // Se guarda en localStorage
