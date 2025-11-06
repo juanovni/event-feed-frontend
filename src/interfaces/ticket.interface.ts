@@ -1,11 +1,12 @@
 import { Event } from "./event.interface";
 
 export interface Ticket {
-  //id: string;
+  id: string;
+  subTotal: number;
+  tax: number;
+  total: number;
+  itemsInOrder: number;
+  isPaid: Boolean;
+  paidAt: Date;
   event: Event;
-  /*   cost: number;
-    ticketNumber: string;
-    seat?: string;
-    section?: string; */
-  //createdAt: Date;
 }
