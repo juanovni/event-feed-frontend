@@ -15,7 +15,7 @@ export default function FollowersPage() {
         <HeaderButton />
       </Title>
       {events.length === 0 ? (
-        <EventEmpty />
+        <EventEmpty type="followers" />
       ) : (
         <EventGrid events={events} />
       )}
