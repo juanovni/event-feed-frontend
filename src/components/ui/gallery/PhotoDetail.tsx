@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { X, User, Clock } from 'lucide-react';
 
 interface Photo {
@@ -14,17 +15,6 @@ interface PhotoDetailProps {
 }
 
 export function PhotoDetail({ photo, onClose }: PhotoDetailProps) {
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('es-ES', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    }).format(date);
-  };
-
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-98 z-[60] flex items-center justify-center p-4"
@@ -43,7 +33,9 @@ export function PhotoDetail({ photo, onClose }: PhotoDetailProps) {
 
         <div className="flex flex-col md:flex-row">
           <div className="flex-1 flex items-center justify-center bg-black p-8">
-            <img
+            <Image
+              width={200}
+              height={200}
               src={photo.image_url}
               alt={`Foto por ${photo.photographer_name}`}
               className="max-w-full max-h-[70vh] object-contain rounded-lg"

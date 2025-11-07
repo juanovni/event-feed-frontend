@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { Dialog } from "@headlessui/react";
 import { X, Images } from "lucide-react";
-/* import { PhotoDetail } from "./PhotoDetail";
- */
+/* import { PhotoDetail } from "./PhotoDetail"; */
+
 interface GalleryPopupProps {
   images: string[];
 }
@@ -55,8 +56,8 @@ const defaultPhotos: Photo[] = [
 
 export const GalleryPopup: React.FC<GalleryPopupProps> = ({ images }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [photos, setPhotos] = useState<Photo[]>(defaultPhotos);
-  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+  const [photos] = useState<Photo[]>(defaultPhotos);
+  /* const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null); */
 
   const getRandomSize = (index: number) => {
     const sizes = [
@@ -103,9 +104,11 @@ export const GalleryPopup: React.FC<GalleryPopupProps> = ({ images }) => {
                   <div
                     key={photo.id}
                     className={`${getRandomSize(index)} relative group cursor-pointer overflow-hidden rounded-lg`}
-                    onClick={() => setSelectedPhoto(photo)}
+                  /* onClick={() => setSelectedPhoto(photo)} */
                   >
-                    <img
+                    <Image
+                      width={200}
+                      height={200}
                       src={photo.image_url}
                       alt={`Foto por ${photo.photographer_name}`}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
