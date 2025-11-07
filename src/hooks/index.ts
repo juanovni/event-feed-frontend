@@ -5,5 +5,6 @@ export * from './event/useCreateEvent';
 export * from './event/useEvent';
 export * from './follow/useFollow';
 export * from './notification/useNotifications';
-export * from './ticket/useCreateTicket';
 export * from './ticket/useTicket';
+export * from './tickets/useCreateTicket';
+export * from './tickets/useTickets';

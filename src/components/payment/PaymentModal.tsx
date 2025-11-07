@@ -18,7 +18,7 @@ import { useEventsStore } from "@/store"
 import { formatDate } from "@/utils"
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import { useCreateTicket } from "@/hooks/ticket/useCreateTicket";
+import { useCreateTicket } from "@/hooks/tickets/useCreateTicket";
 
 interface PaymentModalProps {
   event: Event;

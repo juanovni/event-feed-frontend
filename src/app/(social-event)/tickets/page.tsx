@@ -1,11 +1,13 @@
-//'use client';
+"use client";
 
-import { mockTickets } from "@/data/mockData";
 import { TicketGrid, TicketEmpty, Title } from "@/components";
-//import { useProtectedRoute } from "@/hooks";
+import { useTickets } from "@/hooks";
 
 export default function TicketsPage() {
-  //useProtectedRoute();
+  const { data: tickets, isLoading, isError } = useTickets();
+
+  if (isLoading) return <p>Cargando tickets...</p>;
+  if (isError) return <p>Error al cargar los tickets.</p>;
 
   return (
 
@@ -13,12 +15,11 @@ export default function TicketsPage() {
 
       <Title title="Tickets">{''}</Title>
 
-      <TicketGrid tickets={mockTickets} />
-
-      {mockTickets.length === 0 && (
+      {tickets.length === 0 ? (
         <TicketEmpty />
+      ) : (
+        <TicketGrid tickets={tickets} />
       )}
-
     </div>
   );
 }

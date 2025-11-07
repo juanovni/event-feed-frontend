@@ -1,10 +1,10 @@
-import { getTickets } from "@/actions";
+import { getTicketById } from "@/actions";
 import { useQuery } from "@tanstack/react-query";
 
-export const useTickets = () => {
+export const useTicket = (ticketId: string) => {
   return useQuery({
-    queryKey: ["tickets"],
-    queryFn: () => getTickets(),
-    staleTime: 1000 * 60 * 5, // 5 minutos
+    queryKey: ["ticket-by-id", { ticketId }],
+    queryFn: () => getTicketById(ticketId),
+    staleTime: 1000 * 60 * 15, // 15 minutos
   });
 };

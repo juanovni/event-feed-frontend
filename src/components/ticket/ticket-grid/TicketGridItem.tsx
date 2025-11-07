@@ -49,7 +49,7 @@ export const TicketGridItem = ({ ticket }: Props) => {
           <div className="flex items-center gap-2 text-lg">
             <DollarSign size={16} className="h-4 w-4 shrink-0 text-primary font-bold" />
             <p className="font-semibold">
-              {ticket.cost === 0 ? "Entrada gratuita" : `${ticket.cost} ${ticket.event.currency}`}
+              {ticket.total === 0 ? "Entrada gratuita" : `${ticket.total} ${ticket.event.currency}`}
             </p>
           </div>
         </div>

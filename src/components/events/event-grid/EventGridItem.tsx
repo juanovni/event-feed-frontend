@@ -70,7 +70,7 @@ export const EventGridItem = ({ event }: Props) => {
               <img
                 src={event.mediaUrl}
                 alt="Post content"
-                className="w-full object-contain max-h-1/3 cursor-pointer transition-transform duration-300 hover:scale-105"
+                className="w-full object-contain cursor-pointer transition-transform duration-300 hover:scale-105"
               />
               {event.gallery && (
                 <GalleryPopup images={event.gallery} />
