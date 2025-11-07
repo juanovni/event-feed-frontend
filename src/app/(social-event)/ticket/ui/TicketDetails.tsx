@@ -36,7 +36,7 @@ export const TicketDetails = ({ ticket }: Props) => {
           <MapPin className="w-5 h-5 text-primary mt-0.5" />
           <div>
             <p className="font-medium text-foreground">{ticket.event.location}</p>
-            {/* <p className="text-sm text-muted-foreground">{ticket.event.location}</p> */}
+            <p className="text-sm text-muted-foreground">Ubicación del evento</p>
           </div>
         </div>
 
