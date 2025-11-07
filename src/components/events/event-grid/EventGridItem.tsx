@@ -1,15 +1,13 @@
 'use client';
 
 import { useState } from "react";
+import Image from "next/image";
 import { Event } from "@/interfaces";
 import {
   CreditCard,
-  MessageCircle,
   Users
 } from "lucide-react";
-import { IoSendOutline } from "react-icons/io5";
 import { cn } from "@/lib/utils";
-import { formatTime } from "@/utils";
 import {
   AvatarProfile,
   EventInformation,
@@ -27,7 +25,6 @@ interface Props {
 }
 
 export const EventGridItem = ({ event }: Props) => {
-  const [showComments, setShowComments] = useState(false);
   const [assist, setAssist] = useState(event.hasPaid);
   const [showPaymentModal, setShowPaymentModal] = useState(false)
 
@@ -67,7 +64,7 @@ export const EventGridItem = ({ event }: Props) => {
         <div className="relative bg-black">
           {event.mediaType === 'image' ? (
             <>
-              <img
+              <Image
                 src={event.mediaUrl}
                 alt="Post content"
                 className="w-full object-contain cursor-pointer transition-transform duration-300 hover:scale-105"
@@ -105,15 +102,6 @@ export const EventGridItem = ({ event }: Props) => {
                 <Users className={cn("mr-2 h-4 w-4", assist && "fill-current")} />
                 <span>{assist ? "Confirmado" : "Asistiré"}</span>
               </Button>
-              {/* 
-              <Button
-                onClick={() => setShowComments(!showComments)}
-                variant="outline"
-              >
-                <MessageCircle />{event.comments.length}
-              </Button> */}
-
-
             </div>
 
             <FavoriteButton event={event} />
@@ -131,69 +119,6 @@ export const EventGridItem = ({ event }: Props) => {
             </Button>
           )}
         </div>
-
-        {/* Comments Section */}
-        {showComments && (
-          <div className="border-t border-gray-100">
-            <div className="p-4 space-y-4">
-              {event.comments.map((comment) => (
-                <div key={comment.id} className="flex space-x-3">
-                  <img
-                    src={comment.user.avatar}
-                    alt={comment.user.name}
-                    className="w-8 h-8 rounded-full object-cover flex-shrink-0"
-                  />
-                  <div className="flex-1">
-                    <div className="bg-gray-50 rounded-2xl px-4 py-2">
-                      <div className="flex items-center space-x-2 mb-1">
-                        <span className="font-semibold text-sm text-gray-900">{comment.user.name}</span>
-                        <span className="text-xs text-gray-500">{formatTime(comment.timestamp)}</span>
-                      </div>
-                      <p className="text-sm text-gray-800">{comment.content}</p>
-                    </div>
-                    <div className="flex items-center space-x-4 mt-2 ml-4">
-                      <button className="text-xs text-gray-500 hover:text-red-500 transition-colors duration-200">
-                        Me gusta ({comment.likes})
-                      </button>
-                      <button className="text-xs text-gray-500 hover:text-blue-500 transition-colors duration-200">
-                        Responder
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Add Comment */}
-            <div className="p-4 border-t border-gray-100">
-              <form
-                /* onSubmit={handleSubmitComment}  */
-                className="flex space-x-3">
-                <img
-                  src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150"
-                  alt="Your avatar"
-                  className="w-8 h-8 rounded-full object-cover flex-shrink-0"
-                />
-                <div className="flex-1 flex space-x-2">
-                  <input
-                    type="text"
-                    /* value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)} */
-                    placeholder="Escribe un comentario..."
-                    className="flex-1 px-4 py-2 bg-gray-50 rounded-full border-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200"
-                  />
-                  <button
-                    type="submit"
-                    /*  disabled={!newComment.trim()} */
-                    className="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-                  >
-                    <IoSendOutline className="w-4 h-4" />
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
       </div>
 
       <PaymentModal
