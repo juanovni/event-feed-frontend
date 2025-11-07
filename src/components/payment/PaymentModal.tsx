@@ -62,7 +62,7 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
       // Actualiza el estado global (Zustand)
       updateEventAsPaid(event.id);
 
-      //router.replace('/ticket/' + resp.ticket?.id);
+      router.replace('/ticket/' + resp.ticket?.id);
     } catch (error) {
       console.error(error);
     } finally {

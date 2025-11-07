@@ -1,4 +1,7 @@
+"use client";
+
 import { SetStateAction, useState } from "react";
+import Image from "next/image";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -155,7 +158,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
               ) : (
                 <div className="relative aspect-square w-full rounded-lg overflow-hidden bg-muted">
                   {mediaFile?.type.startsWith('image/') ? (
-                    <img
+                    <Image
                       src={mediaPreview}
                       alt="Preview"
                       className="w-full h-full object-cover"

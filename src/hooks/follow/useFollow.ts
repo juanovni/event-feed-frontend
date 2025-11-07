@@ -9,8 +9,7 @@ export const useFollow = () => {
       const { data } = await eventApi.post(`/follow/${followingId}`);
       return data;
     },
-    onSuccess: (data, followingId) => {
-      // 🔁 Actualiza el estado del evento o lista
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["events"] });
     },
   });

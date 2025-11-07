@@ -1,5 +1,6 @@
 'use client';
 
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Calendar, Clock, CreditCard, Map, DollarSign } from "lucide-react";
 import { Ticket } from "@/interfaces";
@@ -17,7 +18,7 @@ export const TicketGridItem = ({ ticket }: Props) => {
       onClick={() => redirect(`/ticket/${ticket.id}`)}
     >
       <div className="relative h-48 overflow-hidden">
-        <img
+        <Image
           src={ticket.event.mediaUrl}
           alt={ticket.event.title}
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"

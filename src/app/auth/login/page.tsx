@@ -18,6 +18,7 @@ export default function LoginPage() {
       await login(email, password);
       router.push("/");
     } catch (err) {
+      console.log(err);
       alert("Credenciales incorrectas");
     } finally {
       setLoading(false);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useFormContext, UseFormSetValue } from "react-hook-form";
 import { ImageUpIcon, X } from "lucide-react";
 import { toast } from "sonner";
@@ -16,7 +17,6 @@ export function MediaUploadStep({ setValue }: MediaUploadStepProps) {
   const mediaFile = watch("mediaFile");
   const [preview, setPreview] = useState<string | null>(null);
 
-  // 🔹 Genera el preview automáticamente desde el mediaFile actual
   useEffect(() => {
     if (mediaFile instanceof File) {
       const reader = new FileReader();
@@ -48,7 +48,7 @@ export function MediaUploadStep({ setValue }: MediaUploadStepProps) {
     return (
       <div className="relative aspect-square w-full rounded-lg overflow-hidden bg-muted">
         {mediaFile.type.startsWith("image/") ? (
-          <img src={preview} alt="Preview" className="w-full h-full object-cover" />
+          <Image src={preview} alt="Preview" className="w-full h-full object-cover" />
         ) : (
           <video src={preview} controls className="w-full h-full object-cover" />
         )}

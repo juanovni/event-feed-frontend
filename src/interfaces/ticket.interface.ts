@@ -7,7 +7,7 @@ export interface Ticket {
   tax: number;
   total: number;
   itemsInOrder: number;
-  isPaid: Boolean;
+  isPaid: boolean;
   paidAt: Date;
   event: Event;
 }

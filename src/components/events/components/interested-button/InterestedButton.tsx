@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const InterestedButton = ({ event }: Props) => {
-  const { mutate: toggleInterest, isPending } = useToggleInterest();
+  const { mutate: toggleInterest } = useToggleInterest();
   const { toggleLocalInterest } = useInterestStore();
 
   const handleClick = () => {

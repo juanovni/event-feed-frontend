@@ -36,7 +36,7 @@ export interface EventFormValues {
 export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps) {
   const [step, setStep] = useState(1);
   const { mutate, isPending } = useCreateEvent();
-  const { data: categories, isLoading, isError } = useCategories();
+  const { data: categories, isLoading } = useCategories();
 
   const methods = useForm<EventFormValues>({
     defaultValues: {
