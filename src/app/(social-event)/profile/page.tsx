@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Camera, Edit2, MapPin, Link, Calendar, Heart, MessageSquare, Users } from "lucide-react";
 
 export default function ProfilePage() {
@@ -40,7 +41,9 @@ export default function ProfilePage() {
           <div className="flex flex-col sm:flex-row sm:items-end sm:space-x-6">
             {/* Avatar */}
             <div className="relative -mt-20 mb-4 sm:mb-0">
-              <img
+              <Image
+                width={200}
+                height={200}
                 src={currentUser.avatar}
                 alt={currentUser.name}
                 className="w-32 h-32 rounded-full border-4 border-white object-cover shadow-lg"

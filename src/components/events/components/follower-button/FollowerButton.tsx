@@ -13,7 +13,7 @@ interface Props {
 
 export const FollowerButton = ({ event }: Props) => {
 
-  const { toggleFollow, isPending } = useFollow();
+  const { toggleFollow } = useFollow();
   const { toggleLocalFollow } = useFollowStore();
 
   const handleFollow = () => {

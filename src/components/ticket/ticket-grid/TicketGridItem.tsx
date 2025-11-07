@@ -19,6 +19,8 @@ export const TicketGridItem = ({ ticket }: Props) => {
     >
       <div className="relative h-48 overflow-hidden">
         <Image
+          width={200}
+          height={200}
           src={ticket.event.mediaUrl}
           alt={ticket.event.title}
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"

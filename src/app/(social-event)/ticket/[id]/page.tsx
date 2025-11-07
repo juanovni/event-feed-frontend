@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -45,7 +46,9 @@ export default function TicketPage({ params }: Props) {
     <div className="min-h-screen">
       {/* Header Image */}
       <div className="relative h-64 overflow-hidden">
-        <img
+        <Image
+          width={200}
+          height={200}
           src={ticket.event.mediaUrl}
           alt={ticket.event.title}
           className="w-full h-full object-cover"

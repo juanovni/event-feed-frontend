@@ -66,6 +66,8 @@ export const EventGridItem = ({ event }: Props) => {
             <>
               <Image
                 src={event.mediaUrl}
+                width={200}
+                height={200}
                 alt="Post content"
                 className="w-full object-contain cursor-pointer transition-transform duration-300 hover:scale-105"
               />

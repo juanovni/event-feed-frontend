@@ -1,5 +1,6 @@
 'use client';
 
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 export default function EventsLayout({
@@ -25,7 +26,9 @@ export default function EventsLayout({
                 {Array.from({ length: 5 }).map((_, i) => (
                   <li key={i} className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <img
+                      <Image
+                        width={200}
+                        height={200}
                         src={`https://i.pravatar.cc/40?img=${i + 5}`}
                         alt=""
                         className="w-9 h-9 rounded-full"

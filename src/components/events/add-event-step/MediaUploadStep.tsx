@@ -48,7 +48,13 @@ export function MediaUploadStep({ setValue }: MediaUploadStepProps) {
     return (
       <div className="relative aspect-square w-full rounded-lg overflow-hidden bg-muted">
         {mediaFile.type.startsWith("image/") ? (
-          <Image src={preview} alt="Preview" className="w-full h-full object-cover" />
+          <Image
+            width={200}
+            height={200}
+            src={preview}
+            alt="Preview"
+            className="w-full h-full object-cover"
+          />
         ) : (
           <video src={preview} controls className="w-full h-full object-cover" />
         )}

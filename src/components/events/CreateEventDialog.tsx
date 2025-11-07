@@ -159,6 +159,8 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
                 <div className="relative aspect-square w-full rounded-lg overflow-hidden bg-muted">
                   {mediaFile?.type.startsWith('image/') ? (
                     <Image
+                      width={200}
+                      height={200}
                       src={mediaPreview}
                       alt="Preview"
                       className="w-full h-full object-cover"
