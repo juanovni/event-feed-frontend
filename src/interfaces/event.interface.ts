@@ -15,7 +15,7 @@ export interface Event {
   location: string;
   eventDate: Date;
   timestamp: Date;
-  category: EventCategory;
+  category?: EventCategory;
   attendees: number;
   interested: number;
   isFollowing: boolean;

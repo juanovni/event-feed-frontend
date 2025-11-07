@@ -43,20 +43,14 @@ export const mockEvents: Event[] = [
     gallery: [],
     location: "Urdesa Central, Guayaquil Ecuador",
     eventDate: new Date('2025-01-08T16:45:00'),
-    category: "Discoteca",
-    EventImage: [
-      {
-        "id": 17,
-        "url": "https://res.cloudinary.com/dlxl5vbdk/image/upload/v1762461496/events/rllo6mei4z15clxmmo9b.jpg"
-      }
-    ],
-    "attendees": 0,
-    "userStatus": "none",
-    "createdAt": "2025-11-06T20:38:17.095Z",
-    "isFollowing": true,
-    "isInterested": true,
-    "interested": 1,
-    "hasPaid": false
+    attendees: 0,
+    userStatus: "none",
+    isFollowing: false,
+    isInterested: false,
+    interested: 0,
+    hasPaid: true,
+    comments: [],
+    timestamp: new Date('2025-01-08T16:45:00'),
   }
 ];
 
@@ -68,6 +62,7 @@ export const mockTickets: Ticket[] = [
     total: 5.75,
     itemsInOrder: 1,
     isPaid: false,
+    ticketNumber: "CCKCKC",
     paidAt: new Date('2025-01-08T16:45:00'),
     event: mockEvents[0]
   }
