@@ -46,7 +46,7 @@ export function MediaUploadStep({ setValue }: MediaUploadStepProps) {
 
   if (mediaFile && preview) {
     return (
-      <div className="relative aspect-square w-full rounded-lg overflow-hidden bg-muted">
+      <div className="relative aspect-square w-full overflow-hidden bg-muted">
         {mediaFile.type.startsWith("image/") ? (
           <Image
             width={200}
