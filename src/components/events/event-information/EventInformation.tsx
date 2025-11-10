@@ -39,8 +39,8 @@ export const EventInformation = ({ event }: Props) => {
         <div className="flex items-center gap-2 text-sm">
           <Users size={16} className="h-4 w-4 shrink-0 text-primary font-bold" />
           <p className="text-muted-foreground">
-            <span className="font-medium text-foreground">{event.attendees}</span> asistirán •{" "}
-            <span className="font-medium text-foreground">{event.interested}</span> interesados
+            <span className="font-medium text-foreground">{event.interested}</span> interesados •{" "}
+            <span className="font-medium text-foreground">{event.attendees}</span> asistirán
           </p>
         </div>
 

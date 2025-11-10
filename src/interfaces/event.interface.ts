@@ -20,6 +20,7 @@ export interface Event {
   interested: number;
   isFollowing: boolean;
   isInterested: boolean;
+  isAttending: boolean;
   hasPaid: boolean;
   userStatus: UserStatus;
 }

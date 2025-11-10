@@ -19,6 +19,7 @@ import { formatDate } from "@/utils"
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { useCreateTicket } from "@/hooks/tickets/useCreateTicket";
+import { useToggleAttend } from "@/hooks";
 
 interface PaymentModalProps {
   event: Event;
@@ -34,6 +35,7 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
 
   const { mutateAsync } = useCreateTicket();
   const { updateEventAsPaid } = useEventsStore();
+  const { mutateAsync: attendEvent } = useToggleAttend();
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,10 +61,18 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
 
       // Llama al backend con React Query
       const resp = await mutateAsync(payload);
-      // Actualiza el estado global (Zustand)
-      updateEventAsPaid(event.id);
 
-      router.replace('/ticket/' + resp.ticket?.id);
+      if (resp?.ok) {
+        // Actauliza tabla attendence
+        await attendEvent(event.id);
+
+        // Actualiza el estado global (Zustand)
+        updateEventAsPaid(event.id);
+
+        router.replace('/ticket/' + resp.ticket?.id);
+      }
+
+
     } catch (error) {
       console.error(error);
     } finally {

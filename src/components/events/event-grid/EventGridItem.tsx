@@ -19,33 +19,37 @@ import {
 } from "@/components";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useToggleAttend } from "@/hooks";
 
 interface Props {
   event: Event;
 }
 
 export const EventGridItem = ({ event }: Props) => {
-  const [assist, setAssist] = useState(event.hasPaid);
+  const [assist, setAssist] = useState(event.hasPaid || event.isAttending);
   const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const { mutateAsync: attendEvent } = useToggleAttend();
 
   const handlePaymentSuccess = () => {
     setAssist(true);
   }
 
-  const handleAttend = () => {
+  const handleAttend = async () => {
     if (event.cost === 0) {
-      setAssist(!assist);
-    } else {
-      if (!assist) {
-        setShowPaymentModal(true);
+      try {
+        const resp = await attendEvent(event.id);
+        if (resp.attending) setAssist(true);
+      } catch (err) {
+        console.error("Error al confirmar asistencia", err);
       }
+    } else {
+      if (!assist) setShowPaymentModal(true);
     }
-  }
+  };
 
   return (
     <>
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
-        {/* Header */}
         <div className="p-4 flex items-center justify-between">
 
           <AvatarProfile
@@ -99,7 +103,6 @@ export const EventGridItem = ({ event }: Props) => {
               <Button
                 onClick={handleAttend}
                 variant={assist ? "secondary" : "outline"}
-                className="flex-1"
               >
                 <Users className={cn("mr-2 h-4 w-4", assist && "fill-current")} />
                 <span>{assist ? "Confirmado" : "Asistiré"}</span>
