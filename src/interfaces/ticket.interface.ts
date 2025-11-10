@@ -10,4 +10,5 @@ export interface Ticket {
   isPaid: boolean;
   paidAt: Date;
   event: Event;
+  status?: string;
 }
