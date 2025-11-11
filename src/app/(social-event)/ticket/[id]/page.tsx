@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import { TicketInstructions } from "../ui/TicketInstructions";
 import { TicketQRCode } from "../ui/TicketQRCode";
 import { useTicket } from "@/hooks";
@@ -9,13 +10,11 @@ import { TicketHeader } from "../ui/TicketHeader";
 import { TicketSkeleton } from "../ui/TicketSkeleton";
 
 interface Props {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 export default function TicketPage({ params }: Props) {
-  const { id } = params;
+  const { id } = use(params);
   const { data: ticket, isLoading, isError } = useTicket(id);
 
   if (isLoading) {
@@ -40,7 +39,7 @@ export default function TicketPage({ params }: Props) {
         <TicketQRCode ticket={ticket} />
 
         <TicketDetails ticket={ticket} />
-        
+
         <TicketInstructions />
       </div>
     </div>
