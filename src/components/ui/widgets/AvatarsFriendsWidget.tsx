@@ -1,39 +1,19 @@
-import React from 'react'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../tooltip';
-import { Avatar, AvatarFallback, AvatarImage } from '../avatar';
+'use client';
 
-const confirmedFriends = [
-  { id: 1, name: "María", avatar: "https://randomuser.me/api/portraits/women/44.jpg" },
-  { id: 2, name: "Carlos", avatar: "https://randomuser.me/api/portraits/men/52.jpg" },
-  { id: 3, name: "Laura", avatar: "https://randomuser.me/api/portraits/women/32.jpg" },
-];
+import { useConfirmedFriends } from '@/hooks';
+import { EventConfirmedTooltip } from '@/components/events/event-confirmed-friends/EventConfirmedTooltip';
 
 export const AvatarsFriendsWidget = () => {
+  const { data: users, isLoading, isError } = useConfirmedFriends("906a3d9a-aff1-4f06-be5c-f4ce231e87a3");
+
+  if (isLoading) return <p>Cargando.</p>;
+  if (isError) return <p>Error al cargar los eventos.</p>;
+
   return (
     <div className="flex items-center gap-2">
-      <TooltipProvider>
-        <div className="flex items-center -space-x-2">
-          {confirmedFriends.map((friend) => (
-            <Tooltip key={friend.id}>
-              <TooltipTrigger asChild>
-                <Avatar
-                  className="
-                      h-8 w-8 border-2 border-white rounded-full
-                      transition-transform duration-200
-                      hover:scale-110 hover:z-10 cursor-pointer
-                    "
-                >
-                  <AvatarImage src={friend.avatar} alt={friend.name} />
-                  <AvatarFallback>{friend.name[0]}</AvatarFallback>
-                </Avatar>
-              </TooltipTrigger>
-              <TooltipContent side="top" className="text-sm font-medium">
-                {friend.name}
-              </TooltipContent>
-            </Tooltip>
-          ))}
-        </div>
-      </TooltipProvider>
+      {users && (
+        <EventConfirmedTooltip users={users} />
+      )}
       <p className="text-muted-foreground text-sm">tus amigos ya confirmaron</p>
     </div>
   )

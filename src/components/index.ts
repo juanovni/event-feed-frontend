@@ -6,6 +6,8 @@ export * from './events/add-event-step/MediaUploadStep';
 export * from './events/components/favorite-button/FavoriteButton';
 export * from './events/components/follower-button/FollowerButton';
 export * from './events/components/interested-button/InterestedButton';
+export * from './events/event-confirmed-friends/EventConfirmedTooltip';
+export * from './events/event-confirmed-friends/EventConfirmedTooltipItem';
 export * from './events/event-empty/EventEmpty';
 export * from './events/event-grid/EventGrid';
 export * from './events/event-grid/EventGridItem';
