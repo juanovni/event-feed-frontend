@@ -9,6 +9,7 @@ export const useCreateTicket = () => {
     onSuccess: () => {
       // 👇 Refresca la lista de eventos automáticamente
       queryClient.invalidateQueries({ queryKey: ["events"] });
+      queryClient.invalidateQueries({ queryKey: ["tickets"] });
     },
   });
 };

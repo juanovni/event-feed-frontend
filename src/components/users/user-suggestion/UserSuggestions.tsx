@@ -4,6 +4,16 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useFollow, useUserSuggestions } from "@/hooks";
 
+interface UserSuggestions {
+  id: string;
+  name: string;
+  username: string;
+  avatar: string;
+  isFollowing?: boolean;
+  interests: string[];
+  followsYou: boolean;
+}
+
 export const UserSuggestions = () => {
   const { data, isLoading, isError } = useUserSuggestions();
   const { toggleFollow, isPending } = useFollow();
@@ -28,7 +38,7 @@ export const UserSuggestions = () => {
   return (
     <div className="space-y-3">
       {/* <p className="font-semibold">Sugerencias para ti</p> */}
-      {data.map((user: any) => (
+      {data.map((user: UserSuggestions) => (
         <div key={user.id} className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Image

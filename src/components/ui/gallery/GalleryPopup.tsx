@@ -18,12 +18,12 @@ interface Photo {
 const defaultPhotos: Photo[] = [
   {
     id: 1,
-    image_url: 'https://scontent.cdninstagram.com/v/t51.75761-15/488755914_18045350327584200_2691189010476031384_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ig_cache_key=MzYwNzEzNjkxODc5MTY2Mzk4OQ%3D%3D.3-ccb1-7&ccb=1-7&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTgwMC5zZHIuQzMifQ%3D%3D&_nc_ohc=iFgMwxlelT4Q7kNvwHJqR_w&_nc_oc=Adlp5SJvICnn5TuvKwRrIyqoe6i24CAQ3gvSMQq3tExSY0Hhn0qcBwmtJbaQG6TRB4k&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=_oxl1D0HJdi9TGb5N1HDGg&oh=00_AfdlvFZ984ftLt_2vdODXFgxS0gSTpMUF3rhFEwQ_dWyKQ&oe=68FB7BB0',
+    image_url: 'https://offloadmedia.feverup.com/secretchicago.com/wp-content/uploads/2023/08/13042908/bub-city-1024x762.jpg',
     photographer_name: 'Juan'
   },
   {
     id: 2,
-    image_url: 'https://scontent.cdninstagram.com/v/t51.75761-15/481377883_18040173806584200_7448017545496699739_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08_tt6&_nc_cat=102&ig_cache_key=MzU3MzcxMTU4MjA3NDk4NDU4Mg%3D%3D.3-ccb1-7&ccb=1-7&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEzMzR4MTY2Ny5zZHIuQzMifQ%3D%3D&_nc_ohc=-bsGnsRRqREQ7kNvwEIl4UE&_nc_oc=AdkM-rsH-uU604cnjJo4ZN-Tqvlqiv0kAlS9xVQxTzz9mMFOtCFN1csNOgvhHcZzTmA&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=aH-6rNd9I19AETP_xdbM1w&oh=00_AfebQSMvwzkgBGXzT-sT1-q2T_CxgXEFMuJ9OQeP6ojrgg&oe=68FB7FE9',
+    image_url: 'https://offloadmedia.feverup.com/secretchicago.com/wp-content/uploads/2023/08/13042908/bub-city-1024x762.jpg',
     photographer_name: 'Juan'
   },
   {
@@ -33,7 +33,7 @@ const defaultPhotos: Photo[] = [
   },
   {
     id: 4,
-    image_url: 'https://scontent.cdninstagram.com/v/t51.75761-15/487077406_18044067791584200_8493636497851970786_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08_tt6&_nc_cat=100&ig_cache_key=MzU5ODQ0MjQyMDk4MTE5ODQxMw%3D%3D.3-ccb1-7&ccb=1-7&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTgwMC5zZHIuQzMifQ%3D%3D&_nc_ohc=npS5qonkZDcQ7kNvwGMeRge&_nc_oc=AdmyWpxPNgwTL5Ii6kPN6UL8NQRjJ7L77Bdci3qMP2NTt2pas52MjdYTPIZ_ptLk6jo&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=_oxl1D0HJdi9TGb5N1HDGg&oh=00_AfdJgB-Phk3wl9-JM76cbzdfP6zVFA4eMdr0QMsHKBsALQ&oe=68FB81CA',
+    image_url: 'https://offloadmedia.feverup.com/secretchicago.com/wp-content/uploads/2023/08/13042908/bub-city-1024x762.jpg',
     photographer_name: 'Juan'
   },
   {

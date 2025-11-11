@@ -31,7 +31,19 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'instagram.fgye1-2.fna.fbcdn.net'
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: 'scontent.cdninstagram.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'offloadmedia.feverup.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'esa-cdn.carta.menu'
+      },
     ]
   },
 };
