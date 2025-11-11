@@ -41,7 +41,7 @@ export const UserSuggestions = () => {
             <div className="flex flex-col">
               <p className="text-sm font-medium text-gray-900">{user.username}</p>
               <p className="text-xs text-gray-500">
-                {user.followsYou ? "Te sigue" : ""}
+                {user.followsYou ? "Te sigue" : "Sugerencia para ti"}
               </p>
             </div>
           </div>
