@@ -44,7 +44,7 @@ export const EventInformation = ({ event }: Props) => {
           </p>
         </div>
 
-        <AvatarsFriendsWidget />
+        <AvatarsFriendsWidget eventId={event.id} />
 
       </div>
 

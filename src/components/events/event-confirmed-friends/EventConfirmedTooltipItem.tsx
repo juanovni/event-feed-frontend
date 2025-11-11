@@ -7,7 +7,6 @@ interface Props {
 }
 
 export const EventConfirmedTooltipItem = ({ user }: Props) => {
-  console.log(user)
   return (
     <Tooltip key={user.id}>
       <TooltipTrigger asChild>
