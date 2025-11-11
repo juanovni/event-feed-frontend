@@ -48,9 +48,29 @@ export const mockEvents: Event[] = [
     isFollowing: false,
     isInterested: false,
     interested: 0,
+    isAttending: false,
     hasPaid: true,
     comments: [],
     timestamp: new Date('2025-01-08T16:45:00'),
+  }
+];
+
+export const mockFollowers = [
+  {
+    id: "clu1...",
+    name: "usuario_1",
+    username: "usuario_1",
+    avatar: "https://cdn.example.com/avatar1.jpg",
+    isFollowing: false,
+    followsYou: true
+  },
+  {
+    id: "clu2...",
+    name: "usuario_2",
+    username: "usuario_2",
+    avatar: "https://cdn.example.com/avatar2.jpg",
+    isFollowing: false,
+    followsYou: true
   }
 ];
 
