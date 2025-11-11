@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useUserSuggestions } from "@/hooks";
+import { useFollow, useUserSuggestions } from "@/hooks";
 
 export const UserSuggestions = () => {
   const { data, isLoading, isError } = useUserSuggestions();
+  const { toggleFollow, isPending } = useFollow();
 
   if (isLoading) {
     return (
@@ -44,8 +45,13 @@ export const UserSuggestions = () => {
               </p>
             </div>
           </div>
-          <Button size="sm" variant="default">
-            Seguir
+          <Button
+            size="sm"
+            variant={user.isFollowing ? "secondary" : "default"}
+            disabled={isPending}
+            onClick={() => toggleFollow(user.id)}
+          >
+            {user.isFollowing ? "Siguiendo" : "Seguir"}
           </Button>
         </div>
       ))}

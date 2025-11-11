@@ -1,3 +1,4 @@
+// hooks/useFollow.ts
 import { eventApi } from "@/api/event.api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -11,6 +12,7 @@ export const useFollow = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["events"] });
+      queryClient.invalidateQueries({ queryKey: ["user-suggestions"] });
     },
   });
 
