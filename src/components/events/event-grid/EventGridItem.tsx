@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Event } from "@/interfaces";
 import {
   CreditCard,
-  ImagePlus,
+  ImageUpIcon,
   Users
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -110,18 +110,18 @@ export const EventGridItem = ({ event }: Props) => {
                 <Users className={cn("mr-2 h-4 w-4", assist && "fill-current")} />
                 <span>{assist ? "Confirmado" : "Asistiré"}</span>
               </Button>
+
+              <Button
+                title="Publicar foto"
+                onClick={() => setOpenUpload(true)}
+              >
+                <ImageUpIcon className="h-4 w-4" />
+                Subir Foto
+              </Button>
+
             </div>
 
             <FavoriteButton event={event} />
-
-            {/* NEW UPLOAD BUTTON */}
-            <Button
-              size="icon"
-              className="rounded-full bg-gray-200 hover:bg-gray-300"
-              onClick={() => setOpenUpload(true)}
-            >
-              <ImagePlus className="h-4 w-4" />
-            </Button>
 
           </div>
           {event.cost > 0 && !assist && (
