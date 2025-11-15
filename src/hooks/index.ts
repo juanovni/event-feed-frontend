@@ -5,6 +5,7 @@ export * from './event-confirmed-friends/useConfirmedFriends';
 export * from './event-interest/useToggleInterest';
 export * from './event/useCreateEvent';
 export * from './event/useEvent';
+export * from './event/useUploadEventImage';
 export * from './follow/useFollow';
 export * from './notification/useNotifications';
 export * from './ticket/useTicket';

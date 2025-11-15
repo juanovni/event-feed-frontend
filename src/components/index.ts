@@ -14,6 +14,7 @@ export * from './events/event-grid/EventGridItem';
 export * from './events/event-grid/EventSkeletonGrid';
 export * from './events/event-information/EventInformation';
 export * from './events/event-skeleton/EventSkeletonCard';
+export * from './events/event-upload-gallery/UploadGalleryImageDialog';
 export * from './events/hader-buttom/HeaderButton';
 export * from './notifications/notification-grid/NotificationGrid';
 export * from './notifications/notification-grid/NotificationGridItem';

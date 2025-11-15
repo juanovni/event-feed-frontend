@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Event } from "@/interfaces";
 import {
   CreditCard,
+  ImagePlus,
   Users
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -15,7 +16,8 @@ import {
   FollowerButton,
   InterestedButton,
   GalleryPopup,
-  PaymentModal
+  PaymentModal,
+  UploadGalleryImageDialog
 } from "@/components";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,7 +29,8 @@ interface Props {
 
 export const EventGridItem = ({ event }: Props) => {
   const [assist, setAssist] = useState(event.hasPaid || event.isAttending);
-  const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [openUpload, setOpenUpload] = useState(false);
   const { mutateAsync: attendEvent } = useToggleAttend();
 
   const handlePaymentSuccess = () => {
@@ -111,6 +114,15 @@ export const EventGridItem = ({ event }: Props) => {
 
             <FavoriteButton event={event} />
 
+            {/* NEW UPLOAD BUTTON */}
+            <Button
+              size="icon"
+              className="rounded-full bg-gray-200 hover:bg-gray-300"
+              onClick={() => setOpenUpload(true)}
+            >
+              <ImagePlus className="h-4 w-4" />
+            </Button>
+
           </div>
           {event.cost > 0 && !assist && (
             <Button
@@ -132,6 +144,13 @@ export const EventGridItem = ({ event }: Props) => {
         onOpenChange={setShowPaymentModal}
         onSuccess={handlePaymentSuccess}
       />
+
+      <UploadGalleryImageDialog
+        open={openUpload}
+        onOpenChange={setOpenUpload}
+        eventId={event.id}
+      />
+
     </>
   )
 }
