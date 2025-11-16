@@ -24,7 +24,9 @@ export interface EventGalleryFormValues {
 
 export function UploadGalleryImageDialog({ open, onOpenChange, eventId }: CreateMediaDialogProps) {
   const [step, setStep] = useState(1);
-  const { mutate, isPending } = useUploadEventImage();
+  //const { mutate, isPending } = useUploadEventImage();
+  const { mutateAsync, isPending } = useUploadEventImage();
+
   const { data: categories, isLoading } = useCategories();
 
   const methods = useForm<EventGalleryFormValues>({
@@ -36,7 +38,7 @@ export function UploadGalleryImageDialog({ open, onOpenChange, eventId }: Create
 
   const { handleSubmit, getValues, setValue } = methods;
 
-  const onSubmit = (data: EventGalleryFormValues) => {
+  const onSubmit = async (data: EventGalleryFormValues) => {
     const formData = new FormData();
 
     if (!data.mediaFile) {
@@ -45,7 +47,7 @@ export function UploadGalleryImageDialog({ open, onOpenChange, eventId }: Create
     }
 
     formData.append("mediaFile", data.mediaFile);
-    mutate({ eventId, formData });
+    await mutateAsync({ eventId, formData });
 
     onOpenChange(false);
     methods.reset();

@@ -6,57 +6,22 @@ import { Dialog } from "@headlessui/react";
 import { X, Images } from "lucide-react";
 /* import { PhotoDetail } from "./PhotoDetail"; */
 
-interface GalleryPopupProps {
-  images: string[];
-}
-
-interface Photo {
+interface GalleryImage {
   id: number;
-  image_url: string;
-  photographer_name: string;
+  url: string;
 }
-const defaultPhotos: Photo[] = [
-  {
-    id: 1,
-    image_url: 'https://offloadmedia.feverup.com/secretchicago.com/wp-content/uploads/2023/08/13042908/bub-city-1024x762.jpg',
-    photographer_name: 'Juan'
-  },
-  {
-    id: 2,
-    image_url: 'https://offloadmedia.feverup.com/secretchicago.com/wp-content/uploads/2023/08/13042908/bub-city-1024x762.jpg',
-    photographer_name: 'Juan'
-  },
-  {
-    id: 3,
-    image_url: 'https://offloadmedia.feverup.com/secretmiami.com/wp-content/uploads/2021/12/13053615/334061804_1396914061112320_8657061276421314979_n.jpg',
-    photographer_name: 'Juan'
-  },
-  {
-    id: 4,
-    image_url: 'https://offloadmedia.feverup.com/secretchicago.com/wp-content/uploads/2023/08/13042908/bub-city-1024x762.jpg',
-    photographer_name: 'Juan'
-  },
-  {
-    id: 5,
-    image_url: 'https://offloadmedia.feverup.com/secretchicago.com/wp-content/uploads/2023/08/13042908/bub-city-1024x762.jpg',
-    photographer_name: 'Juan'
-  },
-  {
-    id: 6,
-    image_url: 'https://esa-cdn.carta.menu/storage/media/company_gallery/75431901/conversions/contribution_gallery.jpg',
-    photographer_name: 'Juan'
-  },
-  {
-    id: 7,
-    image_url: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800',
-    photographer_name: 'Juan'
-  }
-]
 
+interface GalleryPopupProps {
+  images: GalleryImage[];
+}
 
 export const GalleryPopup: React.FC<GalleryPopupProps> = ({ images }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [photos] = useState<Photo[]>(defaultPhotos);
+  const photos = images.map((img) => ({
+    id: img.id,
+    image_url: img.url,
+    photographer_name: "Usuario" // o lo que tengas en el backend
+  }));
   /* const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null); */
 
   const getRandomSize = (index: number) => {

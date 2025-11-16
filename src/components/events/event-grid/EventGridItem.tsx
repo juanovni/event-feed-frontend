@@ -21,7 +21,7 @@ import {
 } from "@/components";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useToggleAttend } from "@/hooks";
+import { useEventImages, useToggleAttend } from "@/hooks";
 
 interface Props {
   event: Event;
@@ -32,6 +32,7 @@ export const EventGridItem = ({ event }: Props) => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [openUpload, setOpenUpload] = useState(false);
   const { mutateAsync: attendEvent } = useToggleAttend();
+  const { data: galleryImages } = useEventImages(event.id);
 
   const handlePaymentSuccess = () => {
     setAssist(true);
@@ -79,7 +80,7 @@ export const EventGridItem = ({ event }: Props) => {
                 className="w-full object-contain cursor-pointer transition-transform duration-300 hover:scale-105"
               />
               {event.gallery && (
-                <GalleryPopup images={event.gallery} />
+                <GalleryPopup images={galleryImages || []} />
               )}
             </>
           ) : (
