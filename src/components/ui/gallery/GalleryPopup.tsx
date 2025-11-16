@@ -4,11 +4,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Dialog } from "@headlessui/react";
 import { X, Images } from "lucide-react";
+import { User } from "@/interfaces";
 /* import { PhotoDetail } from "./PhotoDetail"; */
 
 interface GalleryImage {
   id: number;
   url: string;
+  user: User;
 }
 
 interface GalleryPopupProps {
@@ -20,7 +22,7 @@ export const GalleryPopup: React.FC<GalleryPopupProps> = ({ images }) => {
   const photos = images.map((img) => ({
     id: img.id,
     image_url: img.url,
-    photographer_name: "Usuario" // o lo que tengas en el backend
+    user: img.user// o lo que tengas en el backend
   }));
   /* const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null); */
 
@@ -75,12 +77,12 @@ export const GalleryPopup: React.FC<GalleryPopupProps> = ({ images }) => {
                       width={200}
                       height={200}
                       src={photo.image_url}
-                      alt={`Foto por ${photo.photographer_name}`}
+                      alt={`Foto por ${photo.user.name}`}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
                       <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center p-4">
-                        <p className="font-semibold">{photo.photographer_name}</p>
+                        <p className="font-semibold">{photo.user.name}</p>
                       </div>
                     </div>
                   </div>
