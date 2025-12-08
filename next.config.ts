@@ -44,6 +44,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'esa-cdn.carta.menu'
       },
+      {
+        protocol: 'https',
+        hostname: 'render.vivenu.com'
+      },
     ]
   },
 };

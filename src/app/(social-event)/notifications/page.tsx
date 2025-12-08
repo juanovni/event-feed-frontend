@@ -1,19 +1,14 @@
 'use client';
 
 import { getUserNotifications } from "@/actions";
-/* import { getUserNotifications } from "@/actions"; */
 import { NotificationGrid, Title } from "@/components";
 import { mockNotifications } from "@/data/mockData";
 import { useNotifications } from "@/hooks";
-import { useNotificationStore } from "@/store";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export default function NotificationPage() {
-  const queryClient = useQueryClient();
-  const { count, resetCount } = useNotificationStore();
 
-  const userId = '36901bb8-d078-4356-9e8f-253cb4a8de49';
+  const userId = '0cd748f2-f7a6-4f80-a777-9339d79fafd3';
 
   // ✅ Llamada inicial controlada
   const { data: notifications = [] } = useQuery({
@@ -23,28 +18,16 @@ export default function NotificationPage() {
     //refetchOnWindowFocus: false,
     //staleTime: 1000 * 60 * 5, // 5 min
   });
-
+  
   // ✅ Activar socket
   useNotifications(userId);
 
 
-  useEffect(() => {
-    queryClient.setQueryData(["notifications_count", userId], 0);
-  }, [userId, queryClient]);
-
-  // 🧹 Resetear contador al entrar
-  useEffect(() => {
-    resetCount();
-  }, [resetCount]);
-
   return (
     <div className="space-y-4">
 
-      <Title title={`Notificaciones (${count})`}>
-        <button
-          className="text-sm text-blue-600 hover:text-blue-700 font-medium"
-          onClick={() => resetCount()}
-        >
+      <Title title="Notificaciones">
+        <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
           Marcar todas como leídas
         </button>
       </Title>
