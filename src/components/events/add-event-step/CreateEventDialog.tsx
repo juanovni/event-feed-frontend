@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { EventDetailsStep, MediaUploadStep } from "@/components";
+import { EventDetailsStep, MediaUploadStep, TicketsStep } from "@/components";
 import { useCategories, useCreateEvent } from "@/hooks";
 import { UserStatus } from "@/interfaces";
 import { combineDateAndTime } from "@/utils";
@@ -31,6 +31,12 @@ export interface EventFormValues {
   userStatus: UserStatus;
   categoryId: string;
   mediaFile?: File | null;
+  tickets: {
+    name: string;
+    price: number;
+    quantity: number;
+    validUntil: Date | null;
+  }[];
 }
 
 export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps) {
@@ -51,7 +57,8 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       attendees: 0,
       userStatus: "none",
       categoryId: "",
-      mediaFile: null
+      mediaFile: null,
+      tickets: []
     },
   });
 
@@ -79,6 +86,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     formData.append("userStatus", eventToSave.userStatus);
     formData.append("categoryId", eventToSave.categoryId);
     formData.append("mediaFile", data.mediaFile);
+    formData.append("eventTicketTypes", JSON.stringify(eventToSave.tickets));
     mutate(formData);
 
     onOpenChange(false);
@@ -86,13 +94,17 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     setStep(1);
   };
 
-  const handleNextStep = () => {
+  const handleNextFormStep = () => {
     const file = getValues("mediaFile");
     if (!file) {
       toast.error("Por favor sube una imagen o video");
       return;
     }
     setStep(2);
+  };
+
+  const handleNextTicketStep = () => {
+    setStep(3);
   };
 
   if (isLoading) return <p>Cargando eventos...</p>;
@@ -104,6 +116,11 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
           <div className="flex items-center justify-between">
             {step === 2 && (
               <Button variant="ghost" size="icon" onClick={() => setStep(1)} className="h-8 w-8">
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+            )}
+            {step === 3 && (
+              <Button variant="ghost" size="icon" onClick={() => setStep(2)} className="h-8 w-8">
                 <ArrowLeft className="h-4 w-4" />
               </Button>
             )}
@@ -119,8 +136,10 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
             <div className="max-h-[70vh] overflow-y-auto">
               {step === 1 ? (
                 <MediaUploadStep setValue={setValue} />
-              ) : (
+              ) : step === 2 ? (
                 <EventDetailsStep categories={categories} />
+              ) : (
+                <TicketsStep />
               )}
             </div>
 
@@ -128,14 +147,26 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
               {step === 1 ? (
                 <Button
                   type="button"
-                  onClick={(e) => { e.preventDefault(); handleNextStep(); }}
+                  onClick={(e) => { e.preventDefault(); handleNextFormStep(); }}
                   className="w-full"
                   size="lg"
                 >
                   Siguiente
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
+
+              ) : step === 2 ? (
+                <Button
+                  type="button"
+                  onClick={(e) => { e.preventDefault(); handleNextTicketStep(); }}
+                  className="w-full"
+                  size="lg"
+                >
+                  Asiganar entradas
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
               ) : (
+
                 <Button
                   type="submit"
                   className="w-full"

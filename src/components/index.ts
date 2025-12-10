@@ -3,6 +3,7 @@
 export * from './events/add-event-step/CreateEventDialog';
 export * from './events/add-event-step/EventDetailsStep';
 export * from './events/add-event-step/MediaUploadStep';
+export * from './events/add-event-step/TicketsStep';
 export * from './events/components/favorite-button/FavoriteButton';
 export * from './events/components/follower-button/FollowerButton';
 export * from './events/components/interested-button/InterestedButton';

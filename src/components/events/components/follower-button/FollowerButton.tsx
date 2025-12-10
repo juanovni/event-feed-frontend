@@ -29,7 +29,7 @@ export const FollowerButton = ({ event }: Props) => {
       variant={event.isFollowing ? "secondary" : "outline"}
       onClick={handleFollow}
     >
-      <UserPlus className={cn("mr-2 h-4 w-4", event.isFollowing && "fill-current")}
+      <UserPlus className={cn("h-4 w-4", event.isFollowing && "fill-current")}
       />
       {event.isFollowing ? "Siguiendo" : "Seguir"}
     </Button>

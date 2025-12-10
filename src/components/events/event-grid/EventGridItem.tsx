@@ -22,6 +22,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useEventImages, useToggleAttend } from "@/hooks";
+import { getTotalPrice } from "@/utils";
 
 interface Props {
   event: Event;
@@ -33,13 +34,14 @@ export const EventGridItem = ({ event }: Props) => {
   const [openUpload, setOpenUpload] = useState(false);
   const { mutateAsync: attendEvent } = useToggleAttend();
   const { data: galleryImages } = useEventImages(event.id);
+  const totalCost = getTotalPrice(event);
 
   const handlePaymentSuccess = () => {
     setAssist(true);
   }
 
   const handleAttend = async () => {
-    if (event.cost === 0) {
+    if (totalCost === 0) {
       try {
         const resp = await attendEvent(event.id);
         if (resp.attending) setAssist(true);
@@ -108,24 +110,26 @@ export const EventGridItem = ({ event }: Props) => {
                 onClick={handleAttend}
                 variant={assist ? "secondary" : "outline"}
               >
-                <Users className={cn("mr-2 h-4 w-4", assist && "fill-current")} />
+                <Users className={cn("h-4 w-4", assist && "fill-current")} />
                 <span>{assist ? "Confirmado" : "Asistiré"}</span>
               </Button>
 
-              <Button
-                title="Publicar foto"
-                onClick={() => setOpenUpload(true)}
-              >
-                <ImageUpIcon className="h-4 w-4" />
-                Subir Foto
-              </Button>
-
+              {event.hasPaid || assist && (
+                <Button
+                  title="Publicar foto"
+                  onClick={() => setOpenUpload(true)}
+                  className="bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
+                >
+                  <ImageUpIcon className="h-4 w-4" />
+                  Subir Foto
+                </Button>
+              )}
             </div>
 
             <FavoriteButton event={event} />
 
           </div>
-          {event.cost > 0 && !assist && (
+          {totalCost > 0 && !assist && (
             <Button
               variant="outline"
               size="lg"

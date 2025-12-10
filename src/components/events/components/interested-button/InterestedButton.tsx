@@ -26,7 +26,7 @@ export const InterestedButton = ({ event }: Props) => {
       variant={event.isInterested ? "secondary" : "outline"}
     >
       <ThumbsUp
-        className={cn("mr-2 h-4 w-4", event.isInterested && "fill-current")}
+        className={cn("h-4 w-4", event.isInterested && "fill-current")}
       />
       {event.isInterested ? "Interesado" : "Me interesa"}
     </Button>

@@ -23,6 +23,13 @@ export interface Event {
   isAttending: boolean;
   hasPaid: boolean;
   userStatus: UserStatus;
+  eventTicketTypes?: {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    validUntil: string | null;
+  }[];
 }
 export type UserStatus = 'attending' | 'interested' | 'none';
 export type EventCategory =

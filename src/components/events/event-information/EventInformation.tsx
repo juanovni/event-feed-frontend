@@ -30,12 +30,48 @@ export const EventInformation = ({ event }: Props) => {
           <Clock className="w-4 h-4 text-primary font-bold" />
           <span className="font-medium">{formatTime(event.eventDate)}</span>
         </div>
-        <div className="flex items-center gap-2 text-sm">
-          <DollarSign size={16} className="h-4 w-4 shrink-0 text-primary font-bold" />
-          <p className="font-medium">
-            {event.cost === 0 ? "Entrada gratuita" : `${currencyFormat(event.cost)} ${event.currency}`}
-          </p>
+
+        <div className="flex items-start gap-2 text-sm">
+          {/* Evento gratuito */}
+          {event.cost === 0 && (!event.eventTicketTypes || event.eventTicketTypes.length === 0) && (
+            <p className="font-medium">Entrada gratuita</p>
+          )}
+
+          {/* Un solo tipo de ticket */}
+          {event.eventTicketTypes && event.eventTicketTypes.length === 1 && (
+            <div className="flex flex-col">
+              <span className="font-medium">
+               ${currencyFormat(event.eventTicketTypes[0].price)} {event.currency}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                {event.eventTicketTypes[0].name}
+              </span>
+            </div>
+          )}
+
+          {/* Múltiples tipos de tickets */}
+          {event.eventTicketTypes && event.eventTicketTypes.length > 1 && (
+            <div className="flex flex-col">
+              <span className="font-medium">
+                Precios Desde{" "}
+                ${currencyFormat(
+                  Math.min(...event.eventTicketTypes.map((t) => t.price))
+                )}{" "}
+                {event.currency}
+              </span>
+
+              <ul className="text-xs text-muted-foreground space-y-1 mt-1">
+                {event.eventTicketTypes.map((ticket) => (
+                  <li key={ticket.id}>
+                    <span className="font-medium text-foreground">{ticket.name}:</span>{" "}
+                    ${currencyFormat(ticket.price)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
+
         <div className="flex items-center gap-2 text-sm">
           <Users size={16} className="h-4 w-4 shrink-0 text-primary font-bold" />
           <p className="text-muted-foreground">
@@ -48,7 +84,7 @@ export const EventInformation = ({ event }: Props) => {
 
       </div>
 
-      <NavigationWidget distanceKm={distanceKm} />
+      {/* <NavigationWidget distanceKm={distanceKm} /> */}
 
     </div>
   )
