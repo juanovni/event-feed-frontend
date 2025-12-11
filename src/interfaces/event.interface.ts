@@ -23,7 +23,7 @@ export interface Event {
   isAttending: boolean;
   hasPaid: boolean;
   userStatus: UserStatus;
-  eventTicketTypes?: {
+  eventTicketTypes: {
     id: string;
     name: string;
     price: number;

@@ -7,5 +7,4 @@ export interface Comment {
   timestamp: Date;
   likes: number;
   replies?: Comment[];
-  //eventId: string;
 }
