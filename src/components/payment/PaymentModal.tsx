@@ -33,6 +33,9 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
+
+
+
   // Cantidades por cada tipo de ticket
   const [quantities, setQuantities] = useState<Record<string, number>>(() => {
     const q: Record<string, number> = {};
@@ -66,6 +69,8 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
   const total = (event.eventTicketTypes ?? []).reduce((acc, ticket) => {
     return acc + ticket.price * (quantities[ticket.id] ?? 0);
   }, 0);
+
+  const totalWithTax = total + total * 0.15;
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -158,7 +163,7 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
                   <div className="flex justify-between items-center pt-2">
                     <span className="text-sm font-medium">Total a pagar</span>
                     <span className="text-lg font-bold">
-                      ${total.toFixed(2)} {event.currency}
+                      ${totalWithTax.toFixed(2)} {event.currency}
                     </span>
                   </div>
                   <span className="text-xs text-muted-foreground">incluido Impuestos</span>
@@ -193,7 +198,7 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
 
                   <DialogFooter>
                     <Button type="submit" disabled={isProcessing || total === 0}>
-                      {isProcessing ? "Procesando..." : `Pagar $${total.toFixed(2)}`}
+                      {isProcessing ? "Procesando..." : `Pagar $${totalWithTax.toFixed(2)}`}
                     </Button>
                   </DialogFooter>
 
