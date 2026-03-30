@@ -80,7 +80,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     formData.append("eventDate", eventDateTime.toISOString());
     formData.append("mediaType", eventToSave.mediaType);
     formData.append("mediaUrl", eventToSave.mediaUrl);
-    formData.append("cost", eventToSave.cost.toString());
+    formData.append("cost", "0".toString());
     formData.append("currency", eventToSave.currency);
     formData.append("attendees", eventToSave.attendees.toString());
     formData.append("userStatus", eventToSave.userStatus);

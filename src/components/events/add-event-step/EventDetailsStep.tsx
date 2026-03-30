@@ -39,7 +39,7 @@ export function EventDetailsStep({ categories }: Props) {
         <Input {...register("location", { required: true })} id="title" placeholder="Ej: Urdesa Central, Guayaquil, Ecuador" />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4">
         <div className="space-y-2">
           <Label htmlFor="category">Categoría</Label>
           <Select
@@ -61,22 +61,6 @@ export function EventDetailsStep({ categories }: Props) {
               </SelectGroup>
             </SelectContent>
           </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="cost">Costo</Label>
-          <Input
-            type="number"
-            step="0.01"
-            placeholder="0.00"
-            {...register("cost", {
-              required: "El costo es obligatorio",
-              valueAsNumber: true,
-              validate: (value) =>
-                !isNaN(value) && value >= 0 && /^\d+(\.\d{1,2})?$/.test(value.toString()) ||
-                "Debe ser un número válido con hasta dos decimales",
-            })}
-          />
         </div>
       </div>
 

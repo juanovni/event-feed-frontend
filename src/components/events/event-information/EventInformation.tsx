@@ -1,7 +1,7 @@
 import { AvatarsFriendsWidget } from "@/components/ui/widgets/AvatarsFriendsWidget";
 import { NavigationWidget } from "@/components/ui/widgets/NavigationWidget";
 import { currencyFormat, formatDate, formatTime } from "@/utils";
-import { Calendar, Clock, DollarSign, Map, Users } from "lucide-react";
+import { Calendar, Clock, Map, Users } from "lucide-react";
 import { Event } from "@/interfaces";
 
 interface Props {
@@ -84,7 +84,7 @@ export const EventInformation = ({ event }: Props) => {
 
       </div>
 
-      {/* <NavigationWidget distanceKm={distanceKm} /> */}
+      <NavigationWidget distanceKm={distanceKm} />
 
     </div>
   )
