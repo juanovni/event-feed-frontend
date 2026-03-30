@@ -31,20 +31,20 @@ export default function LoginPage() {
     <div className="min-h-screen flex flex-col bg-white">
 
       {/* LOGO */}
-      <div className="p-6">
-        <h1 className="text-xl font-semibold">Eventos</h1>
-      </div>
+      <div className="p-6 text-xl font-semibold">Eventos</div>
 
-      {/* LOGIN */}
-      <div className="flex-1 flex items-center justify-center px-4">
-        <form className="w-full max-w-sm space-y-6" onSubmit={handleSubmit}>
-
+      {/* CONTENIDO */}
+      <div className="flex items-center justify-center px-4 py-20">
+        <form
+          className="w-full max-w-sm space-y-6"
+          onSubmit={handleSubmit}
+        >
           <div className="text-center space-y-2">
             <h2 className="text-xl font-semibold">
               Inicia sesión para continuar
             </h2>
             <p className="text-sm text-gray-500">
-              Ingresa tu correo para continuar
+              Ingresa tus credenciales para acceder a tu cuenta y descubrir eventos personalizados según tus intereses.
             </p>
           </div>
 
