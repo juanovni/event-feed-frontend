@@ -3,12 +3,14 @@ import { NavigationWidget } from "@/components/ui/widgets/NavigationWidget";
 import { currencyFormat, formatDate, formatTime } from "@/utils";
 import { Calendar, Clock, Map, Users } from "lucide-react";
 import { Event } from "@/interfaces";
+import { useAuthStore } from '@/store';
 
 interface Props {
   event: Event;
 }
 
 export const EventInformation = ({ event }: Props) => {
+  const { user } = useAuthStore();
   const distanceKm = 4;
 
   return (
@@ -41,7 +43,7 @@ export const EventInformation = ({ event }: Props) => {
           {event.eventTicketTypes && event.eventTicketTypes.length === 1 && (
             <div className="flex flex-col">
               <span className="font-medium">
-               ${currencyFormat(event.eventTicketTypes[0].price)} {event.currency}
+                ${currencyFormat(event.eventTicketTypes[0].price)} {event.currency}
               </span>
               <span className="text-xs text-muted-foreground">
                 {event.eventTicketTypes[0].name}
@@ -84,7 +86,9 @@ export const EventInformation = ({ event }: Props) => {
 
       </div>
 
-      <NavigationWidget distanceKm={distanceKm} />
+      {user?.rol !== "publisher" && (
+        <NavigationWidget distanceKm={distanceKm} />
+      )}
 
     </div>
   )

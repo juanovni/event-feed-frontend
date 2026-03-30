@@ -23,12 +23,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useEventImages, useToggleAttend } from "@/hooks";
 import { getTotalPrice } from "@/utils";
+import { useAuthStore } from '@/store';
 
 interface Props {
   event: Event;
 }
 
 export const EventGridItem = ({ event }: Props) => {
+  const { user } = useAuthStore();
   const [assist, setAssist] = useState(event.hasPaid || event.isAttending);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [openUpload, setOpenUpload] = useState(false);
@@ -52,6 +54,8 @@ export const EventGridItem = ({ event }: Props) => {
       if (!assist) setShowPaymentModal(true);
     }
   };
+
+  if (!user) return null;
 
   return (
     <>
@@ -104,15 +108,18 @@ export const EventGridItem = ({ event }: Props) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
 
-              <InterestedButton event={event} />
-
-              <Button
-                onClick={handleAttend}
-                variant={assist ? "secondary" : "outline"}
-              >
-                <Users className={cn("h-4 w-4", assist && "fill-current")} />
-                <span>{assist ? "Confirmado" : "Asistiré"}</span>
-              </Button>
+              {user.rol !== "publisher" && (
+                <>
+                  <InterestedButton event={event} />
+                  <Button
+                    onClick={handleAttend}
+                    variant={assist ? "secondary" : "outline"}
+                  >
+                    <Users className={cn("h-4 w-4", assist && "fill-current")} />
+                    <span>{assist ? "Confirmado" : "Asistiré"}</span>
+                  </Button>
+                </>
+              )}
 
               {event.hasPaid || assist && (
                 <Button
@@ -129,7 +136,7 @@ export const EventGridItem = ({ event }: Props) => {
             <FavoriteButton event={event} />
 
           </div>
-          {totalCost > 0 && !assist && (
+          {user.rol !== "publisher" && totalCost > 0 && !assist && (
             <Button
               variant="outline"
               size="lg"
