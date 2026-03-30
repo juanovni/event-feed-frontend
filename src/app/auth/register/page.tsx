@@ -1,7 +1,7 @@
 "use client";
 
-import { ImageAccordion } from "@/components/ui/image-accordion/ImageAccordion";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const interestsList = [
   "Conciertos",
@@ -15,8 +15,8 @@ const interestsList = [
 ];
 
 export default function RegisterStepper() {
+  const router = useRouter();
   const [step, setStep] = useState(1);
-
   const [form, setForm] = useState({
     name: "",
     lastName: "",
@@ -184,6 +184,17 @@ export default function RegisterStepper() {
               </div>
             </>
           )}
+
+          <div className="text-center text-sm text-gray-500">
+            ¿Ya tienes cuenta?{" "}
+            <button
+              type="button"
+              onClick={() => router.push("/auth/login")}
+              className="text-black font-medium hover:underline cursor-pointer"
+            >
+              Inicia sesión
+            </button>
+          </div>
 
         </div>
       </div>

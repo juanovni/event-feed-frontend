@@ -16,11 +16,11 @@ const images = [
 
 export const ImageAccordion = () => {
   return (
-    <div className="relative h-40 mt-20 hidden md:block" style={{ width: 80 * images.length }}>
+    <div className="relative h-40 hidden md:block" style={{ width: 80 * images.length }}>
       {images.map((img, i) => (
         <motion.div
           key={img} // 🔥 importante usar img como key
-          className="absolute bottom-8 w-48 h-40 rounded-xl overflow-hidden shadow-md"
+          className="absolute bottom-0 w-40 h-28 rounded-xl overflow-hidden shadow-md"
           style={{
             left: `${i * 120}px`,
             zIndex: images.length - i,

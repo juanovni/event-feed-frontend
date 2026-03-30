@@ -75,6 +75,17 @@ export default function LoginPage() {
             {loading ? "Ingresando..." : "Continuar"}
           </button>
 
+          <div className="text-center text-sm text-gray-500">
+            ¿No tienes cuenta?{" "}
+            <button
+              type="button"
+              onClick={() => router.push("/auth/register")}
+              className="text-black font-medium hover:underline cursor-pointer"
+            >
+              Regístrate
+            </button>
+          </div>
+
         </form>
       </div>
 
