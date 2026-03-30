@@ -98,12 +98,12 @@ export const Sidebar = () => {
         )}
 
         <div className="mt-4">
-          <button
+         {/*  <button
             className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
           >
             <Settings className='w-5 h-5' />
             <span className="font-medium">Configuración</span>
-          </button>
+          </button> */}
 
           <button
             onClick={handleLogout}
