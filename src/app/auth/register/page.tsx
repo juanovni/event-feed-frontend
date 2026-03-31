@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
 
@@ -94,174 +95,190 @@ export default function RegisterStepper() {
       <div className="flex items-center justify-center px-4 py-20">
         <div className="w-full max-w-sm space-y-6">
 
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={step}
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -40 }}
+              transition={{ duration: 0.25 }}
+            >
 
-          {step === 0 && (
-            <>
-              <h2 className="text-xl font-semibold text-center">
-                Crea tu cuenta
-              </h2>
+              {step === 0 && (
+                <div className="w-full max-w-sm space-y-6">
+                  <div className="text-center space-y-2">
+                    <h2 className="text-xl font-semibold text-center">
+                      Crea tu cuenta
+                    </h2>
 
-              <input
-                type="email"
-                placeholder="Correo electrónico"
-                className="w-full border rounded-md px-3 py-2"
-                value={form.email}
-                onChange={(e) =>
-                  setForm({ ...form, email: e.target.value })
-                }
-              />
+                    <p className="text-sm text-gray-500 text-center">
+                      Ingresa tu correo electrónico y crea una contraseña para comenzar a descubrir eventos personalizados según tus intereses.
+                    </p>
+                  </div>
 
-              <input
-                type="password"
-                placeholder="Contraseña"
-                className="w-full border rounded-md px-3 py-2"
-                value={form.password}
-                onChange={(e) =>
-                  setForm({ ...form, password: e.target.value })
-                }
-              />
+                  <input
+                    type="email"
+                    placeholder="Correo electrónico"
+                    className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                    value={form.email}
+                    onChange={(e) =>
+                      setForm({ ...form, email: e.target.value })
+                    }
+                  />
 
-              <button
-                onClick={next}
-                disabled={!canContinueStep0}
-                className="w-full bg-black text-white py-2 rounded-full disabled:opacity-50 cursor-pointer"
-              >
-                Continuar
-              </button>
-            </>
-          )}
+                  <input
+                    type="password"
+                    placeholder="Contraseña"
+                    className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                    value={form.password}
+                    onChange={(e) =>
+                      setForm({ ...form, password: e.target.value })
+                    }
+                  />
 
-          {/* STEP 1 */}
-          {step === 1 && (
-            <div className="w-full max-w-sm space-y-6">
-              <h2 className="text-xl font-semibold text-center">
-                Cuéntanos sobre ti
-              </h2>
-
-              <input
-                placeholder="Nombres"
-                className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-                value={form.name}
-                onChange={(e) =>
-                  setForm({ ...form, name: e.target.value })
-                }
-              />
-
-              <input
-                placeholder="Apellidos"
-                className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-                value={form.lastName}
-                onChange={(e) =>
-                  setForm({ ...form, lastName: e.target.value })
-                }
-              />
-
-              <input
-                type="date"
-                className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-                value={form.birthdate}
-                onChange={(e) =>
-                  setForm({ ...form, birthdate: e.target.value })
-                }
-              />
-              <div className="flex gap-2">
-                <button onClick={back} className="w-full border py-2 rounded-full cursor-pointer">
-                  Atrás
-                </button>
-                <button
-                  onClick={next}
-                  disabled={!canContinueStep1}
-                  className="w-full bg-black text-white py-2 rounded-full disabled:opacity-50 cursor-pointer"
-                >
-                  Continuar
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* STEP 2 */}
-          {step === 2 && (
-            <>
-              <h2 className="text-xl font-semibold text-center">
-                ¿Cuál es tu género?
-              </h2>
-
-              <div className="space-y-3">
-                {["Mujer", "Hombre", "No binario", "Prefiero no decirlo"].map((g) => (
-                  <label
-                    key={g}
-                    className={`flex items-center justify-between border rounded-lg px-3 py-2 cursor-pointer ${form.gender === g ? "border-black" : "border-gray-300"
-                      }`}
+                  <button
+                    onClick={next}
+                    disabled={!canContinueStep0}
+                    className="w-full bg-black text-white py-2 rounded-full disabled:opacity-50 cursor-pointer"
                   >
-                    <span>{g}</span>
-                    <input
-                      type="radio"
-                      name="gender"
-                      checked={form.gender === g}
-                      onChange={() => setForm({ ...form, gender: g })}
-                    />
-                  </label>
-                ))}
-              </div>
+                    Continuar
+                  </button>
+                </div>
+              )}
 
-              <div className="flex gap-2">
-                <button onClick={back} className="w-full border py-2 rounded-full cursor-pointer">
-                  Atrás
-                </button>
-                <button
-                  onClick={next}
-                  disabled={!canContinueStep2}
-                  className="w-full bg-black text-white py-2 rounded-full disabled:opacity-50 cursor-pointer"
-                >
-                  Continuar
-                </button>
-              </div>
-            </>
-          )}
+              {/* STEP 1 */}
+              {step === 1 && (
+                <div className="w-full max-w-sm space-y-6">
+                  <h2 className="text-xl font-semibold text-center">
+                    Cuéntanos sobre ti
+                  </h2>
 
-          {/* STEP 3 */}
-          {step === 3 && (
-            <>
-              <h2 className="text-xl font-semibold text-center">
-                Elige tus intereses
-              </h2>
-              <p className="text-sm text-gray-500 text-center">
-                Selecciona al menos 3
-              </p>
+                  <input
+                    placeholder="Nombres"
+                    className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                    value={form.name}
+                    onChange={(e) =>
+                      setForm({ ...form, name: e.target.value })
+                    }
+                  />
 
-              <div className="grid grid-cols-2 gap-2">
-                {categoriesList.map(({ id, name }) => {
-                  const active = form.categories.includes(id);
+                  <input
+                    placeholder="Apellidos"
+                    className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                    value={form.lastName}
+                    onChange={(e) =>
+                      setForm({ ...form, lastName: e.target.value })
+                    }
+                  />
 
-                  return (
-                    <button
-                      key={id}
-                      onClick={() => toggleInterest(id)}
-                      className={`p-3 rounded-lg border text-sm cursor-pointer ${active
-                        ? "bg-black text-white border-black"
-                        : "border-gray-300"
-                        }`}
-                    >
-                      {name}
+                  <input
+                    type="date"
+                    className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                    value={form.birthdate}
+                    onChange={(e) =>
+                      setForm({ ...form, birthdate: e.target.value })
+                    }
+                  />
+                  <div className="flex gap-2">
+                    <button onClick={back} className="w-full border py-2 rounded-full cursor-pointer">
+                      Atrás
                     </button>
-                  );
-                })}
-              </div>
+                    <button
+                      onClick={next}
+                      disabled={!canContinueStep1}
+                      className="w-full bg-black text-white py-2 rounded-full disabled:opacity-50 cursor-pointer"
+                    >
+                      Continuar
+                    </button>
+                  </div>
+                </div>
+              )}
 
-              <div className="flex gap-2">
-                <button onClick={back} className="w-full border py-2 rounded-full cursor-pointer">
-                  Atrás
-                </button>
-                <button
-                  onClick={handleRegister}
-                  disabled={!canContinueStep3 || loading}
-                  className="w-full bg-black text-white py-2 rounded-full disabled:opacity-50 cursor-pointer"
-                >
-                  {loading ? "Registrando..." : "Finalizar"}
-                </button>
-              </div>
-            </>
-          )}
+              {/* STEP 2 */}
+              {step === 2 && (
+                <div className="w-full max-w-sm space-y-6">
+                  <h2 className="text-xl font-semibold text-center">
+                    ¿Cuál es tu género?
+                  </h2>
+
+                  <div className="space-y-3">
+                    {["Mujer", "Hombre", "No binario", "Prefiero no decirlo"].map((g) => (
+                      <label
+                        key={g}
+                        className={`flex items-center justify-between border rounded-lg px-3 py-2 cursor-pointer ${form.gender === g ? "border-black" : "border-gray-300"
+                          }`}
+                      >
+                        <span>{g}</span>
+                        <input
+                          type="radio"
+                          name="gender"
+                          checked={form.gender === g}
+                          onChange={() => setForm({ ...form, gender: g })}
+                        />
+                      </label>
+                    ))}
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button onClick={back} className="w-full border py-2 rounded-full cursor-pointer">
+                      Atrás
+                    </button>
+                    <button
+                      onClick={next}
+                      disabled={!canContinueStep2}
+                      className="w-full bg-black text-white py-2 rounded-full disabled:opacity-50 cursor-pointer"
+                    >
+                      Continuar
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* STEP 3 */}
+              {step === 3 && (
+                <div className="w-full max-w-sm space-y-6">
+                  <h2 className="text-xl font-semibold text-center">
+                    Elige tus intereses
+                  </h2>
+                  <p className="text-sm text-gray-500 text-center">
+                    Selecciona al menos 3
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    {categoriesList.map(({ id, name }) => {
+                      const active = form.categories.includes(id);
+
+                      return (
+                        <button
+                          key={id}
+                          onClick={() => toggleInterest(id)}
+                          className={`p-3 rounded-lg border text-sm cursor-pointer ${active
+                            ? "bg-black text-white border-black"
+                            : "border-gray-300"
+                            }`}
+                        >
+                          {name}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button onClick={back} className="w-full border py-2 rounded-full cursor-pointer">
+                      Atrás
+                    </button>
+                    <button
+                      onClick={handleRegister}
+                      disabled={!canContinueStep3 || loading}
+                      className="w-full bg-black text-white py-2 rounded-full disabled:opacity-50 cursor-pointer"
+                    >
+                      {loading ? "Registrando..." : "Finalizar"}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
 
           <div className="text-center text-sm text-gray-500">
             ¿Ya tienes cuenta?{" "}
