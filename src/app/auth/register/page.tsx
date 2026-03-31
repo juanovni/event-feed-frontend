@@ -95,6 +95,13 @@ export default function RegisterStepper() {
       <div className="flex items-center justify-center px-4 py-20">
         <div className="w-full max-w-sm space-y-6">
 
+          <div className="h-1 bg-gray-200 mb-6">
+            <motion.div
+              className="h-1 bg-black"
+              animate={{ width: `${((step + 1) / 4) * 100}%` }}
+            />
+          </div>
+
           <AnimatePresence mode="wait">
             <motion.div
               key={step}

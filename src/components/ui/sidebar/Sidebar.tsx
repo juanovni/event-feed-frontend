@@ -28,7 +28,7 @@ export const Sidebar = () => {
     useInterestStore.getState().reset();
 
     // Limpia cache de React Query
-    
+
     queryClient.clear();
 
     router.replace('/auth/login');
@@ -63,8 +63,7 @@ export const Sidebar = () => {
     <div className="w-64 h-screen bg-white border-r border-gray-200 fixed left-0 top-0 z-10">
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg"></div>
-          <h1 className="text-xl font-bold text-gray-900">SocialHub</h1>
+          <h1 className="text-xl font-bold text-gray-900">EventTop</h1>
         </div>
       </div>
 
@@ -98,7 +97,7 @@ export const Sidebar = () => {
         )}
 
         <div className="mt-4">
-         {/*  <button
+          {/*  <button
             className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200"
           >
             <Settings className='w-5 h-5' />
