@@ -162,7 +162,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
                   className="w-full"
                   size="lg"
                 >
-                  Asiganar entradas
+                  Asignar entradas
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               ) : (
