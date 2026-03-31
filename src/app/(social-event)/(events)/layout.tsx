@@ -10,7 +10,7 @@ export default function EventsLayout({
   return (
     <>
       {/* Contenido principal */}
-      <div className="flex w-full max-w-6xl justify-center gap-x-10">
+      <div className="flex w-full max-w-5xl mx-auto gap-10">
         {/* Feed central */}
         <div className="w-full max-w-xl">{children}</div>
 

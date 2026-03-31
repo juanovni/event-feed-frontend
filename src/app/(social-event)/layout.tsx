@@ -10,7 +10,8 @@ export default function FeedLayout({
 
       <Sidebar />
 
-      <div className="ml-64 p-6">
+      <div className="md:ml-64 p-4 md:p-6 transition-all">
+
         <div className="max-w-5xl mx-auto">
           {children}
         </div>

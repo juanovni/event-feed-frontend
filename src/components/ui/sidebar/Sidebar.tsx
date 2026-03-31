@@ -91,6 +91,7 @@ export const Sidebar = () => {
             <h1 className="text-xl font-bold text-gray-900">EventTop</h1>
           </div>
         </div>
+        
         {user && (
           <div className="border-b border-sidebar-border p-4">
             <AvatarProfile
