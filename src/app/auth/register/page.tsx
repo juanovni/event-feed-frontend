@@ -2,20 +2,26 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store";
 
 const interestsList = [
-  "Conciertos",
-  "Bares",
-  "Deportes",
-  "Teatro",
-  "Comida",
-  "Networking",
-  "Tecnología",
-  "Arte",
+  {
+    id: "4a237260-82fd-4380-84dd-7c390bcc21af",
+    name: "Moda",
+  },
+  {
+    id: "1a46546a-9843-4b72-aeec-9cf73b1cb099",
+    name: "Restaurantes",
+  },
+  {
+    id: "b75ee276-affa-4f65-822e-11daba944ae6",
+    name: "Tecnología",
+  },
 ];
 
 export default function RegisterStepper() {
   const router = useRouter();
+  const { register } = useAuthStore();
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
     name: "",
@@ -27,6 +33,7 @@ export default function RegisterStepper() {
 
   const next = () => setStep((s) => s + 1);
   const back = () => setStep((s) => s - 1);
+  const [loading, setLoading] = useState(false);
 
   const toggleInterest = (interest: string) => {
     setForm((prev) => {
@@ -47,6 +54,30 @@ export default function RegisterStepper() {
   const canContinueStep2 = form.gender !== "";
 
   const canContinueStep3 = form.interests.length >= 3;
+
+  const handleRegister = async () => {
+    try {
+      setLoading(true);
+
+      await register({
+        name: form.name,
+        lastName: form.lastName,
+        /*         email: form.email,
+                password: form.password, */
+        email: `${form.name.toLowerCase()}.${form.lastName.toLowerCase()}@example.com`, // Temporal
+        password: "Juan2229@", // Temporal
+        birthdate: form.birthdate,
+        gender: form.gender,
+        categories: form.interests,
+      });
+
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -153,19 +184,19 @@ export default function RegisterStepper() {
               </p>
 
               <div className="grid grid-cols-2 gap-2">
-                {interestsList.map((interest) => {
-                  const active = form.interests.includes(interest);
+                {interestsList.map(({id, name}) => {
+                  const active = form.interests.includes(id);
 
                   return (
                     <button
-                      key={interest}
-                      onClick={() => toggleInterest(interest)}
+                      key={id}
+                      onClick={() => toggleInterest(id)}
                       className={`p-3 rounded-lg border text-sm cursor-pointer ${active
                         ? "bg-black text-white border-black"
                         : "border-gray-300"
                         }`}
                     >
-                      {interest}
+                      {name}
                     </button>
                   );
                 })}
@@ -176,10 +207,11 @@ export default function RegisterStepper() {
                   Atrás
                 </button>
                 <button
-                  disabled={!canContinueStep3}
+                  onClick={handleRegister}
+                  disabled={!canContinueStep3 || loading}
                   className="w-full bg-black text-white py-2 rounded-full disabled:opacity-50 cursor-pointer"
                 >
-                  Finalizar
+                  {loading ? "Registrando..." : "Finalizar"}
                 </button>
               </div>
             </>

@@ -1,13 +1,14 @@
 import { eventApi } from "@/api/event.api";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { RegisterData } from "@/interfaces/user.interface";
 
 interface User {
   id: string;
   name: string;
   username: string;
-  rol: string;
-  avatar: string;
+  rol?: string;
+  avatar?: string;
   email: string;
 }
 
@@ -16,7 +17,7 @@ interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
   login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  register: (data: RegisterData) => Promise<void>;
   logout: () => Promise<void>;
   refreshAccessToken: () => Promise<void>;
 }
@@ -37,12 +38,13 @@ export const useAuthStore = create<AuthState>()(
         });
       },
 
-      async register(name, email, password) {
-        const { data } = await eventApi.post("/auth/register", { name, email, password });
+      async register(data: RegisterData) {
+        const { data: resp } = await eventApi.post("/auth/register", data);
+
         set({
-          user: data.user,
-          accessToken: data.accessToken,
-          refreshToken: data.refreshToken,
+          user: resp.user,
+          accessToken: resp.accessToken,
+          refreshToken: resp.refreshToken,
         });
       },
 

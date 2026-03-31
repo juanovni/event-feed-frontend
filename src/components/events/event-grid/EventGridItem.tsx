@@ -69,9 +69,10 @@ export const EventGridItem = ({ event }: Props) => {
             timesamp={event.timestamp}
             className='h-12 w-12'
           />
+          {user?.rol !== "publisher" && (
+            <FollowerButton event={event} />
 
-          <FollowerButton event={event} />
-
+          )}
         </div>
 
         {/* Media */}
@@ -104,50 +105,49 @@ export const EventGridItem = ({ event }: Props) => {
         <EventInformation event={event} />
 
         {/* Actions */}
-        <div className="px-4 py-3 border-t border-gray-100">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+        {user.rol !== "publisher" && (
+          <div className="px-4 py-3 border-t border-gray-100">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
 
-              {user.rol !== "publisher" && (
-                <>
-                  <InterestedButton event={event} />
-                  <Button
-                    onClick={handleAttend}
-                    variant={assist ? "secondary" : "outline"}
-                  >
-                    <Users className={cn("h-4 w-4", assist && "fill-current")} />
-                    <span>{assist ? "Confirmado" : "Asistiré"}</span>
-                  </Button>
-                </>
-              )}
+                <InterestedButton event={event} />
 
-              {event.hasPaid || assist && (
                 <Button
-                  title="Publicar foto"
-                  onClick={() => setOpenUpload(true)}
-                  className="bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
+                  onClick={handleAttend}
+                  variant={assist ? "secondary" : "outline"}
                 >
-                  <ImageUpIcon className="h-4 w-4" />
-                  Subir Foto
+                  <Users className={cn("h-4 w-4", assist && "fill-current")} />
+                  <span>{assist ? "Confirmado" : "Asistiré"}</span>
                 </Button>
-              )}
+
+                {event.hasPaid || assist && (
+                  <Button
+                    title="Publicar foto"
+                    onClick={() => setOpenUpload(true)}
+                    className="bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
+                  >
+                    <ImageUpIcon className="h-4 w-4" />
+                    Subir Foto
+                  </Button>
+                )}
+              </div>
+
+              <FavoriteButton event={event} />
+
             </div>
-
-            <FavoriteButton event={event} />
-
+            {totalCost > 0 && !assist && (
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full mt-3 font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
+                onClick={() => setShowPaymentModal(true)}
+              >
+                <CreditCard />
+                Pagar y Confirmar Asistencia
+              </Button>
+            )}
           </div>
-          {user.rol !== "publisher" && totalCost > 0 && !assist && (
-            <Button
-              variant="outline"
-              size="lg"
-              className="w-full mt-3 font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
-              onClick={() => setShowPaymentModal(true)}
-            >
-              <CreditCard />
-              Pagar y Confirmar Asistencia
-            </Button>
-          )}
-        </div>
+        )}
       </div>
 
       <PaymentModal
