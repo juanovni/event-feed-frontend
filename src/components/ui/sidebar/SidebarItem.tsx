@@ -7,9 +7,10 @@ interface Props {
   label: string;
   path: string;
   icon: React.ReactNode;
+  onClick?: () => void;
 }
 
-export const SidebarItem = ({ label, icon, path }: Props) => {
+export const SidebarItem = ({ label, icon, path, onClick }: Props) => {
   const currentPath = usePathname();
   return (
     <li>
@@ -19,6 +20,7 @@ export const SidebarItem = ({ label, icon, path }: Props) => {
           ? 'text-blue-600'
           : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
           }`}
+        onClick={onClick}
       >
         {icon}
         <span className="font-bold">{label}</span>
