@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store";
 import { ImageAccordion } from "@/components/ui/image-accordion/ImageAccordion";
+import { Logo } from "@/components/ui/logo/Logo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -31,10 +32,10 @@ export default function LoginPage() {
     <div className="min-h-screen flex flex-col bg-white">
 
       {/* LOGO */}
-      <div className="p-6 text-xl font-semibold">Eventos</div>
+      <Logo/>
 
       {/* CONTENIDO */}
-      <div className="flex items-center justify-center px-4 py-20">
+      <div className="flex items-center justify-center px-4 py-30">
         <form
           className="w-full max-w-sm space-y-6"
           onSubmit={handleSubmit}

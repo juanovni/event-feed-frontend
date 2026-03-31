@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
+import { Logo } from "@/components/ui/logo/Logo";
 
 const categoriesList = [
   {
@@ -89,10 +90,10 @@ export default function RegisterStepper() {
     <div className="min-h-screen flex flex-col bg-white">
 
       {/* HEADER */}
-      <div className="p-6 text-xl font-semibold">Eventos</div>
+      <Logo/>
 
       {/* CONTENIDO */}
-      <div className="flex items-center justify-center px-4 py-20">
+      <div className="flex items-center justify-center px-4 py-30">
         <div className="w-full max-w-sm space-y-6">
 
           <div className="h-1 bg-gray-200 mb-6">
