@@ -5,21 +5,19 @@ import Image from "next/image";
 import { Camera } from "lucide-react";
 import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
-import { eventApi } from "@/api/event.api";
 import { Category } from "@/interfaces";
+import { useUpdateUser } from "@/hooks/user/useUpdateUser";
 
 export default function EditProfileForm() {
-  const { user, setUser } = useAuthStore();
-
+  const { user } = useAuthStore();
+  const { mutate: updateUserMutation, isPending } = useUpdateUser();
   const { data: categories } = useCategories();
-
   const [loading, setLoading] = useState(false);
-
   const [form, setForm] = useState({
     name: user?.name || "",
     lastName: user?.lastName || "",
     username: user?.username || "",
-    bio: user?.description || "",
+    description: user?.description || "",
     gender: user?.gender || "",
     birthdate: user?.birthdate?.slice(0, 10) || "",
     location: user?.location || "",
@@ -57,10 +55,8 @@ export default function EditProfileForm() {
   const handleSave = async () => {
     try {
       setLoading(true);
+      updateUserMutation(form);
 
-      const { data } = await eventApi.put("/users/me", form);
-
-      setUser(data);
     } catch (err) {
       console.error(err);
     } finally {
@@ -76,7 +72,7 @@ export default function EditProfileForm() {
       name: user.name,
       lastName: user.lastName,
       username: user.username,
-      bio: user.description || "",
+      description: user.description || "",
       gender: user.gender,
       birthdate: user.birthdate.slice(0, 10),
       location: user.location || "",
@@ -141,9 +137,9 @@ export default function EditProfileForm() {
       <div>
         <label className="text-sm text-gray-500">Descripción</label>
         <textarea
-          value={form.bio}
+          value={form.description}
           onChange={(e) =>
-            setForm({ ...form, bio: e.target.value })
+            setForm({ ...form, description: e.target.value })
           }
           className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
           rows={3}
@@ -233,11 +229,11 @@ export default function EditProfileForm() {
       {/* SAVE */}
       <button
         onClick={handleSave}
-        disabled={loading}
+        disabled={isPending}
         className={`w-full bg-black text-white py-3 rounded-full disabled:opacity-50 
-          ${loading ? 'cursor-not-allowed' : 'hover:bg-gray-800'} transition`}
+          ${isPending ? 'cursor-not-allowed' : 'hover:bg-gray-800'} transition`}
       >
-        {loading ? "Guardando..." : "Guardar cambios"}
+        {isPending ? "Guardando..." : "Guardar cambios"}
       </button>
     </div>
   );
