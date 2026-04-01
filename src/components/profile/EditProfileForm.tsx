@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { Camera } from "lucide-react";
 import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
@@ -12,7 +11,6 @@ export default function EditProfileForm() {
   const { user } = useAuthStore();
   const { mutate: updateUserMutation, isPending } = useUpdateUser();
   const { data: categories } = useCategories();
-  const [loading, setLoading] = useState(false);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(user?.avatar || null);
   const [form, setForm] = useState({
@@ -51,18 +49,10 @@ export default function EditProfileForm() {
   };
 
   const handleSave = async () => {
-    try {
-      setLoading(true);
-      updateUserMutation({
-        ...form,
-        avatarFile,
-      });
-
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+    updateUserMutation({
+      ...form,
+      avatarFile,
+    });
   };
 
   useEffect(() => {
