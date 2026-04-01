@@ -69,7 +69,7 @@ export const EventGridItem = ({ event }: Props) => {
             timesamp={event.timestamp}
             className='h-12 w-12'
           />
-          {user?.rol !== "publisher" && (
+          {user?.role !== "publisher" && (
             <FollowerButton event={event} />
 
           )}
@@ -105,7 +105,7 @@ export const EventGridItem = ({ event }: Props) => {
         <EventInformation event={event} />
 
         {/* Actions */}
-        {user.rol !== "publisher" && (
+        {user.role !== "publisher" && (
           <div className="px-4 py-3 border-t border-gray-100">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">

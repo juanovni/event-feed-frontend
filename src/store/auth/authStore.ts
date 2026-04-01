@@ -16,6 +16,7 @@ interface User {
   birthdate: string;
   location?: string;
   phone?: string;
+  createdAt: string;
   categories?: { id: string; name: string }[];
 }
 

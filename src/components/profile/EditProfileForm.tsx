@@ -6,7 +6,6 @@ import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
 import { Category } from "@/interfaces";
 import { useUpdateUser } from "@/hooks/user/useUpdateUser";
-import { set } from "date-fns";
 
 export default function EditProfileForm() {
   const { user } = useAuthStore();
