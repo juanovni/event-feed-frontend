@@ -6,6 +6,7 @@ import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
 import { Category } from "@/interfaces";
 import { useUpdateUser } from "@/hooks/user/useUpdateUser";
+import { set } from "date-fns";
 
 export default function EditProfileForm() {
   const { user } = useAuthStore();
@@ -71,6 +72,7 @@ export default function EditProfileForm() {
       categories: user.categories?.map((c: any) => c.id) || [],
       avatar: user.avatar || "",
     });
+    setAvatarPreview(user.avatar || null);
   }, [user]);
 
   useEffect(() => {

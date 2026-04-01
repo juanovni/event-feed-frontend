@@ -114,7 +114,7 @@ export const Sidebar = () => {
             ))}
           </ul>
 
-          {user.rol === "publisher" && (
+          {user.role === "publisher" && (
             <div className="mt-8 pt-6 border-t border-gray-200">
               <button
                 onClick={openDialog}
