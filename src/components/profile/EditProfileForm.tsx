@@ -13,6 +13,8 @@ export default function EditProfileForm() {
   const { mutate: updateUserMutation, isPending } = useUpdateUser();
   const { data: categories } = useCategories();
   const [loading, setLoading] = useState(false);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(user?.avatar || null);
   const [form, setForm] = useState({
     name: user?.name || "",
     lastName: user?.lastName || "",
@@ -42,20 +44,19 @@ export default function EditProfileForm() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const preview = URL.createObjectURL(file);
-
-    setForm((prev) => ({
-      ...prev,
-      avatar: preview,
-    }));
-
+    setAvatarFile(file);
+    // preview inmediato
+    const previewUrl = URL.createObjectURL(file);
+    setAvatarPreview(previewUrl);
   };
-
 
   const handleSave = async () => {
     try {
       setLoading(true);
-      updateUserMutation(form);
+      updateUserMutation({
+        ...form,
+        avatarFile,
+      });
 
     } catch (err) {
       console.error(err);
@@ -74,7 +75,7 @@ export default function EditProfileForm() {
       username: user.username,
       description: user.description || "",
       gender: user.gender,
-      birthdate: user.birthdate.slice(0, 10),
+      birthdate: user?.birthdate?.slice(0, 10) || "",
       location: user.location || "",
       phone: user.phone || "",
       categories: user.categories?.map((c: any) => c.id) || [],
@@ -82,28 +83,42 @@ export default function EditProfileForm() {
     });
   }, [user]);
 
+  useEffect(() => {
+    return () => {
+      if (avatarPreview) URL.revokeObjectURL(avatarPreview);
+    };
+  }, [avatarPreview]);
+
   return (
     <div className="max-w-xl mx-auto space-y-6">
 
       {/* AVATAR */}
-      <div className="flex flex-col items-center">
-        <div className="relative">
-          <Image
-            src={form.avatar || "/images/default-avatar.jpeg"}
-            alt="avatar"
-            width={120}
-            height={120}
-            className="rounded-full object-cover w-28 h-28"
+      <div className="flex justify-center">
+        <div className="relative w-24 h-24">
+
+          {/* Imagen */}
+          <img
+            src={avatarPreview || "/images/default-avatar.jpeg"}
+            className="w-24 h-24 rounded-full object-cover"
           />
 
-          <label className="absolute bottom-0 right-0 bg-black text-white p-2 rounded-full cursor-pointer">
+          {/* Input oculto */}
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            id="avatarInput"
+            onChange={handleAvatarChange}
+          />
+
+          {/* Botón cámara */}
+          <label
+            htmlFor="avatarInput"
+            className="absolute bottom-0 right-0 bg-black text-white p-2 rounded-full cursor-pointer shadow-md hover:scale-105 transition"
+          >
             <Camera size={16} />
-            <input
-              type="file"
-              className="hidden"
-              onChange={handleAvatarChange}
-            />
           </label>
+
         </div>
       </div>
 
@@ -230,7 +245,7 @@ export default function EditProfileForm() {
       <button
         onClick={handleSave}
         disabled={isPending}
-        className={`w-full bg-black text-white py-3 rounded-full disabled:opacity-50 
+        className={`w-full bg-black text-white py-3 rounded-full disabled:opacity-50 cursor-pointer 
           ${isPending ? 'cursor-not-allowed' : 'hover:bg-gray-800'} transition`}
       >
         {isPending ? "Guardando..." : "Guardar cambios"}
