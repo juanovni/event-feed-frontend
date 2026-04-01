@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
 import { Logo } from "@/components/ui/logo/Logo";
+import { Category } from "@/interfaces";
 
 const categoriesList = [
   {
@@ -25,7 +26,7 @@ const categoriesList = [
 export default function RegisterStepper() {
   const router = useRouter();
   const { register } = useAuthStore();
-  const { data: categories, isLoading } = useCategories();
+  const { data: categories } = useCategories();
 
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({
@@ -253,19 +254,19 @@ export default function RegisterStepper() {
                   </p>
 
                   <div className="grid grid-cols-2 gap-2">
-                    {categoriesList.map(({ id, name }) => {
-                      const active = form.categories.includes(id);
+                    {categories.map((cat: Category) => {
+                      const active = form.categories.includes(cat.id);
 
                       return (
                         <button
-                          key={id}
-                          onClick={() => toggleInterest(id)}
+                          key={cat.id}
+                          onClick={() => toggleInterest(cat.id)}
                           className={`p-3 rounded-lg border text-sm cursor-pointer ${active
                             ? "bg-black text-white border-black"
                             : "border-gray-300"
                             }`}
                         >
-                          {name}
+                          {cat.name}
                         </button>
                       );
                     })}

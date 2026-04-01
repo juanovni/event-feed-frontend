@@ -6,10 +6,17 @@ import { RegisterData } from "@/interfaces/user.interface";
 interface User {
   id: string;
   name: string;
+  lastName: string;
   username: string;
   rol?: string;
   avatar?: string;
   email: string;
+  description?: string;
+  gender: string;
+  birthdate: string;
+  location?: string;
+  phone?: string;
+  categories?: { id: string; name: string }[];
 }
 
 interface AuthState {
@@ -20,6 +27,7 @@ interface AuthState {
   register: (data: RegisterData) => Promise<void>;
   logout: () => Promise<void>;
   refreshAccessToken: () => Promise<void>;
+  setUser: (user: User | null) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -28,6 +36,8 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       accessToken: null,
       refreshToken: null,
+
+      setUser: (user) => set({ user }),
 
       async login(email, password) {
         const { data } = await eventApi.post("/auth/login", { email, password });

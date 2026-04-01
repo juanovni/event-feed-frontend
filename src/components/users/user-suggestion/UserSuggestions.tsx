@@ -42,7 +42,7 @@ export const UserSuggestions = () => {
         <div key={user.id} className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Image
-              src={user.avatar || "/default-avatar.png"}
+              src={user.avatar || "/images/default-avatar.jpeg"}
               alt={user.name}
               width={40}
               height={40}
