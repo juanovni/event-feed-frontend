@@ -1,7 +1,7 @@
 import { AvatarsFriendsWidget } from "@/components/ui/widgets/AvatarsFriendsWidget";
 import { NavigationWidget } from "@/components/ui/widgets/NavigationWidget";
 import { currencyFormat, formatDate, formatTime } from "@/utils";
-import { Calendar, Clock, Map, Users } from "lucide-react";
+import { Calendar, Clock, Heart, Map, Users } from "lucide-react";
 import { Event } from "@/interfaces";
 import { useAuthStore } from '@/store';
 import { Badge } from "@/components/ui/badge";
@@ -81,12 +81,20 @@ export const EventInformation = ({ event }: Props) => {
           )}
         </div>
 
-        <div className="flex items-center gap-2 text-sm">
-          <Users size={16} className="h-4 w-4 shrink-0 text-primary font-bold" />
-          <p className="text-muted-foreground">
-            <span className="font-medium text-foreground">{event.interested}</span> interesados •{" "}
-            <span className="font-medium text-foreground">{event.attendees}</span> asistirán
-          </p>
+        <div className="flex items-center gap-2 text-sm mt-2">
+          <div className="flex items-center gap-1">
+            <Heart className="w-4 h-4 text-primary font-bold" />
+            <p className="text-muted-foreground">
+              <span className="font-medium text-foreground">{event.interested}</span> interesados
+            </p>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <Users className="w-4 h-4 text-primary font-bold" />
+            <p className="text-muted-foreground">
+              <span className="font-medium text-foreground">{event.attendees}</span> confirmados
+            </p>
+          </div>
         </div>
 
         {user && (
