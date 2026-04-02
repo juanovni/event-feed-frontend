@@ -3,6 +3,7 @@ import { User } from "./user.interface";
 
 export interface Event {
   id: string;
+  slug?: string;
   user: User;
   title: string;
   description: string;
@@ -21,7 +22,7 @@ export interface Event {
   isFollowing: boolean;
   isInterested: boolean;
   isAttending: boolean;
-  hasPaid: boolean;
+  hasPaid?: boolean;
   userStatus: UserStatus;
   eventTicketTypes: {
     id: string;

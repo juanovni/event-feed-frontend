@@ -59,8 +59,6 @@ export const EventGridItem = ({ event }: Props) => {
     }
   };
 
-  if (!user) return null;
-
   return (
     <>
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
@@ -74,9 +72,10 @@ export const EventGridItem = ({ event }: Props) => {
               timesamp={event.timestamp}
               className='h-12 w-12'
             />
+            {isEventOwner && <PublisherBadge isOwner={isEventOwner} />}
           </div>
 
-          {!isEventOwner && <FollowerButton event={event} />}
+          {!isEventOwner && user && <FollowerButton event={event} />}
 
         </div>
 
@@ -109,8 +108,13 @@ export const EventGridItem = ({ event }: Props) => {
         {/* Informations */}
         <EventInformation event={event} />
 
+        {/* Publisher Stats */}
+        {isEventOwner && (
+          <PublisherEventStats event={event} totalPhotos={galleryImages?.length || 0} />
+        )}
+
         {/* Actions */}
-        {user.role !== "publisher" && (
+        {user && user.role !== "publisher" && (
           <div className="px-4 py-3 border-t border-gray-100">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">

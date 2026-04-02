@@ -89,11 +89,13 @@ export const EventInformation = ({ event }: Props) => {
           </p>
         </div>
 
-        <AvatarsFriendsWidget eventId={event.id} />
+        {user && (
+          <AvatarsFriendsWidget eventId={event.id} />
+        )}
 
       </div>
 
-      {user?.role !== "publisher" && (
+      {user && user?.role !== "publisher" && (
         <NavigationWidget distanceKm={distanceKm} />
       )}
 

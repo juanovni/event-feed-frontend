@@ -1,6 +1,6 @@
 'use client';
 
-import { EventEmpty, EventGrid, EventSkeletonGrid, HeaderButton, Title } from "@/components";
+import { EventEmpty, EventGrid, EventSkeletonCard, HeaderButton, Title } from "@/components";
 import { useEvents } from "@/hooks";
 
 export default function EventsPage() {
@@ -8,12 +8,7 @@ export default function EventsPage() {
 
   if (isLoading) {
     return (
-      <div className="space-y-4">
-        <Title title="Eventos">
-          <HeaderButton />
-        </Title>
-        <EventSkeletonGrid />
-      </div>
+      <EventSkeletonCard  />
     );
   }
   if (isError) return <p>Error al cargar los eventos.</p>;

@@ -25,6 +25,7 @@ export default function EventsLayout({
             </section>
           </div>
         </aside>
+        
       </div>
     </>
   );
