@@ -4,6 +4,8 @@ import { currencyFormat, formatDate, formatTime } from "@/utils";
 import { Calendar, Clock, Map, Users } from "lucide-react";
 import { Event } from "@/interfaces";
 import { useAuthStore } from '@/store';
+import { Badge } from "@/components/ui/badge";
+import { PublisherBadge } from "../components/publisher-badge/PublisherBadge";
 
 interface Props {
   event: Event;
@@ -12,12 +14,17 @@ interface Props {
 export const EventInformation = ({ event }: Props) => {
   const { user } = useAuthStore();
   const distanceKm = 4;
+  const isEventOwner = user?.id === event.user.id;
 
   return (
     <div className="mt-2 p-4">
       <div className="mb-4">
-        <h2 className="text-xl font-bold text-balance">{event.title}</h2>
-        <p className="whitespace-pre-line text-sm text-gray-700">
+        <div className="flex items-center gap-2 mb-2">
+          <h2 className="text-xl font-bold text-balance flex-1">{event.title}</h2>
+          {event.category && <Badge variant="secondary">{event.category}</Badge>}
+        </div>
+        {isEventOwner && <PublisherBadge isOwner={isEventOwner} />}
+        <p className="whitespace-pre-line text-sm text-gray-700 mt-2">
           {event.description}
         </p>
       </div>
@@ -86,7 +93,7 @@ export const EventInformation = ({ event }: Props) => {
 
       </div>
 
-      {user?.rol !== "publisher" && (
+      {user?.role !== "publisher" && (
         <NavigationWidget distanceKm={distanceKm} />
       )}
 

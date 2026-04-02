@@ -70,7 +70,7 @@ export const GalleryPopup: React.FC<GalleryPopupProps> = ({ images }) => {
                 {photos.map((photo, index) => (
                   <div
                     key={photo.id}
-                    className={`${getRandomSize(index)} relative group cursor-pointer overflow-hidden rounded-lg`}
+                    className={`${getRandomSize(index)} relative group cursor-pointer overflow-hidden rounded-lg bg-gray-900`}
                   /* onClick={() => setSelectedPhoto(photo)} */
                   >
                     <Image
@@ -80,10 +80,19 @@ export const GalleryPopup: React.FC<GalleryPopupProps> = ({ images }) => {
                       alt={`Foto por ${photo.user.name}`}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
-                      <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center p-4">
-                        <p className="font-semibold">{photo.user.name}</p>
-                      </div>
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900/90 to-transparent p-3 flex items-center gap-2">
+                      {photo.user.avatar && (
+                        <Image
+                          src={photo.user.avatar}
+                          alt={photo.user.name}
+                          width={24}
+                          height={24}
+                          className="w-6 h-6 rounded-full object-cover flex-shrink-0"
+                        />
+                      )}
+                      <span className="text-white text-sm font-medium truncate">
+                        {photo.user.name}
+                      </span>
                     </div>
                   </div>
                 ))}

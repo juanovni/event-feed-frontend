@@ -17,7 +17,9 @@ import {
   InterestedButton,
   GalleryPopup,
   PaymentModal,
-  UploadGalleryImageDialog
+  UploadGalleryImageDialog,
+  PublisherBadge,
+  PublisherEventStats
 } from "@/components";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -37,6 +39,8 @@ export const EventGridItem = ({ event }: Props) => {
   const { mutateAsync: attendEvent } = useToggleAttend();
   const { data: galleryImages } = useEventImages(event.id);
   const totalCost = getTotalPrice(event);
+
+  const isEventOwner = user?.id === event.user.id;
 
   const handlePaymentSuccess = () => {
     setAssist(true);
@@ -62,17 +66,18 @@ export const EventGridItem = ({ event }: Props) => {
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
         <div className="p-4 flex items-center justify-between">
 
-          <AvatarProfile
-            name={event.user.name}
-            username={event.user.username}
-            image={event.user.avatar}
-            timesamp={event.timestamp}
-            className='h-12 w-12'
-          />
-          {user?.role !== "publisher" && (
-            <FollowerButton event={event} />
+          <div className="flex items-center gap-2">
+            <AvatarProfile
+              name={event.user.name}
+              username={event.user.username}
+              image={event.user.avatar}
+              timesamp={event.timestamp}
+              className='h-12 w-12'
+            />
+          </div>
 
-          )}
+          {!isEventOwner && <FollowerButton event={event} />}
+
         </div>
 
         {/* Media */}
