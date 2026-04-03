@@ -14,6 +14,8 @@ import {
 import { SidebarItem } from './SidebarItem';
 import { AvatarProfile, CreateEventDialog } from '@/components';
 import { useAuthStore, useEventDialogStore, useEventsStore, useInterestStore } from '@/store';
+import { Logo } from "../logo/Logo";
+import Image from "next/image";
 
 export const Sidebar = () => {
   const router = useRouter();
@@ -88,10 +90,10 @@ export const Sidebar = () => {
       >
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center space-x-3">
-            <h1 className="text-xl font-bold text-gray-900">EventTop</h1>
+            <h1 className="text-xl font-bold text-gray-900">AlLado</h1>
           </div>
         </div>
-        
+
         {user && (
           <div className="border-b border-sidebar-border p-4">
             <AvatarProfile
