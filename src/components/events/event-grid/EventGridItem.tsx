@@ -71,9 +71,9 @@ export const EventGridItem = ({ event }: Props) => {
               username={event.user.username}
               image={event.user.avatar}
               timesamp={event.timestamp}
-              className='h-12 w-12'
+              className='h-10 md:h-12 w-10 md:w-12'
             />
-            {isEventOwner && <PublisherBadge isOwner={isEventOwner} />}
+           {/*  {isEventOwner && <PublisherBadge isOwner={isEventOwner} />} */}
           </div>
 
           <div className="flex items-center gap-2">
@@ -130,7 +130,7 @@ export const EventGridItem = ({ event }: Props) => {
                   variant={assist ? "secondary" : "outline"}
                 >
                   <Users className={cn("h-4 w-4", assist && "fill-current")} />
-                  <span>{assist ? "Confirmado" : "Asistiré"}</span>
+                  <span className="hidden md:block">{assist ? "Confirmado" : "Asistiré"}</span>
                 </Button>
 
                 {event.hasPaid || assist && (
@@ -140,7 +140,7 @@ export const EventGridItem = ({ event }: Props) => {
                     className="bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
                   >
                     <ImageUpIcon className="h-4 w-4" />
-                    Subir Foto
+                    <span className="hidden md:block">Subir Foto</span>
                   </Button>
                 )}
               </div>

@@ -20,7 +20,7 @@ export const EventInformation = ({ event }: Props) => {
     <div className="mt-2 p-4">
       <div className="mb-4">
         <div className="flex items-center gap-2 mb-2">
-          <h2 className="text-xl font-bold text-balance flex-1">{event.title}</h2>
+          <h2 className="text-xs md:text-xl font-bold text-balance flex-1">{event.title}</h2>
           {event.category && <Badge variant="secondary">{event.category}</Badge>}
         </div>
         {isEventOwner && <PublisherBadge isOwner={isEventOwner} />}
