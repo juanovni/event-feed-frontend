@@ -19,7 +19,8 @@ import {
   PaymentModal,
   UploadGalleryImageDialog,
   PublisherBadge,
-  PublisherEventStats
+  PublisherEventStats,
+  ShareEventButton
 } from "@/components";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -62,8 +63,8 @@ export const EventGridItem = ({ event }: Props) => {
   return (
     <>
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
-        <div className="p-4 flex items-center justify-between">
 
+        <div className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <AvatarProfile
               name={event.user.name}
@@ -75,7 +76,10 @@ export const EventGridItem = ({ event }: Props) => {
             {isEventOwner && <PublisherBadge isOwner={isEventOwner} />}
           </div>
 
-          {!isEventOwner && user && <FollowerButton event={event} />}
+          <div className="flex items-center gap-2">
+            {!isEventOwner && user && <FollowerButton event={event} />}
+            <ShareEventButton event={event} />
+          </div>
 
         </div>
 
