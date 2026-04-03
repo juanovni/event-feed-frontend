@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import { Event } from "@/interfaces";
 import { useEventsStore } from "@/store";
 import { formatDate } from "@/utils";
@@ -32,9 +31,6 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
-
-
-
 
   // Cantidades por cada tipo de ticket
   const [quantities, setQuantities] = useState<Record<string, number>>(() => {

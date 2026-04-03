@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Camera } from "lucide-react";
 import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
@@ -9,7 +11,8 @@ import { useUpdateUser } from "@/hooks/user/useUpdateUser";
 
 export default function EditProfileForm() {
   const { user } = useAuthStore();
-  const { mutate: updateUserMutation, isPending } = useUpdateUser();
+  const router = useRouter();
+  const { mutateAsync: updateUserMutation, isPending } = useUpdateUser();
   const { data: categories } = useCategories();
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(user?.avatar || null);
@@ -22,7 +25,7 @@ export default function EditProfileForm() {
     birthdate: user?.birthdate?.slice(0, 10) || "",
     location: user?.location || "",
     phone: user?.phone || "",
-    categories: user?.categories?.map((c: any) => c.id) || [],
+    categories: user?.categories?.map((c: Category) => c.id) || [],
     avatar: user?.avatar || "",
   });
 
@@ -49,10 +52,15 @@ export default function EditProfileForm() {
   };
 
   const handleSave = async () => {
-    updateUserMutation({
-      ...form,
-      avatarFile,
-    });
+    try {
+      await updateUserMutation({
+        ...form,
+        avatarFile,
+      });
+      router.push("/profile");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -68,7 +76,7 @@ export default function EditProfileForm() {
       birthdate: user?.birthdate?.slice(0, 10) || "",
       location: user.location || "",
       phone: user.phone || "",
-      categories: user.categories?.map((c: any) => c.id) || [],
+      categories: user.categories?.map((c: Category) => c.id) || [],
       avatar: user.avatar || "",
     });
     setAvatarPreview(user.avatar || null);
@@ -88,7 +96,10 @@ export default function EditProfileForm() {
         <div className="relative w-24 h-24">
 
           {/* Imagen */}
-          <img
+          <Image
+            alt="Avatar"
+            width={96}
+            height={96}
             src={avatarPreview || "/images/default-avatar.jpeg"}
             className="w-24 h-24 rounded-full object-cover"
           />

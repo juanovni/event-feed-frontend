@@ -37,11 +37,11 @@ export default function NotificationPage() {
         <p className="text-gray-500">No tienes notificaciones.</p>
       ) : (
         <ul className="divide-y divide-gray-200">
-          {notifications.map((n: any) => (
+         {/*  {notifications.map((n: any) => (
             <li key={n.id} className="py-2">
               <strong>{n.title}</strong> — {n.message}
             </li>
-          ))}
+          ))} */}
         </ul>
       )}
 

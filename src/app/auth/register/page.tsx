@@ -8,21 +8,6 @@ import { useCategories } from "@/hooks";
 import { Logo } from "@/components/ui/logo/Logo";
 import { Category } from "@/interfaces";
 
-const categoriesList = [
-  {
-    id: "4a237260-82fd-4380-84dd-7c390bcc21af",
-    name: "Moda",
-  },
-  {
-    id: "1a46546a-9843-4b72-aeec-9cf73b1cb099",
-    name: "Restaurantes",
-  },
-  {
-    id: "b75ee276-affa-4f65-822e-11daba944ae6",
-    name: "Tecnología",
-  },
-];
-
 export default function RegisterStepper() {
   const router = useRouter();
   const { register } = useAuthStore();

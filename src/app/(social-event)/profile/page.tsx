@@ -6,10 +6,15 @@ import {
   Camera,
   Edit2,
   MapPin,
-  Link as LinkIcon,
   Calendar,
 } from "lucide-react";
 import { useAuthStore } from "@/store/auth/authStore";
+import { Category } from "@/interfaces";
+
+interface Stats {
+  label: string;
+  value: number;
+}
 
 export default function ProfilePage() {
   const user = useAuthStore((state) => state.user);
@@ -122,7 +127,7 @@ export default function ProfilePage() {
           </h2>
 
           <div className="flex flex-wrap gap-2">
-            {user.categories.map((cat: any) => (
+            {user.categories.map((cat: Category) => (
               <span
                 key={cat.id}
                 className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition"
@@ -138,7 +143,7 @@ export default function ProfilePage() {
 }
 
 /* Mini componente */
-const Stat = ({ label, value }: any) => (
+const Stat = ({ label, value }: Stats) => (
   <div className="text-center">
     <div className="text-lg font-semibold text-gray-900">
       {Number(value).toLocaleString()}

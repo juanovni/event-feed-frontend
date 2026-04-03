@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 const images = [
@@ -31,9 +32,12 @@ export const ImageAccordion = () => {
           transition={{ delay: i * 0.1, duration: 0.5 }}
           whileHover={{ scale: 1.05, y: -5 }}
         >
-          <img
+          <Image
+            width={160}
+            height={112}
             src={img}
             className="w-full h-full object-cover"
+            alt={`Event image ${i + 1}`}
           />
         </motion.div>
       ))}

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { useCategories, useUploadEventImage } from "@/hooks";
+import { useUploadEventImage } from "@/hooks";
 import { MediaGalleryDetailsStep } from "./MediaGalleryDetailsStep";
 import { MediaGalleryUploadStep } from "./MediaGalleryUploadStep";
 
@@ -26,8 +26,6 @@ export function UploadGalleryImageDialog({ open, onOpenChange, eventId }: Create
   const [step, setStep] = useState(1);
   //const { mutate, isPending } = useUploadEventImage();
   const { mutateAsync, isPending } = useUploadEventImage();
-
-  const { data: categories, isLoading } = useCategories();
 
   const methods = useForm<EventGalleryFormValues>({
     defaultValues: {
@@ -62,8 +60,6 @@ export function UploadGalleryImageDialog({ open, onOpenChange, eventId }: Create
     }
     setStep(2);
   };
-
-  if (isLoading) return <p>Cargando galeria...</p>;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
