@@ -65,6 +65,8 @@ export const useAuthStore = create<AuthState>()(
           await eventApi.post("/auth/logout", { refreshToken });
         }
         set({ user: null, accessToken: null, refreshToken: null });
+        // Limpiar localStorage
+        localStorage.removeItem("auth-storage");
       },
 
       async refreshAccessToken() {
