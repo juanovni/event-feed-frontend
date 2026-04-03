@@ -2,34 +2,43 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import clsx from "clsx";
 
-const bottonLinks: { label: string; path: string }[] = [
-  {
-    label: 'Para ti',
-    path: '/'
-  },
-  {
-    label: 'Siguiendo',
-    path: '/followers'
-  }
+const bottonLinks = [
+  { label: 'Para ti', path: '/' },
+  { label: 'Siguiendo', path: '/followers' }
 ];
 
 export const HeaderButton = () => {
   const pathname = usePathname();
 
   return (
-    <>
-      {bottonLinks.map(item => (
-        <Button
-          key={item.label}
-          size="icon-lg"
-          variant={`${pathname === item.path ? 'default' : 'outline'}`}
-          className="rounded-full w-30"
-        >
-          <Link href={item.path}>{item.label}</Link>
-        </Button>
-      ))}
-    </>
-  )
-}
+    <div className="w-full border-gray-200">
+      <div className="flex w-full gap-6 md:gap-4 justify-center md:justify-start">
+        {bottonLinks.map((item) => {
+          const isActive = pathname === item.path;
+
+          return (
+            <Link
+              key={item.label}
+              href={item.path}
+              className={clsx(
+                "flex-1 text-center py-3 text-sm font-medium relative transition",
+                isActive
+                  ? "text-black"
+                  : "text-gray-400"
+              )}
+            >
+              {item.label}
+
+              {/* Indicador activo */}
+              {isActive && (
+                <span className="absolute bottom-0 left-1/4 w-1/2 h-1 bg-gray-800 rounded-full" />
+              )}
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+};

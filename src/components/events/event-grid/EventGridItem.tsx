@@ -76,7 +76,7 @@ export const EventGridItem = ({ event }: Props) => {
            {/*  {isEventOwner && <PublisherBadge isOwner={isEventOwner} />} */}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             {!isEventOwner && user && <FollowerButton event={event} />}
             <ShareEventButton event={event} />
           </div>
@@ -152,7 +152,7 @@ export const EventGridItem = ({ event }: Props) => {
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full mt-3 font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
+                className="w-full rounded-full mt-4 py-4 px-3 font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
                 onClick={() => setShowPaymentModal(true)}
               >
                 <CreditCard />
