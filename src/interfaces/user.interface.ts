@@ -18,4 +18,18 @@ export interface RegisterData {
   categories: string[]; // IDs
 }
 
+export interface UpdateUserPayload {
+  name: string;
+  lastName: string;
+  username: string;
+  description?: string;
+  gender: string;
+  birthdate: string;
+  location?: string;
+  phone?: string;
+  avatar: string;
+  categories: (string | number)[];
+  avatarFile?: File | null;
+}
+
 export type UserRole = "user" | "publisher" | "promoter";

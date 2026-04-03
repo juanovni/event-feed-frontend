@@ -1,18 +1,20 @@
 import { eventApi } from "@/api/event.api";
+import { UpdateUserPayload } from "@/interfaces";
 
-export const updateUser = async (payload: any) => {
+export const updateUser = async (payload: UpdateUserPayload) => {
   try {
     const formData = new FormData();
 
     // campos normales
     Object.entries(payload).forEach(([key, value]) => {
       if (key === "categories") {
-        (value as number[]).forEach((id: number) => {
+        const categoryIds = value as (string | number)[];
+        categoryIds.forEach((id: string | number) => {
           formData.append("categories[]", id.toString());
         });
       } else if (key !== "avatarFile") {
         if (value !== undefined && value !== null) {
-          formData.append(key, value as string);
+          formData.append(key, String(value));
         }
       }
     });

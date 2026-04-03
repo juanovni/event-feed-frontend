@@ -1,4 +1,4 @@
-import { Post, User, Event, Notification, Ticket } from "@/interfaces";
+import { Post, User, Notification } from "@/interfaces";
 
 export const mockUsers: User[] = [
   {
@@ -30,31 +30,6 @@ export const mockUsers: User[] = [
   }
 ];
 
-export const mockEvents: Event[] = [
-  {
-    id: "5d2e1e48-ed0d-4659-a860-c853c211720b",
-    user: mockUsers[1],
-    title: "Hallowen",
-    description: "Hallowen Rock\r\n\r\nEvent y mas cosas",
-    mediaType: "image",
-    mediaUrl: "https://res.cloudinary.com/dlxl5vbdk/image/upload/v1762461496/events/rllo6mei4z15clxmmo9b.jpg",
-    cost: 5,
-    currency: "USA",
-    gallery: [],
-    location: "Urdesa Central, Guayaquil Ecuador",
-    eventDate: new Date('2025-01-08T16:45:00'),
-    attendees: 0,
-    userStatus: "none",
-    isFollowing: false,
-    isInterested: false,
-    interested: 0,
-    isAttending: false,
-    hasPaid: true,
-    comments: [],
-    timestamp: new Date('2025-01-08T16:45:00'),
-  }
-];
-
 export const mockFollowers = [
   {
     id: "clu1...",
@@ -73,21 +48,6 @@ export const mockFollowers = [
     followsYou: true
   }
 ];
-
-export const mockTickets: Ticket[] = [
-  {
-    id: "4f822034-15d7-469a-83bb-7565b542e47e",
-    subTotal: 5,
-    tax: 0.75,
-    total: 5.75,
-    itemsInOrder: 1,
-    isPaid: false,
-    ticketNumber: "CCKCKC",
-    paidAt: new Date('2025-01-08T16:45:00'),
-    event: mockEvents[0]
-  }
-];
-
 
 export const mockPosts: Post[] = [
   {
