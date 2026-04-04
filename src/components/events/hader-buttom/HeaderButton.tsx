@@ -23,7 +23,7 @@ export const HeaderButton = () => {
               key={item.label}
               href={item.path}
               className={clsx(
-                "flex-1 text-center py-3 text-sm font-medium relative transition",
+                "flex-1 text-center  text-sm font-medium relative transition",
                 isActive
                   ? "text-black"
                   : "text-gray-400"
@@ -33,7 +33,7 @@ export const HeaderButton = () => {
 
               {/* Indicador activo */}
               {isActive && (
-                <span className="absolute bottom-0 left-1/4 w-1/2 h-1 bg-gray-800 rounded-full" />
+                <span className="absolute bottom-0 left-1/4 w-1/2 h-1 bg-gray-800 rounded-full mb-[-4px]" />
               )}
             </Link>
           );
