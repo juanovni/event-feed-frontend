@@ -8,7 +8,7 @@ export const Logo = () => {
         height={100}
         src="/images/logodal.png"
         alt="AlLado"
-        className="relative h-28 md:h-32 w-auto object-contain"
+        className="h-28 md:h-32 w-auto object-contain"
       />
     </div>
   )
