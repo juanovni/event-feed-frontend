@@ -90,7 +90,7 @@ export const Sidebar = () => {
       >
 
         <div className="p-8 h-10 md:p-8 border-b border-gray-200">
-          <Logo />
+          <Logo className="top-4.5 md:top-4 left-6 md:left-6" />
         </div>
 
         {user && (

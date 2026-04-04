@@ -76,7 +76,7 @@ export default function RegisterStepper() {
     <div className="min-h-screen flex flex-col bg-white">
 
       {/* HEADER */}
-      <Logo className="justify-center md:justify-start"/>
+      <Logo className="top-12 md:top-4 left-0 md:left-4 justify-center md:justify-start"/>
 
       {/* CONTENIDO */}
       <div className="flex items-center justify-center px-4 py-30">
