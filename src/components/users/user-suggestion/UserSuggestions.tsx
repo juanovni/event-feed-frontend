@@ -37,7 +37,7 @@ export const UserSuggestions = () => {
 
   return (
     <div className="space-y-3">
-      {/* <p className="font-semibold">Sugerencias para ti</p> */}
+      <p className="font-semibold">Sugerencias para ti</p>
       {data.map((user: UserSuggestions) => (
         <div key={user.id} className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -57,7 +57,7 @@ export const UserSuggestions = () => {
           </div>
           <Button
             size="sm"
-            variant={user.isFollowing ? "secondary" : "default"}
+            variant={user.isFollowing ? "link" : "link"}
             disabled={isPending}
             onClick={() => toggleFollow(user.id)}
           >

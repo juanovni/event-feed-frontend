@@ -92,6 +92,7 @@ export const EventGridItem = ({ event }: Props) => {
                 width={200}
                 height={200}
                 alt="Post content"
+                loading="eager"
                 className="w-full object-contain cursor-pointer transition-transform duration-300 hover:scale-105"
               />
               {event.gallery && (

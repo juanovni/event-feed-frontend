@@ -14,7 +14,7 @@ export const HeaderButton = () => {
 
   return (
     <div className="w-full border-gray-200">
-      <div className="flex w-full gap-6 md:gap-4 justify-center md:justify-start">
+      <div className="flex w-full gap-4 justify-center md:justify-start">
         {bottonLinks.map((item) => {
           const isActive = pathname === item.path;
 
