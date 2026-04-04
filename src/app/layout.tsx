@@ -6,10 +6,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - AlLado',
-    default: 'AlLado',
+    template: '%s - QueBuenPlan!',
+    default: 'QueBuenPlan!',
   },
-  description: 'AlLado es una plataforma de eventos sociales que te conecta con experiencias únicas cerca de ti. Descubre, comparte y únete a eventos organizados por personas como tú. Desde conciertos y exposiciones hasta encuentros gastronómicos, encuentra el evento perfecto para ti y tus amigos. ¡Explora lo que sucede a tu alrededor con AlLado!',
+  description: 'QueBuenPlan! es una plataforma de eventos sociales que te conecta con experiencias únicas cerca de ti. Descubre, comparte y únete a eventos organizados por personas como tú. Desde conciertos y exposiciones hasta encuentros gastronómicos, encuentra el evento perfecto para ti y tus amigos. ¡Explora lo que sucede a tu alrededor con QueBuenPlan!',
 }
 
 export default function RootLayout({
