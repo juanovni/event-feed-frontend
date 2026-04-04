@@ -88,10 +88,9 @@ export const Sidebar = () => {
       md:translate-x-0
     `}
       >
-        <div className="p-6 border-b border-gray-200">
-          <div className="flex items-center space-x-3">
-            <h1 className="text-xl font-bold text-gray-900">AlLado</h1>
-          </div>
+
+        <div className="p-8 h-10 md:p-8 border-b border-gray-200">
+          <Logo />
         </div>
 
         {user && (
