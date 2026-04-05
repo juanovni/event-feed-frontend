@@ -62,26 +62,26 @@ export const TicketGridItem = ({ ticket }: Props) => {
 
       </div>
 
-      <CardContent className="text-sm space-y-2 py-4">
+      <CardContent className="text-sm p-4 space-y-2">
         <div className="flex items-center gap-2 text-smtext-muted-foreground">
-          <Map size={16} className="h-4 w-4 shrink-0 text-primary font-bold" />
+          <Map size={18} className="shrink-0 text-primary font-bold" />
           <span className="font-medium">{ticket.event.location}</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Calendar className="w-4 h-4 text-primary" />
+          <Calendar size={18} className="text-primary" />
           <span>{formatDate(ticket.event.eventDate)}</span>
-          <Clock className="w-4 h-4 text-primary" />
+          <Clock size={18} className="text-primary" />
           <span>{formatTime(ticket.event.eventDate)}</span>
         </div>
 
         <div className="flex items-center justify-between pt-2 border-t border-border/50">
           <div className="flex items-center gap-2 text-sm">
-            <CreditCard className="w-4 h-4 text-primary" />
+            <CreditCard size={18} className="text-primary" />
             <span className="text-muted-foreground">Ticket:</span>
             <span className="font-mono text-xs text-foreground">{ticket.ticketNumber}</span>
           </div>
-          <div className="flex items-center gap-2 text-lg">
-            <DollarSign size={16} className="h-4 w-4 shrink-0 text-primary font-bold" />
+          <div className="flex items-center text-sm md:text-lg">
+            <DollarSign className="h-4 md:h-5 w-4 md:w-5 text-sm md:text-lg" />
             <p className="font-semibold">
               {ticket.total === 0 ? "Entrada gratuita" : `${ticket.total} ${ticket.event.currency}`}
             </p>
