@@ -44,6 +44,7 @@ export const TicketGridItem = ({ ticket }: Props) => {
           height={200}
           src={ticket.event.mediaUrl}
           alt={ticket.event.title}
+          loading="eager"
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-background/25 to-transparent" />
