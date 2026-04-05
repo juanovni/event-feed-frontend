@@ -30,13 +30,13 @@ export const EventInformation = ({ event }: Props) => {
       </div>
       <div className="text-sm space-y-2">
         <div className="flex items-center gap-2 text-smtext-muted-foreground">
-          <Map size={16} className="h-4 w-4 shrink-0 text-primary font-bold" />
+          <Map size={18} className="shrink-0 text-primary font-bold" />
           <span className="font-medium">{event.location}</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Calendar size={16} className="h-4 w-4 shrink-0 text-primary font-bold" />
+          <Calendar size={18} className="shrink-0 text-primary font-bold" />
           <span className="font-medium">{formatDate(event.eventDate)}</span>
-          <Clock className="w-4 h-4 text-primary font-bold" />
+          <Clock size={18} className="shrink-0 text-primary font-bold" />
           <span className="font-medium">{formatTime(event.eventDate)}</span>
         </div>
 
@@ -83,14 +83,14 @@ export const EventInformation = ({ event }: Props) => {
 
         <div className="flex items-center gap-2 text-sm mt-2">
           <div className="flex items-center gap-1">
-            <Heart className="w-4 h-4 text-primary font-bold" />
+            <Heart size={18} className="text-primary font-bold" />
             <p className="text-muted-foreground">
               <span className="font-medium text-foreground">{event.interested}</span> interesados
             </p>
           </div>
 
           <div className="flex items-center gap-1">
-            <Users className="w-4 h-4 text-primary font-bold" />
+            <Users size={18} className="text-primary font-bold" />
             <p className="text-muted-foreground">
               <span className="font-medium text-foreground">{event.attendees}</span> confirmados
             </p>

@@ -89,7 +89,7 @@ export default function EditProfileForm() {
   }, [avatarPreview]);
 
   return (
-    <div className="max-w-xl mx-auto space-y-6">
+    <div className="max-w-xl mx-auto px-2 sm:px-6 space-y-6">
 
       {/* AVATAR */}
       <div className="flex justify-center">

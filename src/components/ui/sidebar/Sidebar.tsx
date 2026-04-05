@@ -43,11 +43,11 @@ export const Sidebar = () => {
       path: '/',
       icon: <HomeIcon />
     },
-    {
+   /*  {
       label: 'Notificaciones',
       path: '/notifications',
       icon: <Bell />,
-    },
+    }, */
     {
       label: 'Tickets',
       path: '/tickets',

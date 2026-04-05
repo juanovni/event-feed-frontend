@@ -33,7 +33,7 @@ export const HeaderButton = () => {
 
               {/* Indicador activo */}
               {isActive && (
-                <span className="absolute bottom-0 left-1/4 w-1/2 h-1 bg-gray-800 rounded-full mb-[-4px]" />
+                <span className="absolute bottom-0 left-1/4 w-1/2 h-0.5 bg-gray-700 rounded-full mb-[-10px]" />
               )}
             </Link>
           );
