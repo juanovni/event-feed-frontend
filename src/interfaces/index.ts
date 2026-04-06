@@ -5,3 +5,4 @@ export * from './notification.interface';
 export * from './post.interface';
 export * from './ticket.interface';
 export * from './user.interface';
+export * from './auth-action.interface';

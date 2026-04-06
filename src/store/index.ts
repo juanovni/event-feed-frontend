@@ -5,3 +5,4 @@ export * from './events/favoritesStore';
 export * from './events/followStore';
 export * from './notification/notificationStore';
 export * from './ui/useEventDialogStore';
+export * from './ui/useAuthModalStore';

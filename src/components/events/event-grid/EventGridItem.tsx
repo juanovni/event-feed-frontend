@@ -45,6 +45,16 @@ export const EventGridItem = ({ event }: Props) => {
     setAssist(true);
   }
 
+  const handleClickShowPaymentModal = () => {
+    requireAuth(
+      () => {
+        setShowPaymentModal
+      }, {
+      event,
+      action: "JOIN",
+    });
+  };
+
   return (
     <>
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
@@ -138,7 +148,7 @@ export const EventGridItem = ({ event }: Props) => {
               variant="outline"
               size="lg"
               className="w-full bg-black text-white py-[21.1px] rounded-full text-sm cursor-pointer hover:text-white hover:bg-gray-800 transition mt-4"
-              onClick={() => requireAuth(() => setShowPaymentModal(true))}
+              onClick={handleClickShowPaymentModal}
             >
               <CreditCard />
               Pagar y Confirmar Asistencia

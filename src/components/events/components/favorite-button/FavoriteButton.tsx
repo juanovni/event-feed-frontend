@@ -17,9 +17,21 @@ export const FavoriteButton = ({
   const { requireAuth } = useRequireAuth();
   const { toggleFavorite, isFavorite } = useFavoritesStore();
   const favorite = isFavorite(event.id);
+
+  const handleClick = () => {
+    requireAuth(
+      () => {
+        toggleFavorite(event)
+      },
+      {
+        event,
+        action: "FAVORITE",
+      });
+  };
+
   return (
     <Button
-      onClick={() => requireAuth(() => toggleFavorite(event))}
+      onClick={handleClick}
       variant='outline'
       size="icon-lg"
       className={`p-2 rounded-full transition-all duration-200 ${favorite ? "text-black font-extrabold" : "fill-transparent"}`}

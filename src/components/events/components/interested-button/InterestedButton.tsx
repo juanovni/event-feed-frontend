@@ -17,13 +17,20 @@ export const InterestedButton = ({ event }: Props) => {
   const { toggleLocalInterest } = useInterestStore();
 
   const handleClick = () => {
-    toggleLocalInterest(event.id);
-    toggleInterest(event.id);
+    requireAuth(
+      () => {
+        toggleLocalInterest(event.id);
+        toggleInterest(event.id);
+      },
+      {
+        event,
+        action: "INTEREST",
+      });
   };
 
   return (
     <Button
-      onClick={() => requireAuth(() => handleClick())}
+      onClick={handleClick}
       variant={event.isInterested ? "secondary" : "outline"}
     >
       <ThumbsUp

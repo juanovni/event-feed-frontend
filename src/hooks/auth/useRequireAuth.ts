@@ -1,14 +1,16 @@
-
-import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store";
+import { useAuthStore, useAuthModalStore } from "@/store";
+import { AuthAction, Event } from "@/interfaces";
 
 export const useRequireAuth = () => {
-  const router = useRouter();
   const { user } = useAuthStore();
+  const { openModal } = useAuthModalStore();
 
-  const requireAuth = (callback?: () => void) => {
+  const requireAuth = (
+    callback?: () => void,
+    payload?: { event?: Event; action?: AuthAction }
+  ) => {
     if (!user) {
-      router.push("/auth/login");
+      openModal(callback, payload);
       return;
     }
 

@@ -20,23 +20,32 @@ export const AttendButton = ({ event, totalCost, onRequirePayment }: Props) => {
 
 
   const handleAttend = async () => {
-    if (totalCost === 0) {
-      try {
-        const resp = await attendEvent(event.id);
-        if (resp.attending) setAssist(true);
-      } catch (err) {
-        console.error("Error al confirmar asistencia", err);
-      }
-    } else {
-      if (!assist) {
-        onRequirePayment?.(); // 🔥 abre modal desde afuera
-      }
-    }
+    requireAuth(
+      async () => {
+        if (totalCost === 0) {
+          try {
+            const resp = await attendEvent(event.id);
+            if (resp.attending) setAssist(true);
+          } catch (err) {
+            console.error("Error al confirmar asistencia", err);
+          }
+        } else {
+          if (!assist) {
+            onRequirePayment?.();
+          }
+        }
+      },
+      {
+        event,
+        action: "JOIN",
+      });
+
+
   };
 
   return (
     <Button
-      onClick={() => requireAuth(handleAttend)}
+      onClick={handleAttend}
       variant={assist ? "secondary" : "outline"}
     >
       <Users className={cn("h-4 w-4", assist && "fill-current")} />

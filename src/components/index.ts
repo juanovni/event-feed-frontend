@@ -36,4 +36,5 @@ export * from './ui/sidebar/SidebarItem';
 export * from './ui/title/Title';
 export * from './ui/widgets/AvatarsFriendsWidget';
 export * from './ui/widgets/NavigationWidget';
+export * from './ui/auth-require-modal/AuthRequiredModal';
 export * from './users/user-suggestion/UserSuggestions';
