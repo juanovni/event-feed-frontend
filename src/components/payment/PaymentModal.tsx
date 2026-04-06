@@ -196,7 +196,7 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
                     <Button
                       type="submit"
                       size={"lg"}
-                      className="w-full bg-black text-white py-6 rounded-full text-sm cursor-pointer hover:text-white hover:bg-gray-800 transition" 
+                      className="w-full bg-black text-white py-[21.99px] rounded-full text-sm cursor-pointer hover:text-white hover:bg-gray-800 transition" 
                       disabled={isProcessing || total === 0}>
                       {isProcessing ? "Procesando..." : `Pagar $${totalWithTax.toFixed(2)}`}
                     </Button>
