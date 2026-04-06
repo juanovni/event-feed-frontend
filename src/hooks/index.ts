@@ -1,4 +1,5 @@
 export * from './auth/useProtectedRoute';
+export * from './auth/useRequireAuth';
 export * from './category/useCategory';
 export * from './event-attendance/useToggleAttend';
 export * from './event-confirmed-friends/useConfirmedFriends';

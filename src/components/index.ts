@@ -1,5 +1,5 @@
 
-
+export * from './events/components/attend-button/AttendButton';
 export * from './events/add-event-step/CreateEventDialog';
 export * from './events/add-event-step/EventDetailsStep';
 export * from './events/add-event-step/MediaUploadStep';

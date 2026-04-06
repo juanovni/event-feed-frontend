@@ -4,7 +4,7 @@ import { useInterestStore } from "@/store";
 import { ThumbsUp } from "lucide-react";
 import { Event } from "@/interfaces";
 import { cn } from "@/lib/utils";
-import { useToggleInterest } from "@/hooks";
+import { useRequireAuth, useToggleInterest } from "@/hooks";
 import { Button } from "@/components/ui/button";
 
 interface Props {
@@ -12,6 +12,7 @@ interface Props {
 }
 
 export const InterestedButton = ({ event }: Props) => {
+  const { requireAuth } = useRequireAuth();
   const { mutate: toggleInterest } = useToggleInterest();
   const { toggleLocalInterest } = useInterestStore();
 
@@ -22,7 +23,7 @@ export const InterestedButton = ({ event }: Props) => {
 
   return (
     <Button
-      onClick={handleClick}
+      onClick={() => requireAuth(() => handleClick())}
       variant={event.isInterested ? "secondary" : "outline"}
     >
       <ThumbsUp

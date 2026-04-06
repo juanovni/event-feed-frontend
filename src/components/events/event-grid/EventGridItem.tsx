@@ -6,10 +6,9 @@ import { Event } from "@/interfaces";
 import {
   CreditCard,
   ImageUpIcon,
-  Users
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import {
+  AttendButton,
   AvatarProfile,
   EventInformation,
   FavoriteButton,
@@ -18,13 +17,12 @@ import {
   GalleryPopup,
   PaymentModal,
   UploadGalleryImageDialog,
-  PublisherBadge,
   PublisherEventStats,
   ShareEventButton
 } from "@/components";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useEventImages, useToggleAttend } from "@/hooks";
+import { useEventImages, useRequireAuth } from "@/hooks";
 import { getTotalPrice } from "@/utils";
 import { useAuthStore } from '@/store';
 
@@ -34,10 +32,10 @@ interface Props {
 
 export const EventGridItem = ({ event }: Props) => {
   const { user } = useAuthStore();
+  const { requireAuth } = useRequireAuth();
   const [assist, setAssist] = useState(event.hasPaid || event.isAttending);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [openUpload, setOpenUpload] = useState(false);
-  const { mutateAsync: attendEvent } = useToggleAttend();
   const { data: galleryImages } = useEventImages(event.id);
   const totalCost = getTotalPrice(event);
 
@@ -46,19 +44,6 @@ export const EventGridItem = ({ event }: Props) => {
   const handlePaymentSuccess = () => {
     setAssist(true);
   }
-
-  const handleAttend = async () => {
-    if (totalCost === 0) {
-      try {
-        const resp = await attendEvent(event.id);
-        if (resp.attending) setAssist(true);
-      } catch (err) {
-        console.error("Error al confirmar asistencia", err);
-      }
-    } else {
-      if (!assist) setShowPaymentModal(true);
-    }
-  };
 
   return (
     <>
@@ -73,7 +58,6 @@ export const EventGridItem = ({ event }: Props) => {
               timesamp={event.timestamp}
               className='h-10 md:h-12 w-10 md:w-12'
             />
-           {/*  {isEventOwner && <PublisherBadge isOwner={isEventOwner} />} */}
           </div>
 
           <div className="flex items-center">
@@ -119,49 +103,48 @@ export const EventGridItem = ({ event }: Props) => {
         )}
 
         {/* Actions */}
-        {user && user.role !== "publisher" && (
-          <div className="px-4 py-3 border-t border-gray-100">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
+        <div className="px-4 py-3 border-t border-gray-100">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
 
-                <InterestedButton event={event} />
+              <InterestedButton event={event} />
 
+              {user?.role !== "publisher" && (
+                <AttendButton
+                  event={event}
+                  totalCost={totalCost}
+                  onRequirePayment={() => setShowPaymentModal(true)}
+                />
+              )}
+
+              {event.hasPaid || assist && (
                 <Button
-                  onClick={handleAttend}
-                  variant={assist ? "secondary" : "outline"}
+                  title="Publicar foto"
+                  onClick={() => requireAuth(() => setOpenUpload(true))}
+                  className="bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
                 >
-                  <Users className={cn("h-4 w-4", assist && "fill-current")} />
-                  <span className="hidden md:block">{assist ? "Confirmado" : "Asistiré"}</span>
+                  <ImageUpIcon className="h-4 w-4" />
+                  <span className="hidden md:block">Subir Foto</span>
                 </Button>
-
-                {event.hasPaid || assist && (
-                  <Button
-                    title="Publicar foto"
-                    onClick={() => setOpenUpload(true)}
-                    className="bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
-                  >
-                    <ImageUpIcon className="h-4 w-4" />
-                    <span className="hidden md:block">Subir Foto</span>
-                  </Button>
-                )}
-              </div>
-
-              <FavoriteButton event={event} />
+              )}
 
             </div>
-            {totalCost > 0 && !assist && (
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-full rounded-full mt-4 py-4 px-3 font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
-                onClick={() => setShowPaymentModal(true)}
-              >
-                <CreditCard />
-                Pagar y Confirmar Asistencia
-              </Button>
-            )}
+
+            <FavoriteButton event={event} />
+
           </div>
-        )}
+          {user?.role !== "publisher" && totalCost > 0 && !assist && (
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full rounded-full mt-4 py-4 px-3 font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
+              onClick={() => requireAuth(() => setShowPaymentModal(true))}
+            >
+              <CreditCard />
+              Pagar y Confirmar Asistencia
+            </Button>
+          )}
+        </div>
       </div>
 
       <PaymentModal
