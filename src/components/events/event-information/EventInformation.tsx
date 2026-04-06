@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { AvatarsFriendsWidget } from "@/components/ui/widgets/AvatarsFriendsWidget";
 import { NavigationWidget } from "@/components/ui/widgets/NavigationWidget";
 import { currencyFormat, formatDate, formatTime } from "@/utils";
@@ -6,12 +9,15 @@ import { Event } from "@/interfaces";
 import { useAuthStore } from '@/store';
 import { Badge } from "@/components/ui/badge";
 import { PublisherBadge } from "../components/publisher-badge/PublisherBadge";
+import { cn } from "@/lib/utils";
+import ExpandableText from "@/components/ui/expandable-text/ExpandableText";
 
 interface Props {
   event: Event;
 }
 
 export const EventInformation = ({ event }: Props) => {
+  const [expanded, setExpanded] = useState(false);
   const { user } = useAuthStore();
   const distanceKm = 4;
   const isEventOwner = user?.id === event.user.id;
@@ -24,9 +30,9 @@ export const EventInformation = ({ event }: Props) => {
           {event.category && <Badge variant="secondary">{event.category}</Badge>}
         </div>
         {isEventOwner && <PublisherBadge isOwner={isEventOwner} />}
-        <p className="whitespace-pre-line text-sm text-gray-700 mt-2">
-          {event.description}
-        </p>
+        <div className="mt-2">
+          <ExpandableText text={event.description} maxLines={expanded ? 10 : 3} />
+        </div>
       </div>
       <div className="text-sm space-y-2">
         <div className="flex items-center gap-2 text-smtext-muted-foreground">
