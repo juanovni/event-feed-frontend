@@ -48,7 +48,7 @@ export const EventGridItem = ({ event }: Props) => {
   const handleClickShowPaymentModal = () => {
     requireAuth(
       () => {
-        setShowPaymentModal
+        setShowPaymentModal(true);
       }, {
       event,
       action: "JOIN",
