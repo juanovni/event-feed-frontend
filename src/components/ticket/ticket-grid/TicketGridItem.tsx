@@ -4,7 +4,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Calendar, Clock, CreditCard, Map, DollarSign, CheckCircle, Ticket as TickeIcon, Clock3 } from "lucide-react";
 import { Ticket } from "@/interfaces";
-import { formatDate, formatTime, getTicketStatus } from "@/utils";
+import { currencyFormat, formatDate, formatTime, getTicketStatus } from "@/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -75,19 +75,29 @@ export const TicketGridItem = ({ ticket }: Props) => {
           <span>{formatTime(ticket.event.eventDate)}</span>
         </div>
 
-        <div className="flex items-center justify-between pt-2 border-t border-border/50">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between pt-2 border-t border-border/50 gap-2">
+
+          {/* Ticket */}
           <div className="flex items-center gap-2 text-sm">
             <CreditCard size={18} className="text-primary" />
             <span className="text-muted-foreground">Ticket:</span>
-            <span className="font-mono text-xs text-foreground">{ticket.ticketNumber}</span>
+            <span className="font-mono text-xs text-foreground">
+              {ticket.ticketNumber}
+            </span>
           </div>
-          <div className="flex items-center text-sm md:text-lg">
-            <DollarSign className="h-4 md:h-5 w-4 md:w-5 text-sm md:text-lg" />
+
+          {/* Precio */}
+          <div className="flex items-center text-sm md:text-lg md:justify-end">
+            <DollarSign className="h-4 md:h-5 w-4 md:w-5" />
             <p className="font-semibold">
-              {ticket.total === 0 ? "Entrada gratuita" : `${ticket.total} ${ticket.event.currency}`}
+              {ticket.total === 0
+                ? "Entrada gratuita"
+                : `${currencyFormat(ticket.total)} ${ticket.event.currency}`}
             </p>
           </div>
+
         </div>
+
       </CardContent>
     </Card>
   );
