@@ -137,7 +137,7 @@ export const EventGridItem = ({ event }: Props) => {
             <Button
               variant="outline"
               size="lg"
-              className="w-full rounded-full mt-4 py-4 px-3 font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
+              className="w-full bg-black text-white py-6 rounded-full text-sm cursor-pointer hover:text-white hover:bg-gray-800 transition mt-4"
               onClick={() => requireAuth(() => setShowPaymentModal(true))}
             >
               <CreditCard />

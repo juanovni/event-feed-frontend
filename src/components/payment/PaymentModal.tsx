@@ -107,7 +107,7 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="min-w-5xl">
+      <DialogContent className="w-full max-w-lg md:max-w-3xl lg:max-w-5xl h-[90vh] md:h-auto overflow-y-auto">
         {!paymentSuccess ? (
           <>
             <DialogHeader>
@@ -117,7 +117,7 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
               </DialogDescription>
             </DialogHeader>
 
-            <div className="py-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="py-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
 
               {/* COLUMNA IZQUIERDA: LISTA DE TICKETS */}
               <div className="space-y-4">
@@ -192,8 +192,12 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
                     <Input id="name" placeholder="Juan Pérez" required />
                   </div>
 
-                  <DialogFooter>
-                    <Button type="submit" disabled={isProcessing || total === 0}>
+                  <DialogFooter className="sticky bottom-0 bg-background pt-4">
+                    <Button
+                      type="submit"
+                      size={"lg"}
+                      className="w-full bg-black text-white py-6 rounded-full text-sm cursor-pointer hover:text-white hover:bg-gray-800 transition" 
+                      disabled={isProcessing || total === 0}>
                       {isProcessing ? "Procesando..." : `Pagar $${totalWithTax.toFixed(2)}`}
                     </Button>
                   </DialogFooter>
