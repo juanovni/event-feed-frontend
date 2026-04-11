@@ -41,7 +41,7 @@ export default function FilterCarousel({ options, value, onChange }: Props) {
       className="w-full"
     >
       {options.map((option) => (
-        <SwiperSlide key={option.value} className="!w-auto">
+        <SwiperSlide key={option.value} className="!w-auto p-1">
           <Button
             onClick={() => onChange(option.value)}
             variant={value === option.value ? "default" : "outline"}

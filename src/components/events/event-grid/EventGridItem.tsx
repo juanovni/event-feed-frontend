@@ -4,14 +4,15 @@ import { useState } from "react";
 import Image from "next/image";
 import { Event } from "@/interfaces";
 import {
+  CheckCircle2,
   CreditCard,
   ImageUpIcon,
+  LoaderCircle,
+  Users,
 } from "lucide-react";
 import {
-  AttendButton,
   AvatarProfile,
   EventInformation,
-  FavoriteButton,
   FollowerButton,
   InterestedButton,
   GalleryPopup,
@@ -22,7 +23,7 @@ import {
 } from "@/components";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useEventImages, useRequireAuth } from "@/hooks";
+import { useEventImages, useRequireAuth, useToggleAttend } from "@/hooks";
 import { getTotalPrice } from "@/utils";
 import { useAuthStore } from '@/store';
 
@@ -33,26 +34,52 @@ interface Props {
 export const EventGridItem = ({ event }: Props) => {
   const { user } = useAuthStore();
   const { requireAuth } = useRequireAuth();
+  const { mutateAsync: attendEvent } = useToggleAttend();
   const [assist, setAssist] = useState(event.hasPaid || event.isAttending);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [openUpload, setOpenUpload] = useState(false);
+  const [isSubmittingAttendance, setIsSubmittingAttendance] = useState(false);
   const { data: galleryImages } = useEventImages(event.id);
   const totalCost = getTotalPrice(event);
 
   const isEventOwner = user?.id === event.user.id;
+  const isConfirmed = event.hasPaid || assist;
+  const isPastEvent = new Date(event.eventDate).getTime() < Date.now();
 
   const handlePaymentSuccess = () => {
     setAssist(true);
   }
 
-  const handleClickShowPaymentModal = () => {
+  const handleAttendance = () => {
     requireAuth(
-      () => {
-        setShowPaymentModal(true);
-      }, {
-      event,
-      action: "JOIN",
-    });
+      async () => {
+        if (totalCost > 0) {
+          setShowPaymentModal(true);
+          return;
+        }
+
+        try {
+          setIsSubmittingAttendance(true);
+          const response = await attendEvent(event.id);
+
+          if (response?.attending) {
+            setAssist(true);
+          }
+        } catch (error) {
+          console.error("Error al confirmar asistencia", error);
+        } finally {
+          setIsSubmittingAttendance(false);
+        }
+      },
+      {
+        event,
+        action: "JOIN",
+      }
+    );
+  };
+
+  const handleOpenUpload = () => {
+    requireAuth(() => setOpenUpload(true));
   };
 
   return (
@@ -114,44 +141,49 @@ export const EventGridItem = ({ event }: Props) => {
 
         {/* Actions */}
         <div className="px-4 py-3 border-t border-gray-100">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-
+          <div className="flex justify-center">
+            <div className="grid w-full max-w-md grid-cols-2 gap-3">
               <InterestedButton event={event} />
-
-             {/*  {user?.role !== "publisher" && (
-                <AttendButton
-                  event={event}
-                  totalCost={totalCost}
-                  onRequirePayment={() => setShowPaymentModal(true)}
-                />
-              )} */}
-
-              {event.hasPaid || assist && (
-                <Button
-                  title="Publicar foto"
-                  onClick={() => requireAuth(() => setOpenUpload(true))}
-                  className="bg-gray-800 text-white hover:bg-gray-900 hover:text-white transition-colors duration-200"
-                >
-                  <ImageUpIcon className="h-4 w-4" />
-                  <span className="hidden md:block">Subir Foto</span>
-                </Button>
-              )}
-
+              <Button
+                variant="outline"
+                className="h-11 rounded-full border-black/10 bg-white hover:bg-muted"
+                onClick={handleOpenUpload}
+                disabled={!isConfirmed}
+                title={isConfirmed ? "Publicar foto" : "Debes confirmar tu asistencia para publicar"}
+              >
+                <ImageUpIcon className="h-4 w-4" />
+                Subir foto
+              </Button>
             </div>
-
-            <FavoriteButton event={event} />
-
           </div>
-          {user?.role !== "publisher" && totalCost > 0 && !assist && (
+          {!isEventOwner && (
             <Button
-              variant="outline"
               size="lg"
-              className="w-full bg-black text-white py-[21.1px] rounded-full text-sm cursor-pointer hover:text-white hover:bg-gray-800 transition mt-4"
-              onClick={handleClickShowPaymentModal}
+              className="mt-4 h-12 w-full rounded-full bg-foreground text-background hover:bg-foreground/90"
+              onClick={handleAttendance}
+              disabled={isConfirmed || isPastEvent || isSubmittingAttendance}
             >
-              <CreditCard />
-              Confirmar Asistencia
+              {isSubmittingAttendance ? (
+                <>
+                  <LoaderCircle className="h-4 w-4 animate-spin" />
+                  Confirmando...
+                </>
+              ) : isConfirmed ? (
+                <>
+                  <CheckCircle2 className="h-4 w-4" />
+                  Asistencia confirmada
+                </>
+              ) : totalCost > 0 ? (
+                <>
+                  <CreditCard className="h-4 w-4" />
+                  Comprar entrada
+                </>
+              ) : (
+                <>
+                  <Users className="h-4 w-4" />
+                  Confirmar asistencia
+                </>
+              )}
             </Button>
           )}
         </div>
