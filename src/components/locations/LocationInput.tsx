@@ -18,7 +18,7 @@ export function LocationInput({ value, onChange, onLocationSelect, placeholder, 
   const { suggestions, loading, searchLocations, clearSuggestions } = useLocationSearch();
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState(value);
-  const debounceTimerRef = useRef<NodeJS.Timeout>();
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Debounce para búsqueda
@@ -37,7 +37,11 @@ export function LocationInput({ value, onChange, onLocationSelect, placeholder, 
       }
     }, 300);
 
-    return () => clearTimeout(debounceTimerRef.current);
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
   }, [inputValue, searchLocations, clearSuggestions]);
 
   // Sincronizar inputValue con value prop

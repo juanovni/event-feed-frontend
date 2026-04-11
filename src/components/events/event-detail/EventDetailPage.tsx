@@ -8,24 +8,20 @@ import {
   CheckCircle2,
   Clock3,
   CreditCard,
-  Heart,
   ImageUpIcon,
   LoaderCircle,
   MapPin,
-  Ticket,
   Users,
 } from "lucide-react";
 import {
   AvatarProfile,
   AvatarsFriendsWidget,
-  FavoriteButton,
   FollowerButton,
   GalleryPopup,
   InterestedButton,
   MapPreview,
   PaymentModal,
   PublisherEventStats,
-  ShareEventButton,
   UploadGalleryImageDialog,
 } from "@/components";
 import { Badge } from "@/components/ui/badge";
