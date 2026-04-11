@@ -4,6 +4,7 @@ export const mockUsers: User[] = [
   {
     id: '1',
     name: 'María González',
+    lastName: 'González',
     username: 'maria_photo',
     avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150',
     interests: ['Fotografía', 'Viajes', 'Arte'],
@@ -14,6 +15,7 @@ export const mockUsers: User[] = [
     id: '2',
     name: 'NICANOR • CASA DE BEBIDAS •',
     username: 'nicanorec',
+    lastName: 'CASA DE BEBIDAS',
     avatar: 'https://pbs.twimg.com/profile_images/1443429332496621572/OJ5JizFo_400x400.jpg',
     interests: ['Restaurante', 'Música'],
     isFollowing: true,
@@ -22,6 +24,7 @@ export const mockUsers: User[] = [
   {
     id: '3',
     name: 'Ana Silva',
+    lastName: 'Silva',
     username: 'ana_travel',
     avatar: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150',
     interests: ['Viajes', 'Gastronomía', 'Fotografía'],
