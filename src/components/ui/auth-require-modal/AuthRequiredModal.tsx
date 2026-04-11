@@ -37,7 +37,7 @@ export const AuthRequiredModal = () => {
         {/* TITLE */}
         <h2 className="text-2xl font-semibold">
           {event
-            ? `No te pierdas ninguna publicacion de ${event.user.name}`
+            ? `No te pierdas ninguna publicacion de ${event.user.name} ${event.user.lastName ? event.user.lastName : ""}`
             : "No te pierdas ningún evento"}
         </h2>
 

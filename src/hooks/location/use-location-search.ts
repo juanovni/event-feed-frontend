@@ -1,5 +1,7 @@
 import { useState, useCallback } from "react";
 
+const LOCATION_COUNTRY_CODE = (process.env.NEXT_PUBLIC_LOCATION_COUNTRY_CODE ?? "ec").toLowerCase();
+
 export interface LocationSuggestion {
   id: number;
   name: string;
@@ -30,7 +32,7 @@ export function useLocationSearch() {
 
     try {
       const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&addressdetails=1`,
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&addressdetails=1&countrycodes=${encodeURIComponent(LOCATION_COUNTRY_CODE)}`,
         {
           headers: {
             "Accept-Language": "es",

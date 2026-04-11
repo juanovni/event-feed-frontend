@@ -148,7 +148,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
                 <Button
                   type="button"
                   onClick={(e) => { e.preventDefault(); handleNextFormStep(); }}
-                  className="w-full"
+                  className="w-full h-12 rounded-full bg-foreground text-background hover:bg-foreground/90"
                   size="lg"
                 >
                   Siguiente
@@ -159,7 +159,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
                 <Button
                   type="button"
                   onClick={(e) => { e.preventDefault(); handleNextTicketStep(); }}
-                  className="w-full"
+                  className="w-full h-12 rounded-full bg-foreground text-background hover:bg-foreground/90 "
                   size="lg"
                 >
                   Asignar entradas
@@ -169,7 +169,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
 
                 <Button
                   type="submit"
-                  className="w-full"
+                  className="w-full h-12 rounded-full bg-foreground text-background hover:bg-foreground/90"
                   size="lg"
                   disabled={isPending}
                 >

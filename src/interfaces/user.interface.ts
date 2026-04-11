@@ -2,6 +2,8 @@ export interface User {
   id: string;
   name: string;
   username: string;
+  lastName: string;
+  description?: string;
   avatar: string;
   isFollowing?: boolean;
   interests: string[];

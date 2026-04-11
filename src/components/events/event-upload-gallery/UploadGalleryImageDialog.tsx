@@ -93,8 +93,8 @@ export function UploadGalleryImageDialog({ open, onOpenChange, eventId }: Create
                 <Button
                   type="button"
                   onClick={(e) => { e.preventDefault(); handleNextStep(); }}
-                  className="w-full"
                   size="lg"
+                  className="h-12 w-full rounded-full bg-foreground text-background hover:bg-foreground/90"
                 >
                   Siguiente
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -102,7 +102,7 @@ export function UploadGalleryImageDialog({ open, onOpenChange, eventId }: Create
               ) : (
                 <Button
                   type="submit"
-                  className="w-full"
+                  className="h-12 w-full rounded-full bg-foreground text-background hover:bg-foreground/90"
                   size="lg"
                   disabled={isPending}
                 >
