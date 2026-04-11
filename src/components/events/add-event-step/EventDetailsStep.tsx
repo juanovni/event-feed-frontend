@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Category } from "@/interfaces";
+import { LocationInput } from "@/components/locations/LocationInput";
+import { MapPreview } from "@/components/locations/MapPreview";
 
 interface Props {
   categories: Category[];
@@ -20,12 +22,20 @@ interface Props {
 export function EventDetailsStep({ categories }: Props) {
   const { register, setValue, watch } = useFormContext();
   const eventDate = watch("eventDate");
-  const categoryId = watch("categoryId"); // 👈 observa el valor actual
+  const categoryId = watch("categoryId");
+  const locationLat = watch("locationLat");
+  const locationLon = watch("locationLon");
+  const locationName = watch("location");
+
+  const handleLocationSelect = (location: { name: string; lat: string; lon: string }) => {
+    setValue("locationLat", location.lat);
+    setValue("locationLon", location.lon);
+  };
 
   return (
     <div className="p-6 space-y-6">
       <div className="space-y-2">
-        <Label htmlFor="title">Título del evento</Label>
+        <Label htmlFor="title">Nombre del evento</Label>
         <Input {...register("title", { required: true })} id="title" placeholder="Ej: Concierto de Rock en vivo" />
       </div>
 
@@ -35,9 +45,22 @@ export function EventDetailsStep({ categories }: Props) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="location">Agregar ubicación</Label>
-        <Input {...register("location", { required: true })} id="title" placeholder="Ej: Urdesa Central, Guayaquil, Ecuador" />
+        <Label htmlFor="location">Agregar ubicación del evento</Label>
+        <LocationInput 
+          value={watch("location") || ""}
+          onChange={(value) => setValue("location", value)}
+          onLocationSelect={handleLocationSelect}
+          placeholder="Ej: Calle Malecón, Guayaquil, Ecuador"
+        />
       </div>
+
+      {locationLat && locationLon && (
+        <MapPreview 
+          latitude={locationLat} 
+          longitude={locationLon} 
+          locationName={locationName}
+        />
+      )}
 
       <div className="grid grid-cols-1 gap-4">
         <div className="space-y-2">

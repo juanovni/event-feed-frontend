@@ -31,6 +31,7 @@ export const InterestedButton = ({ event }: Props) => {
   return (
     <Button
       onClick={handleClick}
+      className="h-11 rounded-full border-black/10 bg-white hover:bg-muted"
       variant={event.isInterested ? "secondary" : "outline"}
     >
       <ThumbsUp

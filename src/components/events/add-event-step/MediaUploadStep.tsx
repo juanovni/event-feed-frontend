@@ -85,7 +85,7 @@ export function MediaUploadStep({ setValue }: MediaUploadStepProps) {
         <div>
           <h3 className="text-lg font-semibold mb-2">Arrastra tu archivo aquí</h3>
           <p className="text-sm text-muted-foreground">o haz clic para seleccionar</p>
-          <p className="text-xs text-muted-foreground mt-2">Soporta imágenes y videos</p>
+          <p className="text-xs text-muted-foreground mt-2">Soporta imágenes</p>
         </div>
       </div>
       <input id="media-upload" type="file" accept="image/*,video/*" onChange={handleUpload} className="hidden" />

@@ -107,11 +107,11 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     setStep(3);
   };
 
-  if (isLoading) return <p>Cargando eventos...</p>;
+  if (isLoading) return <p></p>;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl p-0 overflow-hidden">
+      <DialogContent className="p-0 overflow-hidden">
         <DialogHeader className="px-2 pt-2 pb-4 border-b">
           <div className="flex items-center justify-between">
             {step === 2 && (
@@ -125,7 +125,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
               </Button>
             )}
             <DialogTitle className={cn("text-lg font-semibold", step === 1 && "mx-auto")}>
-              {step === 1 ? "Sube tu imagen o video" : "Detalles del evento"}
+              {step === 1 ? "Sube tu imagen" : "Detalles del evento"}
             </DialogTitle>
             {step === 2 && <div className="w-8" />}
           </div>

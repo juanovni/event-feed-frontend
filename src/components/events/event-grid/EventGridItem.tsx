@@ -119,13 +119,13 @@ export const EventGridItem = ({ event }: Props) => {
 
               <InterestedButton event={event} />
 
-              {user?.role !== "publisher" && (
+             {/*  {user?.role !== "publisher" && (
                 <AttendButton
                   event={event}
                   totalCost={totalCost}
                   onRequirePayment={() => setShowPaymentModal(true)}
                 />
-              )}
+              )} */}
 
               {event.hasPaid || assist && (
                 <Button
@@ -151,7 +151,7 @@ export const EventGridItem = ({ event }: Props) => {
               onClick={handleClickShowPaymentModal}
             >
               <CreditCard />
-              Pagar y Confirmar Asistencia
+              Confirmar Asistencia
             </Button>
           )}
         </div>

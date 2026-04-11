@@ -117,7 +117,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
               </Button>
             )}
             <DialogTitle className={cn("text-xl font-semibold", step === 1 && "mx-auto")}>
-              {step === 1 ? "Sube tu imagen o video" : "Detalles del evento"}
+              {step === 1 ? "Sube tu imagen" : "Detalles del evento"}
             </DialogTitle>
             {step === 2 && <div className="w-8" />}
           </div>
