@@ -66,7 +66,13 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
 
   const onSubmit = (data: EventFormValues) => {
     const formData = new FormData();
-    const { ...eventToSave } = data;
+    const eventToSave = {
+      ...data,
+      tickets: data.tickets.map((ticket) => ({
+        ...ticket,
+        price: 0,
+      })),
+    };
     const eventDateTime = combineDateAndTime(eventToSave.eventDate, eventToSave.eventTime);
 
     if (!data.mediaFile) {
@@ -125,7 +131,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
               </Button>
             )}
             <DialogTitle className={cn("text-lg font-semibold", step === 1 && "mx-auto")}>
-              {step === 1 ? "Sube tu imagen" : "Detalles del evento"}
+              {step === 1 ? "Sube tu imagen" : step === 2 ? "Detalles del evento" : "Entradas del evento"}
             </DialogTitle>
             {step === 2 && <div className="w-8" />}
           </div>
@@ -173,7 +179,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
                   size="lg"
                   disabled={isPending}
                 >
-                  Crear Evento
+                  Crear evento
                   <Check className="ml-2 h-4 w-4" />
                 </Button>
               )}

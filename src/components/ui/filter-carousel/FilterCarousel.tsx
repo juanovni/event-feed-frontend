@@ -41,12 +41,12 @@ export default function FilterCarousel({ options, value, onChange }: Props) {
       className="w-full"
     >
       {options.map((option) => (
-        <SwiperSlide key={option.value} className="!w-auto p-1">
+        <SwiperSlide key={option.value} className="!w-auto px-1 py-1">
           <Button
             onClick={() => onChange(option.value)}
             variant={value === option.value ? "default" : "outline"}
             className={cn(
-              "rounded-full text-sm px-4 py-2 whitespace-nowrap transition-all",
+              "rounded-full text-sm px-4 py-2 px-4 py-2 whitespace-nowrap transition-all",
               value === option.value && "shadow-md scale-105"
             )}
           >

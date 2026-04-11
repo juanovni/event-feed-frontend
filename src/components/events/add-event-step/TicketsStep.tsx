@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { useFormContext, useFieldArray } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CalendarIcon, Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -12,6 +14,7 @@ import { format } from "date-fns";
 
 export function TicketsStep() {
   const { control, register, watch, setValue } = useFormContext();
+  const [openSupportModal, setOpenSupportModal] = useState(false);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -23,20 +26,29 @@ export function TicketsStep() {
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold">Entradas del evento</h2>
 
-        <Button
-          type="button"
-          onClick={() =>
-            append({
-              name: "",
-              price: 0,
-              quantity: 0,
-              validUntil: null,
-            })
-          }
-        >
-          Agregar entrada
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button type="button" variant="outline" onClick={() => setOpenSupportModal(true)}>
+            Agregar costo
+          </Button>
+          <Button
+            type="button"
+            onClick={() =>
+              append({
+                name: "",
+                price: 0,
+                quantity: 0,
+                validUntil: null,
+              })
+            }
+          >
+            Agregar entrada
+          </Button>
+        </div>
       </div>
+
+      <p className="text-sm text-muted-foreground">
+        Todas las entradas creadas desde este formulario son gratis.
+      </p>
 
       {fields.length === 0 && (
         <p className="text-sm text-muted-foreground">
@@ -69,14 +81,11 @@ export function TicketsStep() {
               <div className="space-y-2">
                 <Label>Precio</Label>
                 <Input
-                  type="number"
-                  step="0.01"
-                  placeholder="0.00"
-                  {...register(`tickets.${index}.price`, {
-                    required: true,
-                    valueAsNumber: true,
-                  })}
+                  value="Gratis"
+                  disabled
+                  className="bg-muted"
                 />
+                <input type="hidden" {...register(`tickets.${index}.price`, { valueAsNumber: true })} defaultValue={0} />
               </div>
 
               <div className="space-y-2">
@@ -121,6 +130,36 @@ export function TicketsStep() {
           </div>
         );
       })}
+
+      <Dialog open={openSupportModal} onOpenChange={setOpenSupportModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">Aceptar pagos</DialogTitle>
+            <DialogDescription className="mt-2 space-y-4">
+              <p>
+                Actualmente, todas las entradas creadas desde este formulario son gratis.
+              </p>
+              <p>
+                En nuestra plataforma usamos Payphone para los cobros, pero esta opcion se encuentra en desarrollo y todavia no esta disponible para todos los eventos.
+              </p>
+              <p>
+                Para habilitar esta funcionalidad, por favor comunicate con el equipo de soporte: constantinemurillo@gmail.com.
+              </p>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              size={"lg"}
+              type="button"
+              className="w-full h-12 rounded-full bg-foreground text-background hover:bg-foreground/90"
+              onClick={() => setOpenSupportModal(false)}
+            >
+              Entendido
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
     </div>
   );
 }
