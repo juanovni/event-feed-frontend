@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
 
 interface Props {
   text: string;
@@ -27,6 +28,8 @@ export default function ExpandableText({ text, maxLines = 3 }: Props) {
     }
   }, [expanded, maxLines]);
 
+  const shouldShow = text.length > 120;
+
   return (
     <div>
       <div className="relative">
@@ -41,18 +44,27 @@ export default function ExpandableText({ text, maxLines = 3 }: Props) {
         </p>
 
         {/* Fade */}
-        {text.length > 120 && !expanded && (
+        {shouldShow && !expanded && (
           <div className="pointer-events-none absolute bottom-0 left-0 w-full h-6 bg-gradient-to-t from-background to-transparent" />
         )}
       </div>
 
-      {text.length > 120 && (
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="text-primary text-sm font-medium mt-1 hover:underline cursor-pointer"
-        >
-          {expanded ? "Leer menos" : "Leer más"}
-        </button>
+      {/* SOLO mostrar cuando está colapsado */}
+      {shouldShow && !expanded && (
+        <div className="flex justify-center mt-2">
+          <button
+            onClick={() => setExpanded(true)}
+            className="group relative flex items-center justify-center cursor-pointer"
+          >
+            {/* Tooltip */}
+            <span className="absolute -top-7 text-xs bg-black text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
+              Expandir
+            </span>
+
+            {/* Icono animado */}
+            <ChevronDown className="w-6 h-6 text-primary animate-bounce" />
+          </button>
+        </div>
       )}
     </div>
   );

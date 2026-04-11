@@ -5,6 +5,7 @@ import { Event } from '@/interfaces';
 import {
   MoreVertical,
   Copy,
+  ExternalLink,
 } from 'lucide-react';
 import { FaFacebook, FaTwitter } from "react-icons/fa";
 
@@ -44,6 +45,11 @@ export const ShareEventButton = ({ event }: Props) => {
     setOpenSharePopover(false);
   };
 
+  const handleGoToPublication = () => {
+    window.open(eventUrl, '_blank', 'noopener,noreferrer');
+    setOpenSharePopover(false);
+  };
+
   return (
     <Popover open={openSharePopover} onOpenChange={setOpenSharePopover}>
       <PopoverTrigger asChild>
@@ -54,8 +60,15 @@ export const ShareEventButton = ({ event }: Props) => {
       <PopoverContent className="w-60 p-0" align="end">
         <div className="flex flex-col">
           <button
-            onClick={handleCopyLink}
+            onClick={handleGoToPublication}
             className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 font-medium text-sm transition-colors cursor-pointer"
+          >
+            <ExternalLink className="h-5 w-5" />
+            Ir a la publicación
+          </button>
+          <button
+            onClick={handleCopyLink}
+            className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 font-medium text-sm border-t transition-colors cursor-pointer"
           >
             <Copy className="h-5 w-5" />
             Copiar enlace
