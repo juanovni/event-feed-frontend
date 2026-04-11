@@ -28,8 +28,8 @@ export const AuthRequiredModal = () => {
           <Image
             width={200}
             height={200}
-            src={event?.mediaUrl || "/default-event.png"}
-            alt={event?.title || "Evento"}
+            src={event?.user?.avatar || "/images/default-avatar.jpeg"}
+            alt={event?.user?.name || "Usuario"}
             className="w-28 h-28 sm:w-32 sm:h-32 rounded-full border-4 border-white object-cover shadow-lg"
           />
         </div>
@@ -37,7 +37,7 @@ export const AuthRequiredModal = () => {
         {/* TITLE */}
         <h2 className="text-2xl font-semibold">
           {event
-            ? `No te pierdas ninguna publicacion de ${event.title}`
+            ? `No te pierdas ninguna publicacion de ${event.user.name}`
             : "No te pierdas ningún evento"}
         </h2>
 
