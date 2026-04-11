@@ -17,7 +17,7 @@ export function MapPreview({ latitude, longitude, locationName }: MapPreviewProp
   const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${parseFloat(longitude) - 0.01},${parseFloat(latitude) - 0.01},${parseFloat(longitude) + 0.01},${parseFloat(latitude) + 0.01}&layer=mapnik&marker=${latitude},${longitude}`;
 
   return (
-    <div className="space-y-2">
+    <div className="w-full min-w-0 space-y-2">
       <div className="flex items-center gap-2">
         <MapPin className="h-4 w-4 text-blue-500" />
         <p className="text-sm font-medium">Vista previa de ubicación</p>
@@ -34,7 +34,7 @@ export function MapPreview({ latitude, longitude, locationName }: MapPreviewProp
           style={{ border: 0 }}
         />
       </div>
-      <p className="text-xs text-gray-600 truncate">{locationName}</p>
+      <p className="text-xs text-gray-600 break-words">{locationName}</p>
     </div>
   );
 }

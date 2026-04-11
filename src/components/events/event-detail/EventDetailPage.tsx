@@ -73,8 +73,8 @@ function EventLocationSection({ location }: { location: string }) {
 
   return (
     <Card className="border-black/8 bg-white/88 py-0 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.45)] backdrop-blur-sm">
-      <CardContent className="space-y-5 p-6 sm:p-8">
-        <div className="flex items-start justify-between gap-4">
+      <CardContent className="space-y-5 p-4 sm:p-6 lg:p-8">
+        <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:gap-4">
           <div className="space-y-2">
             <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
               Ubicación
@@ -86,7 +86,7 @@ function EventLocationSection({ location }: { location: string }) {
             href={directionsUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-2 text-sm font-medium text-foreground transition hover:bg-muted"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-black/10 bg-white px-3 py-2 text-sm font-medium text-foreground transition hover:bg-muted sm:w-auto"
           >
             Ver mapa
             <ArrowUpRight className="h-4 w-4" />
@@ -94,12 +94,12 @@ function EventLocationSection({ location }: { location: string }) {
         </div>
 
         <div className="rounded-3xl border border-black/6 bg-muted/45 p-4">
-          <div className="mb-4 flex items-start gap-3">
+          <div className="mb-4 flex min-w-0 items-start gap-3">
             <div className="rounded-full bg-white p-2 shadow-sm">
               <MapPin className="h-4 w-4 text-foreground" />
             </div>
-            <div>
-              <p className="font-medium text-foreground">{location}</p>
+            <div className="min-w-0">
+              <p className="break-words font-medium text-foreground">{location}</p>
               <p className="text-sm text-muted-foreground">
                 {loading
                   ? "Buscando la mejor referencia de mapa..."
@@ -143,13 +143,13 @@ function OrganizerEventsSection({ organizerId, organizerName, currentEventId }: 
   if (isLoading || otherEvents.length === 0) return null;
 
   return (
-    <div className="space-y-6 border-t border-black/6 pt-10">
+    <div className="space-y-6 border-t border-black/6 pt-8 sm:pt-10">
       <div className="flex items-baseline justify-between gap-4">
         <div className="space-y-1">
           <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
             Mismo anfitrión
           </p>
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+          <h2 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
             Más planes de {organizerName}
           </h2>
         </div>
@@ -257,8 +257,8 @@ export function EventDetailPage({ event }: Props) {
       <section className="relative overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-72" />
 
-        <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-2 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+        <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-3 sm:gap-8 sm:px-6 sm:py-4 lg:px-8">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground sm:gap-3 sm:text-sm">
             {event.category && (
               <Badge className="rounded-full border border-black/10 bg-white/80 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-foreground shadow-sm hover:bg-white">
                 {event.category}
@@ -274,8 +274,8 @@ export function EventDetailPage({ event }: Props) {
             </span>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(380px,460px)] lg:items-start xl:grid-cols-[minmax(0,0.95fr)_minmax(420px,520px)]">
-            <div className="space-y-6">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(380px,460px)] lg:items-start lg:gap-8 xl:grid-cols-[minmax(0,0.95fr)_minmax(420px,520px)]">
+            <div className="order-2 min-w-0 space-y-5 sm:space-y-6 lg:order-1">
               <div className="overflow-hidden rounded-xl border border-black/8 bg-white/85 shadow-[0_30px_90px_-45px_rgba(15,23,42,0.45)] backdrop-blur-sm">
                 <div className="relative">
                   {event.mediaType === "image" ? (
@@ -286,7 +286,7 @@ export function EventDetailPage({ event }: Props) {
                         height={1400}
                         alt={event.title}
                         priority
-                        className="h-[clamp(200px,70vh,720px)] w-full object-cover object-center rounded-xl"
+                        className="h-[clamp(220px,52vh,720px)] w-full object-cover object-center rounded-xl sm:h-[clamp(240px,58vh,720px)]"
                       />
                       {event.gallery && <GalleryPopup images={galleryImages || []} />}
                     </>
@@ -294,7 +294,7 @@ export function EventDetailPage({ event }: Props) {
                     <video
                       src={event.mediaUrl}
                       controls
-                      className="h-[clamp(200px,70vh,720px)] w-full object-cover"
+                      className="h-[clamp(220px,52vh,720px)] w-full object-cover sm:h-[clamp(240px,58vh,720px)]"
                       poster="https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg?auto=compress&cs=tinysrgb&w=800"
                     />
                   )}
@@ -303,7 +303,7 @@ export function EventDetailPage({ event }: Props) {
 
               <div className="space-y-6">
                 <Card className="border-black/8 bg-white/88 py-0 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.45)] backdrop-blur-sm">
-                  <CardContent className="space-y-5 p-6">
+                  <CardContent className="space-y-5 p-4 sm:p-6">
                     <div className="space-y-1">
                       <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
                         Comunidad
@@ -360,13 +360,13 @@ export function EventDetailPage({ event }: Props) {
                   </CardContent>
                 </Card>
                 <Card className="border-black/8 bg-white/88 py-0 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.45)] backdrop-blur-sm">
-                  <CardContent className="space-y-8 p-6 sm:p-8">
+                  <CardContent className="space-y-6 p-4 sm:space-y-8 sm:p-6 lg:p-8">
                     <div className="space-y-4 border-b border-black/6 pb-6">
                       <div className="space-y-3">
                         <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
                           Evento
                         </p>
-                        <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+                        <h2 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
                           {event.title}
                         </h2>
                       </div>
@@ -388,18 +388,18 @@ export function EventDetailPage({ event }: Props) {
               </div>
             </div>
 
-            <aside className="space-y-6 lg:sticky lg:top-14">
+            <aside className="order-1 min-w-0 space-y-4 sm:space-y-6 lg:order-2 lg:sticky lg:top-14">
 
 
               <Card className="overflow-hidden rounded-xl border border-black/8 bg-white/92 py-0 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.45)] backdrop-blur-sm">
-                <CardContent className="space-y-6 p-6">
+                <CardContent className="space-y-5 p-4 sm:space-y-6 sm:p-6">
                   <div className="space-y-4 border-b border-black/6 pb-6">
                     <div className="flex items-start justify-between gap-4">
                       <div className="space-y-2">
                         <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
                           Inscripción
                         </p>
-                        <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+                        <h2 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
                           {event.title}
                         </h2>
                       </div>
@@ -482,7 +482,7 @@ export function EventDetailPage({ event }: Props) {
                       )}
                     </Button>
 
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <InterestedButton event={event} />
                       <Button
                         variant="outline"
@@ -498,13 +498,13 @@ export function EventDetailPage({ event }: Props) {
                   </div>
 
                   <div className="rounded-3xl border border-black/6 bg-white p-4 text-sm text-muted-foreground">
-                    <div className="mb-3 flex items-center justify-between">
+                    <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                       <span>Estado del evento</span>
                       <span className="font-medium text-foreground">
                         {isPastEvent ? "Finalizado" : isConfirmed ? "Tu cupo está listo" : "Inscripción abierta"}
                       </span>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
                       <span>Fotos en galería</span>
                       <span className="font-medium text-foreground">{galleryImages?.length || 0}</span>
                     </div>
@@ -521,7 +521,9 @@ export function EventDetailPage({ event }: Props) {
               </div>
 
               {/* Location preview — sits at the top of the sidebar */}
-              <EventLocationSection location={event.location} />
+              <div className="min-w-0">
+                <EventLocationSection location={event.location} />
+              </div>
 
             </aside>
           </div>
