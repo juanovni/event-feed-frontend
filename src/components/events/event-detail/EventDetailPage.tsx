@@ -17,7 +17,6 @@ import {
   AvatarProfile,
   AvatarsFriendsWidget,
   FollowerButton,
-  GalleryPopup,
   InterestedButton,
   MapPreview,
   PaymentModal,
@@ -43,6 +42,7 @@ import {
   useToggleAttend,
 } from "@/hooks";
 import ExpandableText from "@/components/ui/expandable-text/ExpandableText";
+import { EventMediaBlock } from "./EventMediaBlock";
 
 interface Props {
   event: Event;
@@ -274,32 +274,22 @@ export function EventDetailPage({ event }: Props) {
             </span>
           </div>
 
+          <EventMediaBlock
+            event={event}
+            galleryImages={galleryImages || []}
+            objectFit="contain"
+            className="block overflow-hidden md:hidden"
+          />
+
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(380px,460px)] lg:items-start lg:gap-8 xl:grid-cols-[minmax(0,0.95fr)_minmax(420px,520px)]">
             <div className="order-2 min-w-0 space-y-5 sm:space-y-6 lg:order-1">
-              <div className="overflow-hidden rounded-xl border border-black/8 bg-white/85 shadow-[0_30px_90px_-45px_rgba(15,23,42,0.45)] backdrop-blur-sm">
-                <div className="relative">
-                  {event.mediaType === "image" ? (
-                    <>
-                      <Image
-                        src={event.mediaUrl}
-                        width={1400}
-                        height={1400}
-                        alt={event.title}
-                        priority
-                        className="h-[clamp(220px,52vh,720px)] w-full object-cover object-center rounded-xl sm:h-[clamp(240px,58vh,720px)]"
-                      />
-                      {event.gallery && <GalleryPopup images={galleryImages || []} />}
-                    </>
-                  ) : (
-                    <video
-                      src={event.mediaUrl}
-                      controls
-                      className="h-[clamp(220px,52vh,720px)] w-full object-cover sm:h-[clamp(240px,58vh,720px)]"
-                      poster="https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg?auto=compress&cs=tinysrgb&w=800"
-                    />
-                  )}
-                </div>
-              </div>
+
+              <EventMediaBlock
+                event={event}
+                galleryImages={galleryImages || []}
+                objectFit="cover"
+                className="hidden overflow-hidden rounded-xl border border-black/8 bg-white/85 shadow-[0_30px_90px_-45px_rgba(15,23,42,0.45)] backdrop-blur-sm md:block"
+              />
 
               <div className="space-y-6">
                 <Card className="border-black/8 bg-white/88 py-0 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.45)] backdrop-blur-sm">
