@@ -5,7 +5,7 @@ interface EventAttendeeResponse {
   id: string;
   user: string;
   username: string;
-  lastname: string;
+  lastName: string;
   avatar: string;
 }
 
@@ -14,7 +14,7 @@ const mapAttendee = (attendee: EventAttendeeResponse): EventAttendee => {
     id: attendee.id,
     name: attendee.user,
     username: attendee.username,
-    lastName: attendee.lastname,
+    lastName: attendee.lastName,
     avatar: attendee.avatar,
     isAttending: true,
     confirmedAt: null,
