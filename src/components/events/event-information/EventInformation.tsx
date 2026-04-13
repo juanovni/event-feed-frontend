@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AvatarsFriendsWidget } from "@/components/ui/widgets/AvatarsFriendsWidget";
 import { NavigationWidget } from "@/components/ui/widgets/NavigationWidget";
 import { currencyFormat, formatDate, formatTime } from "@/utils";
-import { Calendar, Clock, Heart, Map, Users } from "lucide-react";
+import { Calendar, Clock, Heart, Map, ThumbsUp, Users } from "lucide-react";
 import { Event } from "@/interfaces";
 import { useAuthStore } from '@/store';
 import { Badge } from "@/components/ui/badge";
@@ -89,7 +89,7 @@ export const EventInformation = ({ event }: Props) => {
 
         <div className="flex items-center gap-2 text-sm mt-2">
           <div className="flex items-center gap-1">
-            <Heart size={18} className="text-primary font-bold" />
+            <ThumbsUp size={18} className="text-primary font-bold" />
             <p className="text-muted-foreground">
               <span className="font-medium text-foreground">{event.interested}</span> interesados
             </p>
@@ -109,9 +109,9 @@ export const EventInformation = ({ event }: Props) => {
 
       </div>
 
-      {user && user?.role !== "publisher" && (
+      {/* {user && user?.role !== "publisher" && (
         <NavigationWidget distanceKm={distanceKm} />
-      )}
+      )} */}
 
     </div>
   )

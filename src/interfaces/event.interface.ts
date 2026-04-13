@@ -14,6 +14,8 @@ export interface Event {
   comments: Comment[];
   gallery?: string[];
   location: string;
+  lat?: number;
+  lon?: number;
   eventDate: Date;
   timestamp: Date;
   category?: EventCategory;
