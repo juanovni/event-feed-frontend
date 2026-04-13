@@ -8,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
 import { useEventAttendees } from "@/hooks";
 import { useEventAttendeesDialogStore } from "@/store";
 import { AvatarProfile } from "@/components";
@@ -56,29 +55,17 @@ export function EventAttendeesDialog() {
                     {/* Left */}
                     <div className="flex items-center gap-3">
                       <AvatarProfile
-                        name={attendee.name}
+                        name={attendee.name + " " + (typeof attendee?.lastName === "string" ? attendee.lastName : "")}
+                        username={attendee.username}
                         image={attendee.avatar || ''}
                         className="h-10 w-10"
                       />
-
-                      <div className="flex flex-col leading-tight">
-                        <span className="text-sm font-medium text-gray-900">
-                          {attendee.name}
-                        </span>
-                        <span className="text-xs text-gray-400">
-                          {attendee.username ? `@${attendee.username}` : ""}
-                        </span>
-                      </div>
                     </div>
-
                     {/* Right */}
-                    <Badge
-                      variant={attendee.isAttending ? "default" : "secondary"}
-                      className="rounded-full px-3 py-1 text-xs"
-                    >
-                      {attendee.isAttending ? "✔" : "…"}
-                    </Badge>
-                    
+                    <div
+                      className={`h-2 w-2 rounded-full ${attendee.isAttending ? "bg-green-500" : "bg-gray-300"
+                        }`}
+                    />
                   </div>
                 ))}
               </div>

@@ -370,7 +370,7 @@ export function EventDetailPage({ event }: Props) {
                       <div className="rounded-2xl bg-muted px-4 py-3">
                         <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Asistentes</p>
                         <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">{event.attendees}</p>
-                        {canViewAttendees && (
+                        {canViewAttendees && isEventOwner && (
                           <Button
                             type="button"
                             variant="link"
@@ -405,11 +405,7 @@ export function EventDetailPage({ event }: Props) {
                     </div>
                   </CardContent>
                 </Card>
-                {isEventOwner && (
-                  <div className="overflow-hidden rounded-3xl border border-black/8 bg-white/88">
-                    <PublisherEventStats event={event} totalPhotos={galleryImages?.length || 0} />
-                  </div>
-                )}
+
               </div>
             </div>
 
@@ -548,16 +544,16 @@ export function EventDetailPage({ event }: Props) {
                       <span className="font-medium text-foreground">{galleryImages?.length || 0}</span>
                     </div>
                   </div>
+
+                  <div className="space-y-6">
+                    {isEventOwner && (
+                      <div className="overflow-hidden rounded-3xl border border-black/8 bg-white/88 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.45)] backdrop-blur-sm">
+                        <PublisherEventStats event={event} totalPhotos={galleryImages?.length || 0} />
+                      </div>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
-
-              <div className="space-y-6">
-                {isEventOwner && (
-                  <div className="overflow-hidden rounded-3xl border border-black/8 bg-white/88 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.45)] backdrop-blur-sm">
-                    <PublisherEventStats event={event} totalPhotos={galleryImages?.length || 0} />
-                  </div>
-                )}
-              </div>
 
               {/* Location preview — sits at the top of the sidebar */}
               <div className="min-w-0">
