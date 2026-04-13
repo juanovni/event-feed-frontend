@@ -3,6 +3,7 @@ export * from './event/create-event';
 export * from './event/get-events';
 export * from './event/get-events-by-user';
 export * from './event/get-event-by-slug';
+export * from './event/get-event-attendees';
 export * from './event/get-confirmed-friends';
 export * from './event/upload-event-image';
 export * from './event/get-event-images';

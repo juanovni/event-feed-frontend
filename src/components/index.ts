@@ -12,6 +12,7 @@ export * from './events/components/publisher-event-stats/PublisherEventStats';
 export * from './events/components/share-button/ShareEventButton';
 export * from './events/event-confirmed-friends/EventConfirmedTooltip';
 export * from './events/event-confirmed-friends/EventConfirmedTooltipItem';
+export * from './events/event-detail/EventAttendeesDialog';
 export * from './events/event-detail/EventDetailPage';
 export * from './events/event-empty/EventEmpty';
 export * from './events/event-grid/EventGrid';

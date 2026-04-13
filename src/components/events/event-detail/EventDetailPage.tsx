@@ -17,6 +17,7 @@ import {
 import {
   AvatarProfile,
   AvatarsFriendsWidget,
+  EventAttendeesDialog,
   FollowerButton,
   InterestedButton,
   MapPreview,
@@ -28,7 +29,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Event } from "@/interfaces";
-import { useAuthStore } from "@/store";
+import { useAuthStore, useEventAttendeesDialogStore } from "@/store";
 import {
   currencyFormat,
   formatDate,
@@ -204,6 +205,7 @@ function OrganizerEventsSection({ organizerId, organizerName, currentEventId }: 
 
 export function EventDetailPage({ event }: Props) {
   const { user } = useAuthStore();
+  const openAttendeesDialog = useEventAttendeesDialogStore((state) => state.openDialog);
   const { requireAuth } = useRequireAuth();
   const { mutateAsync: attendEvent } = useToggleAttend();
   const [assist, setAssist] = useState(event.hasPaid || event.isAttending);
@@ -213,10 +215,10 @@ export function EventDetailPage({ event }: Props) {
   const { data: galleryImages } = useEventImages(event.id);
   const totalCost = getTotalPrice(event);
   const isEventOwner = user?.id === event.user.id;
+  const canViewAttendees = user?.role === "publisher";
   const isConfirmed = event.hasPaid || assist;
   const isPastEvent = new Date(event.eventDate).getTime() < Date.now();
   const priceLabel = getPriceLabel(event);
-  const [expanded, setExpanded] = useState(false);
   const accessUrl = totalCost > 0 ? "/tickets" : `/ticket/${getAttendanceAccessPassId(event.id)}`;
 
   const handlePaymentSuccess = () => {
@@ -253,6 +255,13 @@ export function EventDetailPage({ event }: Props) {
 
   const handleOpenUpload = () => {
     requireAuth(() => setOpenUpload(true));
+  };
+
+  const handleOpenAttendees = () => {
+    openAttendeesDialog({
+      eventId: event.id,
+      eventTitle: event.title,
+    });
   };
 
   return (
@@ -330,10 +339,23 @@ export function EventDetailPage({ event }: Props) {
                           <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
                             Ya confirmaron
                           </p>
-                          <div className="flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1 shadow-sm">
-                            <Users className="h-3.5 w-3.5 text-muted-foreground" />
-                            <span className="text-xs font-semibold text-foreground">{event.attendees}</span>
-                          </div>
+                          {canViewAttendees ? (
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="h-auto rounded-full bg-white px-2.5 py-1 shadow-sm hover:bg-white"
+                              onClick={handleOpenAttendees}
+                            >
+                              <Users className="h-3.5 w-3.5 text-muted-foreground" />
+                              <span className="text-xs font-semibold text-foreground">{event.attendees}</span>
+                            </Button>
+                          ) : (
+                            <div className="flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1 shadow-sm">
+                              <Users className="h-3.5 w-3.5 text-muted-foreground" />
+                              <span className="text-xs font-semibold text-foreground">{event.attendees}</span>
+                            </div>
+                          )}
                         </div>
                         <AvatarsFriendsWidget eventId={event.id} />
                       </div>
@@ -348,6 +370,16 @@ export function EventDetailPage({ event }: Props) {
                       <div className="rounded-2xl bg-muted px-4 py-3">
                         <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Asistentes</p>
                         <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">{event.attendees}</p>
+                        {canViewAttendees && (
+                          <Button
+                            type="button"
+                            variant="link"
+                            className="mt-1 h-auto p-0 text-xs text-muted-foreground"
+                            onClick={handleOpenAttendees}
+                          >
+                            Ver listado
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </CardContent>
@@ -367,9 +399,9 @@ export function EventDetailPage({ event }: Props) {
 
                     <div className="space-y-3">
                       <h2 className="text-lg font-semibold text-foreground">Acerca del evento</h2>
-                      <p className="max-w-3xl whitespace-pre-line text-[15px] leading-7 text-muted-foreground">
-                        <ExpandableText text={event.description} maxLines={expanded ? 10 : 3} />
-                      </p>
+                      <div className="max-w-3xl text-[15px] leading-7 text-muted-foreground">
+                        <ExpandableText text={event.description} maxLines={3} />
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -556,6 +588,8 @@ export function EventDetailPage({ event }: Props) {
         onOpenChange={setOpenUpload}
         eventId={event.id}
       />
+
+      {canViewAttendees && <EventAttendeesDialog />}
     </>
   );
 }
