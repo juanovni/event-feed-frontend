@@ -4,6 +4,7 @@ export * from './category/useCategory';
 export * from './event-attendance/useToggleAttend';
 export * from './event-confirmed-friends/useConfirmedFriends';
 export * from './event-interest/useToggleInterest';
+export * from './event-interest/useInterestedEvents';
 export * from './event/useCreateEvent';
 export * from './event/useEvent';
 export * from './event/useEventBySlug';

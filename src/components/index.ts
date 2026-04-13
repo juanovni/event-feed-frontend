@@ -41,3 +41,4 @@ export * from './ui/widgets/AvatarsFriendsWidget';
 export * from './ui/widgets/NavigationWidget';
 export * from './ui/auth-require-modal/AuthRequiredModal';
 export * from './users/user-suggestion/UserSuggestions';
+export * from './profile/interested-events-grid/InterestedEventsGrid';

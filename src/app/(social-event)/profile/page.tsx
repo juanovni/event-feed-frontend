@@ -7,10 +7,14 @@ import {
   Edit2,
   MapPin,
   Calendar,
+  ThumbsUp,
 } from "lucide-react";
 import { useAuthStore } from "@/store/auth/authStore";
 import { Category } from "@/interfaces";
-import { Title } from "@/components";
+import { Title, InterestedEventsGrid } from "@/components";
+import { useInterestedEvents } from "@/hooks";
+import { useState } from "react";
+import { LayoutGrid, Heart, Bookmark } from "lucide-react";
 
 interface Stats {
   label: string;
@@ -20,6 +24,9 @@ interface Stats {
 export default function ProfilePage() {
   const user = useAuthStore((state) => state.user);
   const router = useRouter();
+  const { data: interestedEventsResponse, isLoading: isLoadingInterested } = useInterestedEvents();
+  const [activeTab, setActiveTab] = useState<'grid' | 'likes' | 'saved'>('grid');
+  const interestedEvents = interestedEventsResponse?.items ?? [];
 
   if (!user) return null;
 
@@ -95,7 +102,6 @@ export default function ProfilePage() {
                     {user.description}
                   </p>
                 )}
-
                 {/* Meta */}
                 <div className="flex flex-wrap justify-center sm:justify-start gap-3 text-xs sm:text-sm text-gray-600 mb-4">
 
@@ -146,6 +152,47 @@ export default function ProfilePage() {
               ))}
             </div>
           </div>
+        )}
+
+        <div className="flex items-center justify-around border-b border-gray-200 mb-3">
+          {/* Grid */}
+          <button
+            onClick={() => setActiveTab('grid')}
+            className={`flex flex-col items-center py-2 cursor-pointer ${activeTab === 'grid' ? 'text-black' : 'text-gray-400'
+              }`}
+          >
+            <ThumbsUp className="w-5 h-5" />
+            <div className={`h-[2px] w-6 mt-1 ${activeTab === 'grid' ? 'bg-black' : 'bg-transparent'
+              }`} />
+          </button>
+          {/* Guardados */}
+          <button
+            onClick={() => setActiveTab('saved')}
+            className={`flex flex-col items-center py-2 cursor-pointer ${activeTab === 'saved' ? 'text-black' : 'text-gray-400'
+              }`}
+          >
+            <Bookmark className="w-5 h-5" />
+            <div className={`h-[2px] w-6 mt-1 ${activeTab === 'saved' ? 'bg-black' : 'bg-transparent'
+              }`} />
+          </button>
+        </div>
+
+        {isLoadingInterested ? (
+          <div className="grid grid-cols-3 gap-[2px]">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="bg-gray-200 aspect-square animate-pulse" />
+            ))}
+          </div>
+        ) : (
+          <>
+            {activeTab === 'grid' && (
+              <InterestedEventsGrid events={interestedEvents} />
+            )}
+            {activeTab === 'saved' && (
+              <>
+              </>
+            )}
+          </>
         )}
       </div>
     </div>

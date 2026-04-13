@@ -7,3 +7,4 @@ export * from './access-pass.interface';
 export * from './ticket.interface';
 export * from './user.interface';
 export * from './auth-action.interface';
+export * from './interested-events.interface';

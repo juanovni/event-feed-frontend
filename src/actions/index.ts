@@ -7,6 +7,7 @@ export * from './event/get-confirmed-friends';
 export * from './event/upload-event-image';
 export * from './event/get-event-images';
 export * from './event/toggle-interest';
+export * from './event/get-interested-events';
 export * from './event/toogle-attendance';
 export * from './notifications/get-user-notifications';
 export * from './notifications/mark-notification-read';
