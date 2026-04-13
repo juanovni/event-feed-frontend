@@ -19,6 +19,7 @@ export default function RegisterStepper() {
     password: "",
     name: "",
     lastName: "",
+    phone: "",
     birthdate: "",
     gender: "",
     categories: [] as string[],
@@ -44,7 +45,7 @@ export default function RegisterStepper() {
   const canContinueStep0 = form.email && form.password;
 
   const canContinueStep1 =
-    form.name && form.lastName && form.birthdate;
+    form.name && form.birthdate;
 
   const canContinueStep2 = form.gender !== "";
 
@@ -56,8 +57,9 @@ export default function RegisterStepper() {
 
       await register({
         name: form.name,
-        lastName: form.lastName,
+        lastName: '', // form.lastName, --- IGNORE ---
         email: form.email,
+        phone: form.phone,
         password: form.password,
         birthdate: form.birthdate,
         gender: form.gender,
@@ -76,7 +78,7 @@ export default function RegisterStepper() {
     <div className="min-h-screen flex flex-col bg-white">
 
       {/* HEADER */}
-      <Logo className="top-12 md:top-4 left-0 md:left-4 justify-center md:justify-start"/>
+      <Logo className="top-12 md:top-4 left-0 md:left-4 justify-center md:justify-start" />
 
       {/* CONTENIDO */}
       <div className="flex items-center justify-center px-4 py-30">
@@ -148,7 +150,7 @@ export default function RegisterStepper() {
                   </h2>
 
                   <input
-                    placeholder="Nombres"
+                    placeholder="Nombres Completos"
                     className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
                     value={form.name}
                     onChange={(e) =>
@@ -157,11 +159,12 @@ export default function RegisterStepper() {
                   />
 
                   <input
-                    placeholder="Apellidos"
+                    type="number"
+                    placeholder="Telefono (opcional)"
                     className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-                    value={form.lastName}
+                    value={form.phone}
                     onChange={(e) =>
-                      setForm({ ...form, lastName: e.target.value })
+                      setForm({ ...form, phone: e.target.value })
                     }
                   />
 

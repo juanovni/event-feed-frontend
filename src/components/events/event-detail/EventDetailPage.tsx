@@ -476,34 +476,36 @@ export function EventDetailPage({ event }: Props) {
                   </div>
 
                   <div className="space-y-3">
-                    <Button
-                      size="lg"
-                      className="h-12 w-full rounded-full bg-foreground text-background hover:bg-foreground/90"
-                      onClick={handleAttendance}
-                      disabled={isConfirmed || isPastEvent || isSubmittingAttendance}
-                    >
-                      {isSubmittingAttendance ? (
-                        <>
-                          <LoaderCircle className="h-4 w-4 animate-spin" />
-                          Confirmando...
-                        </>
-                      ) : isConfirmed ? (
-                        <>
-                          <CheckCircle2 className="h-4 w-4" />
-                          Asistencia confirmada
-                        </>
-                      ) : totalCost > 0 ? (
-                        <>
-                          <CreditCard className="h-4 w-4" />
-                          Comprar entrada
-                        </>
-                      ) : (
-                        <>
-                          <Users className="h-4 w-4" />
-                          Confirmar asistencia
-                        </>
-                      )}
-                    </Button>
+                    {!isEventOwner && (
+                      <Button
+                        size="lg"
+                        className="h-12 w-full rounded-full bg-foreground text-background hover:bg-foreground/90"
+                        onClick={handleAttendance}
+                        disabled={isConfirmed || isPastEvent || isSubmittingAttendance}
+                      >
+                        {isSubmittingAttendance ? (
+                          <>
+                            <LoaderCircle className="h-4 w-4 animate-spin" />
+                            Confirmando...
+                          </>
+                        ) : isConfirmed ? (
+                          <>
+                            <CheckCircle2 className="h-4 w-4" />
+                            Asistencia confirmada
+                          </>
+                        ) : totalCost > 0 ? (
+                          <>
+                            <CreditCard className="h-4 w-4" />
+                            Comprar entrada
+                          </>
+                        ) : (
+                          <>
+                            <Users className="h-4 w-4" />
+                            Confirmar asistencia
+                          </>
+                        )}
+                      </Button>
+                    )}
 
                     {isConfirmed && (
                       <Button

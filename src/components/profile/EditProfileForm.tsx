@@ -69,7 +69,7 @@ export default function EditProfileForm() {
 
     setForm({
       name: user.name,
-      lastName: user.lastName,
+      lastName: '', // user.lastName || "", --- IGNORE ---
       username: user.username,
       description: user.description || "",
       gender: user.gender,
@@ -128,7 +128,7 @@ export default function EditProfileForm() {
 
       {/* NAME */}
       <div>
-        <label className="text-sm text-gray-500">Nombres</label>
+        <label className="text-sm text-gray-500">{user?.role === "publisher" ? "Nombre comercial" : "Nombre completo"}</label>
         <input
           value={form.name}
           onChange={(e) =>
@@ -139,7 +139,7 @@ export default function EditProfileForm() {
       </div>
 
       {/* LAST NAME */}
-      <div>
+      {/* <div>
         <label className="text-sm text-gray-500">Apellidos</label>
         <input
           value={form.lastName}
@@ -148,7 +148,7 @@ export default function EditProfileForm() {
           }
           className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
         />
-      </div>
+      </div> */}
 
       {/* BIO */}
       <div>

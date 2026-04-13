@@ -17,6 +17,7 @@ export interface RegisterData {
   password: string;
   birthdate: string;
   gender: string;
+  phone?: string;
   categories: string[]; // IDs
 }
 

@@ -6,7 +6,7 @@ import { RegisterData } from "@/interfaces/user.interface";
 interface User {
   id: string;
   name: string;
-  lastName: string;
+  lastName?: string;
   username: string;
   role?: string;
   avatar?: string;
