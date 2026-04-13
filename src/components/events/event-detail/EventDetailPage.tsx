@@ -400,7 +400,7 @@ export function EventDetailPage({ event }: Props) {
                     <div className="space-y-3">
                       <h2 className="text-lg font-semibold text-foreground">Acerca del evento</h2>
                       <div className="max-w-3xl text-[15px] leading-7 text-muted-foreground">
-                        <ExpandableText text={event.description} maxLines={3} />
+                        <ExpandableText text={event.description} maxLines={1} />
                       </div>
                     </div>
                   </CardContent>
