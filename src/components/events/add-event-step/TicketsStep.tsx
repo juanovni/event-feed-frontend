@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, Trash } from "lucide-react";
+import { CalendarIcon, CircleHelp, Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 
@@ -27,22 +27,32 @@ export function TicketsStep() {
         <h2 className="text-lg font-semibold">Entradas del evento</h2>
 
         <div className="flex items-center gap-2">
-          <Button type="button" variant="outline" onClick={() => setOpenSupportModal(true)}>
-            Agregar costo
-          </Button>
           <Button
             type="button"
-            onClick={() =>
-              append({
-                name: "",
-                price: 0,
-                quantity: 0,
-                validUntil: null,
-              })
-            }
+            disabled
+            /*  onClick={() =>
+               append({
+                 name: "",
+                 price: 0,
+                 quantity: 0,
+                 validUntil: null,
+               })
+             } */
+            onClick={() => setOpenSupportModal(true)}
           >
             Agregar entrada
           </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            className="h-9 w-9"
+            onClick={() => setOpenSupportModal(true)}
+            aria-label="Información sobre pagos"
+          >
+            <CircleHelp className="h-4 w-4" />
+          </Button>
+
         </div>
       </div>
 
