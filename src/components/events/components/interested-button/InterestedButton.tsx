@@ -37,7 +37,7 @@ export const InterestedButton = ({ event }: Props) => {
       <ThumbsUp
         className={cn("h-4 w-4", event.isInterested && "fill-current")}
       />
-      <span className="hidden md:block">{event.isInterested ? "Interesado" : "Me interesa"}</span>
+      <span>{event.isInterested ? "Interesado" : "Me interesa"}</span>
     </Button>
   )
 }

@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button";
 import { useEventImages, useRequireAuth, useToggleAttend } from "@/hooks";
 import { getTotalPrice } from "@/utils";
 import { useAuthStore } from '@/store';
+import { EventMediaBlock } from "../event-detail/EventMediaBlock";
 
 interface Props {
   event: Event;
@@ -84,7 +85,7 @@ export const EventGridItem = ({ event }: Props) => {
 
   return (
     <>
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
 
         <div className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -92,7 +93,7 @@ export const EventGridItem = ({ event }: Props) => {
               name={event.user.name}
               username={event.user.username}
               image={event.user.avatar}
-              timesamp={event.timestamp}
+              timestamp={event.timestamp}
               className='h-10 md:h-12 w-10 md:w-12'
             />
           </div>
@@ -105,31 +106,13 @@ export const EventGridItem = ({ event }: Props) => {
         </div>
 
         {/* Media */}
-        <div className="relative bg-black">
-          {event.mediaType === 'image' ? (
-            <>
-              <Image
-                src={event.mediaUrl}
-                width={200}
-                height={200}
-                alt="Post content"
-                loading="eager"
-                className="w-full object-contain cursor-pointer transition-transform duration-300 hover:scale-105"
-              />
-              {event.gallery && (
-                <GalleryPopup images={galleryImages || []} />
-              )}
-            </>
-          ) : (
-            <video
-              src={event.mediaUrl}
-              controls
-              className="w-full object-cover max-h-96"
-              poster="https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg?auto=compress&cs=tinysrgb&w=800"
-            />
-          )}
-          <Badge variant="secondary" className="absolute right-3 top-3">{event.category}</Badge>
-        </div>
+        <EventMediaBlock
+          event={event}
+          galleryImages={galleryImages || []}
+          objectFit="contain"
+          className="rounded-sm border bg-black"
+        />
+
 
         {/* Informations */}
         <EventInformation event={event} />

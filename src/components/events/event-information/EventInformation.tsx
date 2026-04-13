@@ -31,7 +31,7 @@ export const EventInformation = ({ event }: Props) => {
         </div>
         {isEventOwner && <PublisherBadge isOwner={isEventOwner} />}
         <div className="mt-2">
-          <ExpandableText text={event.description} maxLines={expanded ? 10 : 3} />
+          <ExpandableText text={event.description} maxLines={expanded ? 10 : 1} />
         </div>
       </div>
       <div className="text-sm space-y-2">
