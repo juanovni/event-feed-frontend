@@ -2,29 +2,30 @@
 
 import { useState, useMemo } from "react";
 import { TicketGrid, TicketEmpty, Title } from "@/components";
-import { useTickets } from "@/hooks";
+import { useEvents, useTickets } from "@/hooks";
 import { TicketSkeleton } from "./ui/TicketSkeleton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { getTicketStatus } from "@/utils/getTicketStatus";
+import { getTicketStatus, normalizeAccessPasses } from "@/utils";
 import FilterCarousel from "@/components/ui/filter-carousel/FilterCarousel";
 
 export default function TicketsPage() {
-  const { data: tickets, isLoading, isError } = useTickets();
+  const { data: tickets = [], isLoading: isLoadingTickets, isError: isErrorTickets } = useTickets();
+  const { data: events = [], isLoading: isLoadingEvents, isError: isErrorEvents } = useEvents();
 
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [sortOrder, setSortOrder] = useState<string>("desc");
 
+  const accessPasses = useMemo(() => normalizeAccessPasses(tickets, events), [tickets, events]);
+
   const filteredTickets = useMemo(() => {
-    if (!tickets) return [];
+    if (!accessPasses.length) return [];
 
-    let result = [...tickets];
+    let result = [...accessPasses];
 
-    // ✅ Filtrar por estado usando la función utilitaria
     if (statusFilter !== "all") {
       result = result.filter((ticket) => getTicketStatus(ticket) === statusFilter);
     }
 
-    // ✅ Ordenar por fecha del evento
     result.sort((a, b) => {
       const dateA = new Date(a.event.eventDate).getTime();
       const dateB = new Date(b.event.eventDate).getTime();
@@ -32,12 +33,15 @@ export default function TicketsPage() {
     });
 
     return result;
-  }, [tickets, statusFilter, sortOrder]);
+  }, [accessPasses, statusFilter, sortOrder]);
+
+  const isLoading = isLoadingTickets || isLoadingEvents;
+  const isError = isErrorTickets && isErrorEvents;
 
   if (isLoading) {
     return (
       <div className="space-y-4">
-        <Title title="Tickets">{""}</Title>
+        <Title title="Tickets y accesos">{""}</Title>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
           {Array.from({ length: 4 }).map((_, i) => (
             <TicketSkeleton key={i} />
@@ -51,9 +55,13 @@ export default function TicketsPage() {
 
   return (
     <div className="space-y-6">
-      <Title title="Tickets">{""}</Title>
+      <div className="space-y-2">
+        <Title title="Tickets y accesos">{""}</Title>
+        <p className="px-3 text-sm text-muted-foreground md:px-0">
+          Aqui veras tanto tus entradas pagadas como las asistencias confirmadas para eventos gratuitos.
+        </p>
+      </div>
 
-      {/* Filtros de estado */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
 
         <FilterCarousel
@@ -67,7 +75,6 @@ export default function TicketsPage() {
           ]}
         />
 
-        {/* Ordenar */}
         <div className="flex justify-end pt-4 sm:pt-0">
           <Select value={sortOrder} onValueChange={setSortOrder}>
             <SelectTrigger className="w-[180px]">

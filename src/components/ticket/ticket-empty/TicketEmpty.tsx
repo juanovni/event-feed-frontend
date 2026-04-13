@@ -7,10 +7,10 @@ export const TicketEmpty = () => {
         <Ticket className="w-12 h-12 text-muted-foreground" />
       </div>
       <h2 className="text-xl font-semibold text-foreground mb-2">
-        No tienes entradas
+        No tienes tickets ni accesos confirmados
       </h2>
       <p className="text-muted-foreground max-w-md">
-        Tus entradas compradas aparecerán aquí. ¡Compra tu primer evento!
+        Cuando compres una entrada o confirmes asistencia a un evento gratuito, tu QR aparecerá aquí.
       </p>
     </div>
   )

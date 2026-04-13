@@ -7,16 +7,16 @@ export const TicketEmpty = () => {
       <div className="p-4 rounded-full bg-muted/50 mb-4">
       </div>
       <h2 className="text-xl font-semibold text-foreground mb-2">
-        Entrada no encontra
+        Acceso no encontrado
       </h2>
       <p className="text-muted-foreground max-w-md mb-4">
-        Tus entradas compradas aparecerán aquí. ¡Compra tu primer evento!
+        Puede que este acceso ya no exista o que todavia no se haya confirmado tu asistencia.
       </p>
       <Link href="/tickets">
         <Button
           size={"lg"}
           variant="default">
-          Volver a mis tickets
+          Volver a mis accesos
         </Button>
       </Link>
     </div>

@@ -1,8 +1,8 @@
 import { TicketGridItem } from "@/components";
-import { Ticket } from "@/interfaces";
+import { AccessPass } from "@/interfaces";
 
 interface Props {
-  tickets: Ticket[];
+  tickets: AccessPass[];
 }
 
 export const TicketGrid = ({ tickets }: Props) => {

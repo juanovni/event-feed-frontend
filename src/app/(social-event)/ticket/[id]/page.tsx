@@ -1,13 +1,14 @@
 "use client";
 
-import { use } from "react";
+import { use, useMemo } from "react";
 import { TicketInstructions } from "../ui/TicketInstructions";
 import { TicketQRCode } from "../ui/TicketQRCode";
-import { useTicket } from "@/hooks";
+import { useEvents, useTicket } from "@/hooks";
 import { TicketDetails } from "../ui/TicketDetails";
 import { TicketEmpty } from "../ui/TicketEmpty";
 import { TicketHeader } from "../ui/TicketHeader";
 import { TicketSkeleton } from "../ui/TicketSkeleton";
+import { findAccessPassById, isAttendanceAccessPassId } from "@/utils";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -15,7 +16,17 @@ interface Props {
 
 export default function TicketPage({ params }: Props) {
   const { id } = use(params);
-  const { data: ticket, isLoading, isError } = useTicket(id);
+  const isAttendancePass = isAttendanceAccessPassId(id);
+  const { data: ticket, isLoading: isLoadingTicket, isError: isErrorTicket } = useTicket(id, !isAttendancePass);
+  const shouldLoadEvents = isAttendancePass || isErrorTicket;
+  const { data: events = [], isLoading: isLoadingEvents } = useEvents(undefined, shouldLoadEvents);
+
+  const accessPass = useMemo(
+    () => findAccessPassById(id, ticket ? [ticket] : [], events),
+    [id, ticket, events]
+  );
+
+  const isLoading = (!isAttendancePass && isLoadingTicket) || (shouldLoadEvents && isLoadingEvents && !accessPass);
 
   if (isLoading) {
     return (
@@ -23,7 +34,7 @@ export default function TicketPage({ params }: Props) {
     );
   }
 
-  if (isError) {
+  if (!accessPass) {
     return (
       <TicketEmpty />
     );
@@ -32,13 +43,13 @@ export default function TicketPage({ params }: Props) {
   return (
     <div className="min-h-screen">
       <TicketHeader
-        url={ticket.event.mediaUrl}
-        title={ticket.event.title}
+        url={accessPass.event.mediaUrl}
+        title={accessPass.event.title}
       />
       <div className="max-w-2xl mx-auto px-4 -mt-12 pb-8 space-y-4">
-        <TicketQRCode ticket={ticket} />
+        <TicketQRCode ticket={accessPass} />
 
-        <TicketDetails ticket={ticket} />
+        <TicketDetails ticket={accessPass} />
 
         <TicketInstructions />
       </div>

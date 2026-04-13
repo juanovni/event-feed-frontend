@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowUpRight,
   CalendarDays,
@@ -32,6 +33,7 @@ import {
   currencyFormat,
   formatDate,
   formatTime,
+  getAttendanceAccessPassId,
   getTotalPrice,
 } from "@/utils";
 import {
@@ -215,6 +217,7 @@ export function EventDetailPage({ event }: Props) {
   const isPastEvent = new Date(event.eventDate).getTime() < Date.now();
   const priceLabel = getPriceLabel(event);
   const [expanded, setExpanded] = useState(false);
+  const accessUrl = totalCost > 0 ? "/tickets" : `/ticket/${getAttendanceAccessPassId(event.id)}`;
 
   const handlePaymentSuccess = () => {
     setAssist(true);
@@ -260,9 +263,9 @@ export function EventDetailPage({ event }: Props) {
         <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-3 sm:gap-8 sm:px-6 sm:py-4 lg:px-8">
           <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground sm:gap-3 sm:text-sm">
             {event.category && (
-              <Badge className="rounded-full border border-black/10 bg-white/80 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-foreground shadow-sm hover:bg-white">
+              <span className="flex items-center gap-2 rounded-full border border-black/5 bg-white/70 px-3 py-1.5 shadow-sm">
                 {event.category}
-              </Badge>
+              </span>
             )}
             <span className="flex items-center gap-2 rounded-full border border-black/5 bg-white/70 px-3 py-1.5 shadow-sm">
               <CalendarDays className="h-4 w-4" />
@@ -427,7 +430,9 @@ export function EventDetailPage({ event }: Props) {
                     <p className="mt-1 text-sm text-muted-foreground">
                       {isPastEvent
                         ? "Este evento ya finalizó. Puedes revisar sus detalles y la galería publicada."
-                        : "Reserva tu lugar y mantén tu confirmación sincronizada con el resto de la experiencia."}
+                        : isConfirmed
+                          ? "Tu confirmación ya está activa. Encontrarás el acceso y su QR dentro de Tickets."
+                          : "Reserva tu lugar y mantén tu confirmación sincronizada con el resto de la experiencia."}
                     </p>
 
                     {event.eventTicketTypes?.length > 0 && (
@@ -471,6 +476,18 @@ export function EventDetailPage({ event }: Props) {
                         </>
                       )}
                     </Button>
+
+                    {isConfirmed && (
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="h-11 w-full rounded-full border-black/10 bg-white hover:bg-muted"
+                      >
+                        <Link href={accessUrl}>
+                          {totalCost > 0 ? "Ver mis tickets" : "Ver mi QR de acceso"}
+                        </Link>
+                      </Button>
+                    )}
 
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <InterestedButton event={event} />

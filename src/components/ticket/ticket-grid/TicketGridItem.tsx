@@ -3,17 +3,18 @@
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Calendar, Clock, CreditCard, Map, DollarSign, CheckCircle, Ticket as TickeIcon, Clock3 } from "lucide-react";
-import { Ticket } from "@/interfaces";
+import { AccessPass } from "@/interfaces";
 import { currencyFormat, formatDate, formatTime, getTicketStatus } from "@/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 interface Props {
-  ticket: Ticket;
+  ticket: AccessPass;
 }
 
 export const TicketGridItem = ({ ticket }: Props) => {
   const status = getTicketStatus(ticket);
+  const isAttendancePass = ticket.source === "attendance";
 
   const statusConfig = {
     redeemed: {
@@ -64,6 +65,12 @@ export const TicketGridItem = ({ ticket }: Props) => {
       </div>
 
       <CardContent className="text-sm p-4 space-y-2">
+        {isAttendancePass && (
+          <Badge variant="outline" className="w-fit border-emerald-200 bg-emerald-50 text-emerald-700">
+            Acceso confirmado
+          </Badge>
+        )}
+
         <div className="flex items-center gap-2 text-smtext-muted-foreground">
           <Map size={18} className="shrink-0 text-primary font-bold" />
           <span className="font-medium">{ticket.event.location}</span>
@@ -77,23 +84,27 @@ export const TicketGridItem = ({ ticket }: Props) => {
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between pt-2 border-t border-border/50 gap-2">
 
-          {/* Ticket */}
           <div className="flex items-center gap-2 text-sm">
             <CreditCard size={18} className="text-primary" />
-            <span className="text-muted-foreground">Ticket:</span>
+            <span className="text-muted-foreground">{isAttendancePass ? "Acceso:" : "Ticket:"}</span>
             <span className="font-mono text-xs text-foreground">
-              {ticket.ticketNumber}
+              {isAttendancePass ? "Confirmado" : ticket.ticketNumber}
             </span>
           </div>
 
-          {/* Precio */}
           <div className="flex items-center text-sm md:text-lg md:justify-end">
-            <DollarSign className="h-4 md:h-5 w-4 md:w-5" />
-            <p className="font-semibold">
-              {ticket.total === 0
-                ? "Entrada gratuita"
-                : `${currencyFormat(ticket.total)} ${ticket.event.currency}`}
-            </p>
+            {isAttendancePass ? (
+              <p className="font-semibold text-emerald-700">QR disponible</p>
+            ) : (
+              <>
+                <DollarSign className="h-4 md:h-5 w-4 md:w-5" />
+                <p className="font-semibold">
+                  {ticket.total === 0
+                    ? "Entrada gratuita"
+                    : `${currencyFormat(ticket.total)} ${ticket.event.currency}`}
+                </p>
+              </>
+            )}
           </div>
 
         </div>

@@ -1,14 +1,16 @@
 
 import QRCode from "react-qr-code";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Ticket } from "@/interfaces";
+import { AccessPass } from "@/interfaces";
 
 interface Props {
-  ticket: Ticket;
+  ticket: AccessPass;
 }
 
 export const TicketQRCode = ({ ticket }: Props) => {
   const qrData = JSON.stringify({
+    accessType: ticket.source,
+    accessId: ticket.id,
     ticketNumber: ticket.ticketNumber,
     ticketName: ticket.event.title,
     date: ticket.event.eventDate,
@@ -35,9 +37,10 @@ export const TicketQRCode = ({ ticket }: Props) => {
           />
         </div>
 
-        {/* Ticket Number */}
         <div className="w-full text-center space-y-1">
-          <p className="text-sm text-muted-foreground">Número de Ticket</p>
+          <p className="text-sm text-muted-foreground">
+            {ticket.source === "attendance" ? "Código de acceso" : "Número de Ticket"}
+          </p>
           <p className="text-xl font-mono font-bold tracking-wider bg-gradient-to-r from-primary to-secondary bg-clip-text">
             {ticket.ticketNumber}
           </p>

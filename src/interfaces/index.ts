@@ -3,6 +3,7 @@ export * from './comment.interface';
 export * from './event.interface';
 export * from './notification.interface';
 export * from './post.interface';
+export * from './access-pass.interface';
 export * from './ticket.interface';
 export * from './user.interface';
 export * from './auth-action.interface';
