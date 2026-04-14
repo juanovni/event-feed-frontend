@@ -30,7 +30,7 @@ export function EventMediaBlock({ event, galleryImages, className, objectFit = "
               height={1400}
               alt={event.title}
               priority
-              className={`h-[clamp(220px,52vh,720px)] w-full transition-transform duration-300 hover:scale-105 cursor-pointer ${objectFit === "cover" ? "object-cover" : "object-contain"} object-center sm:h-[clamp(240px,58vh,720px)]`}
+              className={`w-full aspect-[4/5] max-h-[80vh] ${objectFit === "cover" ? "object-cover" : "object-contain"} transition-transform duration-300 hover:scale-105 cursor-pointer`}
             />
             {event.gallery && <GalleryPopup images={galleryImages} />}
           </>
@@ -38,7 +38,7 @@ export function EventMediaBlock({ event, galleryImages, className, objectFit = "
           <video
             src={event.mediaUrl}
             controls
-            className={`h-[clamp(220px,52vh,720px)] w-full transition-transform duration-300 hover:scale-105 cursor-pointer ${objectFit === "cover" ? "object-cover" : "object-contain"} object-center rounded-xl sm:h-[clamp(240px,58vh,720px)]`}
+            className={`w-full aspect-[4/5] transition-transform duration-300 hover:scale-105 cursor-pointer ${objectFit === "cover" ? "object-cover" : "object-contain"} object-center rounded-xl sm:h-[clamp(240px,58vh,720px)]`}
             poster="https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg?auto=compress&cs=tinysrgb&w=800"
           />
         )}
