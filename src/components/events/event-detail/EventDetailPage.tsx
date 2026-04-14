@@ -23,6 +23,7 @@ import {
   MapPreview,
   PaymentModal,
   PublisherEventStats,
+  ShareEventButton,
   UploadGalleryImageDialog,
 } from "@/components";
 import { Badge } from "@/components/ui/badge";
@@ -415,7 +416,8 @@ export function EventDetailPage({ event }: Props) {
               <Card className="overflow-hidden rounded-xl border border-black/8 bg-white/92 py-0 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.45)] backdrop-blur-sm">
                 <CardContent className="space-y-5 p-4 sm:space-y-6 sm:p-6">
                   <div className="space-y-4 border-b border-black/6 pb-6">
-                    <div className="flex items-start justify-between gap-4">
+
+                    <div className="flex items-center justify-between gap-4">
                       <div className="space-y-2">
                         <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
                           Inscripción
@@ -424,16 +426,23 @@ export function EventDetailPage({ event }: Props) {
                           {event.title}
                         </h2>
                       </div>
-                      {isConfirmed ? (
-                        <Badge variant="default" className="rounded-full px-3 py-1">
-                          Confirmado
-                        </Badge>
-                      ) : (
-                        <Badge variant="secondary" className="rounded-full px-3 py-1">
-                          Disponible
-                        </Badge>
-                      )}
+                      <div className="flex items-center gap-2">
+
+                        {isConfirmed ? (
+                          <Badge variant="default" className="rounded-full px-3 py-1">
+                            Confirmado
+                          </Badge>
+                        ) : (
+                          <Badge variant="secondary" className="rounded-full px-3 py-1">
+                            Disponible
+                          </Badge>
+                        )}
+
+                        {!isEventOwner && user && <FollowerButton event={event} />}
+                        <ShareEventButton event={event} />
+                      </div>
                     </div>
+
 
                     <div className="space-y-3 text-sm text-muted-foreground">
                       <div className="flex items-start gap-3">
