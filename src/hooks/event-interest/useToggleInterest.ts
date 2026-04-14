@@ -7,8 +7,8 @@ export const useToggleInterest = () => {
   return useMutation({
     mutationFn: (eventId: string) => toggleInterest(eventId),
     onSuccess: () => {
-      // 👇 Refresca la lista de eventos automáticamente
-      queryClient.invalidateQueries({ queryKey: ["events"] });
+      console.log("Interés toggled, refrescando eventos...");
+      queryClient.refetchQueries({ queryKey: ["event-by-slug"], exact: false });
     },
   });
 };

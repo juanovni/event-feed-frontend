@@ -1,25 +1,44 @@
 import { create } from "zustand";
 
 interface InterestStore {
-  interestedEvents: Set<string>;
-  toggleLocalInterest: (eventId: string) => void;
+  interestOverrides: Record<string, boolean>;
+  toggleLocalInterest: (eventId: string, currentValue: boolean) => void;
+  setLocalInterest: (eventId: string, value: boolean) => void;
+  clearLocalInterest: (eventId: string) => void;
   reset: () => void;
 }
 
 export const useInterestStore = create<InterestStore>((set, get) => ({
+  interestOverrides: {},
 
-  interestedEvents: new Set(),
+  toggleLocalInterest: (eventId, currentValue) => {
+    const current = get().interestOverrides[eventId] ?? currentValue;
+    const next = !current;
 
-  toggleLocalInterest: (eventId) => {
-    const current = new Set(get().interestedEvents);
-    if (current.has(eventId)) {
-      current.delete(eventId);
-    } else {
-      current.add(eventId);
-    }
-    set({ interestedEvents: current });
+    set((state) => ({
+      interestOverrides: {
+        ...state.interestOverrides,
+        [eventId]: next,
+      },
+    }));
   },
 
-  reset: () => set({ interestedEvents: new Set() }),
+  setLocalInterest: (eventId, value) =>
+    set((state) => ({
+      interestOverrides: {
+        ...state.interestOverrides,
+        [eventId]: value,
+      },
+    })),
+
+  clearLocalInterest: (eventId) =>
+    set((state) => {
+      const next = { ...state.interestOverrides };
+      delete next[eventId];
+
+      return { interestOverrides: next };
+    }),
+
+  reset: () => set({ interestOverrides: {} }),
 
 }));

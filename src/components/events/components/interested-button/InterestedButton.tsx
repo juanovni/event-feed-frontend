@@ -14,13 +14,22 @@ interface Props {
 export const InterestedButton = ({ event }: Props) => {
   const { requireAuth } = useRequireAuth();
   const { mutate: toggleInterest } = useToggleInterest();
-  const { toggleLocalInterest } = useInterestStore();
+  const localInterest = useInterestStore((state) => state.interestOverrides[event.id]);
+  const { setLocalInterest } = useInterestStore();
+  const isInterested = localInterest ?? event.isInterested;
 
   const handleClick = () => {
+    const previousValue = isInterested;
+    const nextValue = !isInterested;
+
     requireAuth(
       () => {
-        toggleLocalInterest(event.id);
-        toggleInterest(event.id);
+        setLocalInterest(event.id, nextValue);
+        toggleInterest(event.id, {
+          onError: () => {
+            setLocalInterest(event.id, previousValue);
+          },
+        });
       },
       {
         event,
@@ -32,12 +41,12 @@ export const InterestedButton = ({ event }: Props) => {
     <Button
       onClick={handleClick}
       className="h-11 rounded-full border-black/10 bg-white hover:bg-muted"
-      variant={event.isInterested ? "secondary" : "outline"}
+      variant={isInterested ? "secondary" : "outline"}
     >
       <ThumbsUp
-        className={cn("h-4 w-4", event.isInterested && "fill-current")}
+        className={cn("h-4 w-4", isInterested && "fill-current")}
       />
-      <span>{event.isInterested ? "Interesado" : "Me interesa"}</span>
+      <span>{isInterested ? "Interesado" : "Me interesa"}</span>
     </Button>
   )
 }
