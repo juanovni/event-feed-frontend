@@ -438,7 +438,6 @@ export function EventDetailPage({ event }: Props) {
                           </Badge>
                         )}
 
-                        {!isEventOwner && user && <FollowerButton event={event} />}
                         <ShareEventButton event={event} />
                       </div>
                     </div>
