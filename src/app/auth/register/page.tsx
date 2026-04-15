@@ -1,19 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from 'next/navigation';
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
 import { Logo } from "@/components/ui/logo/Logo";
 import { Category } from "@/interfaces";
+import { VerificationModal } from "@/components";
 
 export default function RegisterStepper() {
   const router = useRouter();
-  const { register } = useAuthStore();
+  const { register, preRegister } = useAuthStore();
   const { data: categories } = useCategories();
 
   const [step, setStep] = useState(0);
+  const [showVerification, setShowVerification] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -27,7 +29,7 @@ export default function RegisterStepper() {
 
   const next = () => setStep((s) => s + 1);
   const back = () => setStep((s) => s - 1);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggleInterest = (interest: string) => {
     setForm((prev) => {
@@ -43,21 +45,38 @@ export default function RegisterStepper() {
   };
 
   const canContinueStep0 = form.email && form.password;
-
-  const canContinueStep1 =
-    form.name && form.birthdate;
-
+  const canContinueStep1 = form.name && form.birthdate;
   const canContinueStep2 = form.gender !== "";
-
   const canContinueStep3 = form.categories.length >= 3;
+
+  const handleStep0Continue = async () => {
+    // Aquí llamas a tu endpoint para enviar el código
+    try {
+      setIsLoading(true);
+      await preRegister(
+        {
+          email: form.email,
+          password: form.password
+        }
+      );
+      setShowVerification(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleVerificationSuccess = () => {
+    setShowVerification(false);
+    next(); // avanza al step 1
+  };
 
   const handleRegister = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
 
       await register({
         name: form.name,
-        lastName: '', // form.lastName, --- IGNORE ---
+        lastName: '',
         email: form.email,
         phone: form.phone,
         password: form.password,
@@ -70,7 +89,7 @@ export default function RegisterStepper() {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -79,6 +98,17 @@ export default function RegisterStepper() {
 
       {/* HEADER */}
       <Logo className="top-12 md:top-4 left-0 md:left-4 justify-center md:justify-start" />
+
+      {/* Modal de verificación */}
+      <AnimatePresence>
+        {showVerification && (
+          <VerificationModal
+            email={form.email}
+            onSuccess={handleVerificationSuccess}
+            onClose={() => setShowVerification(false)}
+          />
+        )}
+      </AnimatePresence>
 
       {/* CONTENIDO */}
       <div className="flex items-center justify-center px-4 py-30">
@@ -133,11 +163,11 @@ export default function RegisterStepper() {
                   />
 
                   <button
-                    onClick={next}
-                    disabled={!canContinueStep0}
+                    onClick={handleStep0Continue}
+                    disabled={!canContinueStep0 || isLoading}
                     className="w-full bg-black text-white py-2 rounded-full disabled:opacity-50 cursor-pointer"
                   >
-                    Continuar
+                    {isLoading ? "Enviando código..." : "Continuar"}
                   </button>
                 </div>
               )}
@@ -266,10 +296,10 @@ export default function RegisterStepper() {
                     </button>
                     <button
                       onClick={handleRegister}
-                      disabled={!canContinueStep3 || loading}
+                      disabled={!canContinueStep3 || isLoading}
                       className="w-full bg-black text-white py-2 rounded-full disabled:opacity-50 cursor-pointer"
                     >
-                      {loading ? "Registrando..." : "Finalizar"}
+                      {isLoading ? "Registrando..." : "Finalizar"}
                     </button>
                   </div>
                 </div>

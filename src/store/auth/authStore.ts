@@ -1,7 +1,8 @@
 import { eventApi } from "@/api/event.api";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { RegisterData } from "@/interfaces/user.interface";
+import { PreRegisterData, RegisterData } from "@/interfaces/user.interface";
+import { toast } from "sonner";
 
 interface User {
   id: string;
@@ -25,6 +26,7 @@ interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
   login: (email: string, password: string) => Promise<void>;
+  preRegister: (data: PreRegisterData) => Promise<void>;
   register: (data: RegisterData) => Promise<void>;
   logout: () => Promise<void>;
   refreshAccessToken: () => Promise<void>;
@@ -49,8 +51,20 @@ export const useAuthStore = create<AuthState>()(
         });
       },
 
+      async preRegister(data: PreRegisterData) {
+        try {
+          const { data: resp } = await eventApi.post("/auth/pre-register", data);
+          set({
+            user: resp.user,
+          });
+        } catch (error: any) {
+          toast.error(error?.response?.data?.message || "Error en pre-registro");
+          throw new Error("Error en pre-registro");
+        }
+      },
+
       async register(data: RegisterData) {
-        const { data: resp } = await eventApi.post("/auth/register", data);
+        const { data: resp } = await eventApi.post("/auth/complete-register", data);
 
         set({
           user: resp.user,

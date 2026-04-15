@@ -272,11 +272,6 @@ export function EventDetailPage({ event }: Props) {
 
         <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-3 sm:gap-8 sm:px-6 sm:py-4 lg:px-8">
           <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground sm:gap-3 sm:text-sm">
-            {event.category && (
-              <span className="flex items-center gap-2 rounded-full border border-black/5 bg-white/70 px-3 py-1.5 shadow-sm">
-                {event.category}
-              </span>
-            )}
             <span className="flex items-center gap-2 rounded-full border border-black/5 bg-white/70 px-3 py-1.5 shadow-sm">
               <CalendarDays className="h-4 w-4" />
               {formatDate(event.eventDate)}
