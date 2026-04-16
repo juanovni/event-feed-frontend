@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
 import { Logo } from "@/components/ui/logo/Logo";
 import { Category } from "@/interfaces";
 import { VerificationModal } from "@/components";
+import { buildPhoneNumber, DEFAULT_PHONE_COUNTRY_CODE, PHONE_COUNTRY_CODES } from "@/utils";
 
 export default function RegisterStepper() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function RegisterStepper() {
 
   const [step, setStep] = useState(0);
   const [showVerification, setShowVerification] = useState(false);
+  const [phoneCountryCode, setPhoneCountryCode] = useState(DEFAULT_PHONE_COUNTRY_CODE);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -78,7 +80,7 @@ export default function RegisterStepper() {
         name: form.name,
         lastName: '',
         email: form.email,
-        phone: form.phone,
+        phone: buildPhoneNumber(phoneCountryCode, form.phone),
         password: form.password,
         birthdate: form.birthdate,
         gender: form.gender,
@@ -142,26 +144,39 @@ export default function RegisterStepper() {
                     </p>
                   </div>
 
-                  <input
-                    type="email"
-                    placeholder="Correo electrónico"
-                    className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-                    value={form.email}
-                    onChange={(e) =>
-                      setForm({ ...form, email: e.target.value })
-                    }
-                  />
+                  <div className="space-y-2">
+                    <label className="block text-sm text-gray-600">
+                      Correo electrónico
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="email"
+                        placeholder="Correo electrónico"
+                        className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                        value={form.email}
+                        onChange={(e) =>
+                          setForm({ ...form, email: e.target.value })
+                        }
+                      />
+                    </div>
+                  </div>
 
-                  <input
-                    type="password"
-                    placeholder="Contraseña"
-                    className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-                    value={form.password}
-                    onChange={(e) =>
-                      setForm({ ...form, password: e.target.value })
-                    }
-                  />
-
+                  <div className="space-y-2">
+                    <label className="block text-sm text-gray-600">
+                      Contraseña
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="password"
+                        placeholder="Contraseña"
+                        className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                        value={form.password}
+                        onChange={(e) =>
+                          setForm({ ...form, password: e.target.value })
+                        }
+                      />
+                    </div>
+                  </div>
                   <button
                     onClick={handleStep0Continue}
                     disabled={!canContinueStep0 || isLoading}
@@ -179,33 +194,71 @@ export default function RegisterStepper() {
                     Cuéntanos sobre ti
                   </h2>
 
-                  <input
-                    placeholder="Nombres Completos"
-                    className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-                    value={form.name}
-                    onChange={(e) =>
-                      setForm({ ...form, name: e.target.value })
-                    }
-                  />
+                  <div className="space-y-2">
+                    <label className="block text-sm text-gray-600">
+                      Nombres completos
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        placeholder="Nombres Completos"
+                        className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                        value={form.name}
+                        onChange={(e) =>
+                          setForm({ ...form, name: e.target.value })
+                        }
+                      />
+                    </div>
+                  </div>
 
-                  <input
-                    type="number"
-                    placeholder="Telefono (opcional)"
-                    className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-                    value={form.phone}
-                    onChange={(e) =>
-                      setForm({ ...form, phone: e.target.value })
-                    }
-                  />
+                  <div className="space-y-2">
+                    <label className="block text-sm text-gray-600">
+                      Celular (opcional)
+                    </label>
+                    <div className="flex gap-2">
+                      <select
+                        value={phoneCountryCode}
+                        onChange={(e) => setPhoneCountryCode(e.target.value)}
+                        className="w-36 border rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-black"
+                      >
+                        {PHONE_COUNTRY_CODES.map((country) => (
+                          <option key={country.code} value={country.code}>
+                            {country.label} {country.code}
+                          </option>
+                        ))}
+                      </select>
 
-                  <input
-                    type="date"
-                    className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-                    value={form.birthdate}
-                    onChange={(e) =>
-                      setForm({ ...form, birthdate: e.target.value })
-                    }
-                  />
+                      <input
+                        type="tel"
+                        inputMode="numeric"
+                        placeholder="987654321"
+                        className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                        value={form.phone}
+                        onChange={(e) =>
+                          setForm({
+                            ...form,
+                            phone: e.target.value.replace(/\D/g, ""),
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm text-gray-600">
+                      Fecha de nacimiento
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="date"
+                        className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                        value={form.birthdate}
+                        onChange={(e) =>
+                          setForm({ ...form, birthdate: e.target.value })
+                        }
+                      />
+                    </div>
+                  </div>
+
                   <div className="flex gap-2">
                     <button onClick={back} className="w-full border py-2 rounded-full cursor-pointer">
                       Atrás

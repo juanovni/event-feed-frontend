@@ -41,7 +41,7 @@ export default function ProfilePage() {
   const avatarSrc =
     user?.avatar
       ? `${user.avatar}?t=${Date.now()}`
-      : "/default-avatar.png";
+      : "/images/default-avatar.jpeg";
 
   return (
 

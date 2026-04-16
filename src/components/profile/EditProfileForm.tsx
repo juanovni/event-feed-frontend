@@ -8,6 +8,7 @@ import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
 import { Category } from "@/interfaces";
 import { useUpdateUser } from "@/hooks/user/useUpdateUser";
+import { buildPhoneNumber, DEFAULT_PHONE_COUNTRY_CODE, PHONE_COUNTRY_CODES, splitPhoneNumber } from "@/utils";
 
 export default function EditProfileForm() {
   const { user } = useAuthStore();
@@ -16,6 +17,9 @@ export default function EditProfileForm() {
   const { data: categories } = useCategories();
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(user?.avatar || null);
+  const initialPhone = splitPhoneNumber(user?.phone);
+  const [phoneCountryCode, setPhoneCountryCode] = useState(initialPhone.countryCode);
+
   const [form, setForm] = useState({
     name: user?.name || "",
     lastName: user?.lastName || "",
@@ -24,7 +28,7 @@ export default function EditProfileForm() {
     gender: user?.gender || "",
     birthdate: user?.birthdate?.slice(0, 10) || "",
     location: user?.location || "",
-    phone: user?.phone || "",
+    phone: initialPhone.localNumber,
     categories: user?.categories?.map((c: Category) => c.id) || [],
     avatar: user?.avatar || "",
   });
@@ -55,6 +59,7 @@ export default function EditProfileForm() {
     try {
       await updateUserMutation({
         ...form,
+        phone: buildPhoneNumber(phoneCountryCode, form.phone),
         avatarFile,
       });
       router.push("/profile");
@@ -67,6 +72,8 @@ export default function EditProfileForm() {
 
     if (!user) return;
 
+    const parsedPhone = splitPhoneNumber(user.phone);
+
     setForm({
       name: user.name,
       lastName: '', // user.lastName || "", --- IGNORE ---
@@ -75,10 +82,11 @@ export default function EditProfileForm() {
       gender: user.gender,
       birthdate: user?.birthdate?.slice(0, 10) || "",
       location: user.location || "",
-      phone: user.phone || "",
+      phone: parsedPhone.localNumber,
       categories: user.categories?.map((c: Category) => c.id) || [],
       avatar: user.avatar || "",
     });
+    setPhoneCountryCode(parsedPhone.countryCode || DEFAULT_PHONE_COUNTRY_CODE);
     setAvatarPreview(user.avatar || null);
   }, [user]);
 
@@ -210,13 +218,29 @@ export default function EditProfileForm() {
       {/* TELEFONO */}
       <div>
         <label className="text-sm text-gray-500">Celular</label>
-        <input
-          value={form.phone}
-          onChange={(e) =>
-            setForm({ ...form, phone: e.target.value })
-          }
-          className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-        />
+        <div className="flex gap-2">
+
+          <select
+            value={phoneCountryCode}
+            onChange={(e) => setPhoneCountryCode(e.target.value)}
+            className="w-36 border rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-black"
+          >
+            {PHONE_COUNTRY_CODES.map((country) => (
+              <option key={country.code} value={country.code}>
+                {country.label} {country.code}
+              </option>
+            ))}
+          </select>
+          <input
+            type="tel"
+            inputMode="numeric"
+            value={form.phone}
+            onChange={(e) =>
+              setForm({ ...form, phone: e.target.value.replace(/\D/g, "") })
+            }
+            className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+          />
+        </div>
       </div>
 
       {/* INTERESES */}
