@@ -221,6 +221,32 @@ export function EventDetailPage({ event }: Props) {
   const isPastEvent = new Date(event.eventDate).getTime() < Date.now();
   const priceLabel = getPriceLabel(event);
   const accessUrl = totalCost > 0 ? "/tickets" : `/ticket/${getAttendanceAccessPassId(event.id)}`;
+  const eventSummary = [
+    event.description?.trim(),
+    event.location ? `Ubicación: ${event.location}.` : null,
+    event.category ? `Categoría: ${event.category}.` : null,
+  ].filter(Boolean).join(" ");
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: event.title,
+    description: eventSummary,
+    startDate: new Date(event.eventDate).toISOString(),
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    eventStatus: isPastEvent
+      ? "https://schema.org/EventCompleted"
+      : "https://schema.org/EventScheduled",
+    image: event.mediaUrl ? [event.mediaUrl] : undefined,
+    location: {
+      "@type": "Place",
+      name: event.location,
+      address: event.location,
+    },
+    organizer: {
+      "@type": "Person",
+      name: event.user.name,
+    },
+  };
 
   const handlePaymentSuccess = () => {
     setAssist(true);
@@ -267,20 +293,33 @@ export function EventDetailPage({ event }: Props) {
 
   return (
     <>
-      <section className="relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+
+      <main className="relative overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-72" />
 
         <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-3 sm:gap-8 sm:px-6 sm:py-4 lg:px-8">
-          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground sm:gap-3 sm:text-sm">
-            <span className="flex items-center gap-2 rounded-full border border-black/5 bg-white/70 px-3 py-1.5 shadow-sm">
-              <CalendarDays className="h-4 w-4" />
-              {formatDate(event.eventDate)}
-            </span>
-            <span className="flex items-center gap-2 rounded-full border border-black/5 bg-white/70 px-3 py-1.5 shadow-sm">
-              <Clock3 className="h-4 w-4" />
-              {formatTime(event.eventDate)}
-            </span>
-          </div>
+          <header className="space-y-4">
+            <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground sm:gap-3 sm:text-sm">
+              <span className="flex items-center gap-2 rounded-full border border-black/5 bg-white/70 px-3 py-1.5 shadow-sm">
+                <CalendarDays className="h-4 w-4" />
+                {formatDate(event.eventDate)}
+              </span>
+              <span className="flex items-center gap-2 rounded-full border border-black/5 bg-white/70 px-3 py-1.5 shadow-sm">
+                <Clock3 className="h-4 w-4" />
+                {formatTime(event.eventDate)}
+              </span>
+              {event.category && (
+                <span className="rounded-full border border-black/5 bg-white/70 px-3 py-1.5 shadow-sm">
+                  {event.category}
+                </span>
+              )}
+            </div>
+          </header>
 
           <EventMediaBlock
             event={event}
@@ -300,107 +339,114 @@ export function EventDetailPage({ event }: Props) {
               />
 
               <div className="space-y-6">
-                <Card className="border-black/8 bg-white/88 py-0 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.45)] backdrop-blur-sm">
-                  <CardContent className="space-y-5 p-4 sm:p-6">
-                    <div className="space-y-1">
-                      <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
-                        Comunidad
-                      </p>
-                      <h2 className="text-lg font-semibold text-foreground">La gente detrás del plan</h2>
-                    </div>
-
-                    {/* Organizer block */}
-                    <div className="space-y-3 rounded-3xl border border-black/6 bg-white p-4">
-                      <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
-                        Organiza
-                      </p>
-                      <div className="flex items-start justify-between gap-3">
-                        <AvatarProfile
-                          name={event.user.name}
-                          username={event.user.username}
-                          image={event.user.avatar}
-                          className="h-12 w-12"
-                        />
-                        {!isEventOwner && user && <FollowerButton event={event} />}
-                      </div>
-                      <p className="text-[13px] leading-relaxed text-muted-foreground">
-                        Sigue al anfitrión para estar al tanto de sus próximos planes.
-                      </p>
-                    </div>
-
-                    {/* Social affinity block */}
-                    {user && (
-                      <div className="space-y-3 rounded-3xl border border-black/6 bg-muted/50 p-4">
-                        <div className="flex items-center justify-between">
-                          <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
-                            Ya confirmaron
-                          </p>
-                          {canViewAttendees ? (
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              className="h-auto rounded-full bg-white px-2.5 py-1 shadow-sm hover:bg-white"
-                              onClick={handleOpenAttendees}
-                            >
-                              <Users className="h-3.5 w-3.5 text-muted-foreground" />
-                              <span className="text-xs font-semibold text-foreground">{event.attendees}</span>
-                            </Button>
-                          ) : (
-                            <div className="flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1 shadow-sm">
-                              <Users className="h-3.5 w-3.5 text-muted-foreground" />
-                              <span className="text-xs font-semibold text-foreground">{event.attendees}</span>
-                            </div>
-                          )}
-                        </div>
-                        <AvatarsFriendsWidget eventId={event.id} />
-                      </div>
-                    )}
-
-                    {/* Stats row */}
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="rounded-2xl bg-muted px-4 py-3">
-                        <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Interesados</p>
-                        <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">{event.interested}</p>
-                      </div>
-                      <div className="rounded-2xl bg-muted px-4 py-3">
-                        <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Asistentes</p>
-                        <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">{event.attendees}</p>
-                        {canViewAttendees && isEventOwner && (
-                          <Button
-                            type="button"
-                            variant="link"
-                            className="mt-1 h-auto p-0 text-xs text-muted-foreground"
-                            onClick={handleOpenAttendees}
-                          >
-                            Ver listado
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card className="border-black/8 bg-white/88 py-0 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.45)] backdrop-blur-sm">
-                  <CardContent className="space-y-6 p-4 sm:space-y-8 sm:p-6 lg:p-8">
-                    <div className="space-y-4 border-b border-black/6 pb-6">
-                      <div className="space-y-3">
+                <section aria-labelledby="event-community-title">
+                  <Card className="border-black/8 bg-white/88 py-0 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.45)] backdrop-blur-sm">
+                    <CardContent className="space-y-5 p-4 sm:p-6">
+                      <div className="space-y-1">
                         <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
-                          Evento
+                          Comunidad
                         </p>
-                        <h2 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-                          {event.title}
+                        <h2 id="event-community-title" className="text-lg font-semibold text-foreground">
+                          La gente detrás del plan
                         </h2>
                       </div>
-                    </div>
 
-                    <div className="space-y-3">
-                      <h2 className="text-lg font-semibold text-foreground">Acerca del evento</h2>
-                      <div className="max-w-3xl text-[15px] leading-7 text-muted-foreground">
-                        <ExpandableText text={event.description} maxLines={1} />
+                      {/* Organizer block */}
+                      <div className="space-y-3 rounded-3xl border border-black/6 bg-white p-4">
+                        <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
+                          Organiza
+                        </p>
+                        <div className="flex items-start justify-between gap-3">
+                          <AvatarProfile
+                            name={event.user.name}
+                            username={event.user.username}
+                            image={event.user.avatar}
+                            className="h-12 w-12"
+                          />
+                          {!isEventOwner && user && <FollowerButton event={event} />}
+                        </div>
+                        <p className="text-[13px] leading-relaxed text-muted-foreground">
+                          Sigue al anfitrión para estar al tanto de sus próximos planes.
+                        </p>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
+
+                      {/* Social affinity block */}
+                      {user && (
+                        <div className="space-y-3 rounded-3xl border border-black/6 bg-muted/50 p-4">
+                          <div className="flex items-center justify-between">
+                            <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
+                              Ya confirmaron
+                            </p>
+                            {canViewAttendees ? (
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="h-auto rounded-full bg-white px-2.5 py-1 shadow-sm hover:bg-white"
+                                onClick={handleOpenAttendees}
+                              >
+                                <Users className="h-3.5 w-3.5 text-muted-foreground" />
+                                <span className="text-xs font-semibold text-foreground">{event.attendees}</span>
+                              </Button>
+                            ) : (
+                              <div className="flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1 shadow-sm">
+                                <Users className="h-3.5 w-3.5 text-muted-foreground" />
+                                <span className="text-xs font-semibold text-foreground">{event.attendees}</span>
+                              </div>
+                            )}
+                          </div>
+                          <AvatarsFriendsWidget eventId={event.id} />
+                        </div>
+                      )}
+
+                      {/* Stats row */}
+                      <div className="grid grid-cols-2 gap-3 text-sm">
+                        <div className="rounded-2xl bg-muted px-4 py-3">
+                          <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Interesados</p>
+                          <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">{event.interested}</p>
+                        </div>
+                        <div className="rounded-2xl bg-muted px-4 py-3">
+                          <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Asistentes</p>
+                          <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">{event.attendees}</p>
+                          {canViewAttendees && isEventOwner && (
+                            <Button
+                              type="button"
+                              variant="link"
+                              className="mt-1 h-auto p-0 text-xs text-muted-foreground"
+                              onClick={handleOpenAttendees}
+                            >
+                              Ver listado
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </section>
+
+                <section aria-labelledby="event-details-title">
+                  <Card className="border-black/8 bg-white/88 py-0 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.45)] backdrop-blur-sm">
+                    <CardContent className="space-y-6 p-4 sm:space-y-8 sm:p-6 lg:p-8">
+                      <div className="space-y-4 border-b border-black/6 pb-6">
+                        <div className="space-y-3">
+                          <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
+                            Detalles
+                          </p>
+                          <h2 id="event-details-title" className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+                            Información del evento
+                          </h2>
+                        </div>
+                      </div>
+
+                      <div className="space-y-3">
+                        <h3 className="text-lg font-semibold text-foreground">Acerca del evento</h3>
+                        <div className="max-w-3xl text-[15px] leading-7 text-muted-foreground">
+                          <ExpandableText text={event.description} maxLines={1} />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </section>
 
               </div>
             </div>
@@ -411,6 +457,14 @@ export function EventDetailPage({ event }: Props) {
               <Card className="overflow-hidden rounded-xl border border-black/8 bg-white/92 py-0 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.45)] backdrop-blur-sm">
                 <CardContent className="space-y-5 p-4 sm:space-y-6 sm:p-6">
                   <div className="space-y-4 border-b border-black/6 pb-6">
+                    <div className="space-y-3">
+                      <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
+                        Evento en QueBuenPlan!
+                      </p>
+                      <h1 className="text-3xl font-semibold tracking-tight text-foreground">
+                        {event.title}
+                      </h1>
+                    </div>
 
                     <div className="flex items-center justify-between gap-4">
                       <div className="space-y-2">
@@ -418,7 +472,7 @@ export function EventDetailPage({ event }: Props) {
                           Inscripción
                         </p>
                         <h2 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-                          {event.title}
+                          Reserva tu lugar
                         </h2>
                       </div>
                       <div className="flex items-center gap-2">
@@ -575,7 +629,7 @@ export function EventDetailPage({ event }: Props) {
             currentEventId={event.id}
           />
         </div>
-      </section>
+      </main>
 
       <PaymentModal
         event={event}
