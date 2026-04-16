@@ -9,6 +9,7 @@ export const useToggleInterest = () => {
     onSuccess: () => {
       console.log("Interés toggled, refrescando eventos...");
       queryClient.refetchQueries({ queryKey: ["event-by-slug"], exact: false });
+      queryClient.refetchQueries({ queryKey: ["events"] });
     },
   });
 };
