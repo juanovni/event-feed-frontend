@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, ChevronRight, MapPin, Users } from "lucide-react";
+import { ArrowUpRight, CalendarDays, ChevronRight, MapPin, Users } from "lucide-react";
 import { Event } from "@/interfaces";
 
 interface Props {
@@ -119,9 +119,9 @@ export const PublisherEventsSection = ({ events, isLoading = false }: Props) => 
 
   if (events.length === 0) {
     return (
-      <div className="rounded-[28px] border border-dashed border-gray-200 bg-white px-6 py-12 text-center">
+      <div className="rounded-[28px] border border-dashed border-gray-200 px-6 py-12 text-center">
         <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
-          <CalendarDays className="h-5 w-5 text-gray-500" />
+          <CalendarDays size={48} className="text-gray-500" />
         </div>
         <h3 className="mt-4 text-lg font-semibold text-gray-900">
           Aún no has creado eventos
@@ -138,7 +138,7 @@ export const PublisherEventsSection = ({ events, isLoading = false }: Props) => 
   return (
     <div className="space-y-6">
       {groupedEvents.map((group) => (
-        <section key={group.label} className="space-y-3">
+        <section key={group.label} className="space-y-1">
           <div className="flex items-center gap-3">
             <h3 className="text-base font-semibold capitalize text-gray-900">
               {group.label}
@@ -150,16 +150,18 @@ export const PublisherEventsSection = ({ events, isLoading = false }: Props) => 
             {group.items.map((event) => {
               const eventDate = new Date(event.eventDate);
               const href = event.slug ? `/p/${event.slug}` : "#";
+              const directionsUrl = event.location
+                ? `https://www.openstreetmap.org/search?query=${encodeURIComponent(event.location)}`
+                : null;
 
               return (
                 <Link
                   key={event.id}
                   href={href}
-                  className={`group flex gap-4 rounded-[24px] border border-gray-100 bg-white p-3 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:p-4 ${
-                    event.slug ? "" : "pointer-events-none"
-                  }`}
+                  className={`group flex gap-4 rounded-xl p-3 transition hover:-translate-y-0.5 hover:shadow-md sm:p-4 ${event.slug ? "" : "pointer-events-none"
+                    }`}
                 >
-                  <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-gray-100 sm:h-28 sm:w-28">
+                  <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-gray-100 sm:h-44 sm:w-44">
                     {event.mediaUrl ? (
                       <Image
                         src={event.mediaUrl}
@@ -180,21 +182,30 @@ export const PublisherEventsSection = ({ events, isLoading = false }: Props) => 
                         <p className="line-clamp-2 text-sm font-semibold text-gray-900 sm:text-base">
                           {event.title}
                         </p>
-                        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-gray-500 sm:text-sm">
-                          <span className="inline-flex items-center gap-1.5">
+                        <div className="mt-2 space-y-2 text-xs text-gray-500 sm:text-sm">
+                          <div className="inline-flex items-center gap-1.5">
                             <CalendarDays className="h-3.5 w-3.5" />
                             {formatTimeLabel(eventDate)}
-                          </span>
-                          {event.location && (
-                            <span className="inline-flex items-center gap-1.5">
-                              <MapPin className="h-3.5 w-3.5" />
-                              <span className="truncate">{event.location}</span>
-                            </span>
-                          )}
-                          <span className="inline-flex items-center gap-1.5">
-                            <Users className="h-3.5 w-3.5" />
-                            {event.attendees ?? 0} asistentes
-                          </span>
+                          </div>
+
+                        </div>
+                        {event.location && directionsUrl && (
+                          <a
+                            href={directionsUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="flex min-w-0 max-w-full items-center gap-1.5 rounded-full bg-gray-50  py-1 text-gray-600 transition hover:bg-gray-100 hover:text-gray-900"
+                            title={`Ver ${event.location} en OpenStreetMap`}
+                          >
+                            <MapPin className="h-3.5 w-3.5 shrink-0" />
+                            <span className="min-w-0 truncate">{event.location}</span>
+                            <ArrowUpRight className="h-3.5 w-3.5 shrink-0" />
+                          </a>
+                        )}
+                        <div className="flex items-center gap-1.5">
+                          <Users className="h-3.5 w-3.5" />
+                          {event.attendees ?? 0} asistentes
                         </div>
                       </div>
 
@@ -202,12 +213,6 @@ export const PublisherEventsSection = ({ events, isLoading = false }: Props) => 
                         <ChevronRight className="h-4 w-4" />
                       </div>
                     </div>
-
-                    {event.description && (
-                      <p className="mt-3 line-clamp-2 text-sm leading-6 text-gray-600">
-                        {event.description}
-                      </p>
-                    )}
                   </div>
                 </Link>
               );

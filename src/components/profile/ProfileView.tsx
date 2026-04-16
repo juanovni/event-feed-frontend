@@ -138,7 +138,7 @@ export const ProfileView = ({ profile, isOwnProfile = false }: Props) => {
                 </div>
 
                 <div className="grid grid-cols-3 gap-4 sm:flex sm:gap-6">
-                  <Stat label="Eventos" value={isPublisher ? createdEvents.length : 0} />
+                  {isPublisher && <Stat label="Eventos" value={isPublisher ? createdEvents.length : 0} />}
                   <Stat label="Seguidores" value={0} />
                   <Stat label="Siguiendo" value={0} />
                 </div>
@@ -147,7 +147,7 @@ export const ProfileView = ({ profile, isOwnProfile = false }: Props) => {
           </div>
         </div>
 
-        {profile.categories && profile.categories.length > 0 && (
+        {isOwnProfile && profile.categories && profile.categories.length > 0 && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
             <h2 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">
               Intereses
@@ -220,13 +220,13 @@ export const ProfileView = ({ profile, isOwnProfile = false }: Props) => {
         )}
 
         {activeTab === 'saved' && showSavedTab && (
-          <div className="rounded-[28px] border border-dashed border-gray-200 bg-white px-6 py-12 text-center text-sm text-gray-500">
+          <div className="rounded-[28px] border border-dashed border-gray-200 px-6 py-12 text-center text-sm text-gray-500">
             Próximamente verás aquí tus eventos guardados.
           </div>
         )}
 
         {!showCreatedTab && !showInterestedTab && !showSavedTab && (
-          <div className="rounded-[28px] border border-dashed border-gray-200 bg-white px-6 py-12 text-center text-sm text-gray-500">
+          <div className="rounded-[28px] border border-dashed border-gray-200 px-6 py-12 text-center text-sm text-gray-500">
             Este usuario aún no tiene contenido público para mostrar.
           </div>
         )}

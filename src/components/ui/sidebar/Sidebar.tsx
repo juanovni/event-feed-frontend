@@ -55,7 +55,7 @@ export const Sidebar = () => {
     },
     {
       label: 'Perfil',
-      path: '/profile',
+      path: `/profile/${user.id}`,
       icon: <UserPlus />
     },
   ];

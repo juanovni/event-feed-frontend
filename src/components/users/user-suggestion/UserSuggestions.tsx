@@ -1,6 +1,7 @@
 'use client';
 
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useFollow, useUserSuggestions } from "@/hooks";
 
@@ -40,7 +41,10 @@ export const UserSuggestions = () => {
       <p className="font-semibold">Sugerencias para ti</p>
       {data.map((user: UserSuggestions) => (
         <div key={user.id} className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+          <Link
+            href={`/profile/${user.id}`}
+            className="flex items-center space-x-3 transition-opacity hover:opacity-80"
+          >
             <Image
               src={user.avatar || "/images/default-avatar.jpeg"}
               alt={user.name}
@@ -54,7 +58,7 @@ export const UserSuggestions = () => {
                 {user.followsYou ? "Te sigue" : "Sugerencia para ti"}
               </p>
             </div>
-          </div>
+          </Link>
           <Button
             size="sm"
             variant={user.isFollowing ? "link" : "link"}
