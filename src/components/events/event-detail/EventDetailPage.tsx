@@ -358,6 +358,7 @@ export function EventDetailPage({ event }: Props) {
                         </p>
                         <div className="flex items-start justify-between gap-3">
                           <AvatarProfile
+                            userId={event.user.id}
                             name={event.user.name}
                             username={event.user.username}
                             image={event.user.avatar}

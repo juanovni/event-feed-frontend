@@ -19,4 +19,5 @@ export * from './ticket/useTicket';
 export * from './tickets/useCreateTicket';
 export * from './tickets/useTickets';
 export * from './user/useUserSuggestions';
+export * from './user/useUserById';
 export * from './verification/useVerifyCode';

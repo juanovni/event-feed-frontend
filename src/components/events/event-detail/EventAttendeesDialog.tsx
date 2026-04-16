@@ -55,6 +55,7 @@ export function EventAttendeesDialog() {
                     {/* Left */}
                     <div className="flex items-center gap-3">
                       <AvatarProfile
+                        userId={attendee.id}
                         name={attendee.name + " " + (typeof attendee?.lastName === "string" ? attendee.lastName : "")}
                         username={attendee.username}
                         image={attendee.avatar || ''}

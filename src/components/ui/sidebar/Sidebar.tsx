@@ -96,6 +96,7 @@ export const Sidebar = () => {
         {user && (
           <div className="border-b border-sidebar-border p-4">
             <AvatarProfile
+              userId={user.id}
               name={user.name}
               username={user.username}
               image={user.avatar || ''}

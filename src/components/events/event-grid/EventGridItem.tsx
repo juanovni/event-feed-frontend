@@ -90,6 +90,7 @@ export const EventGridItem = ({ event }: Props) => {
         <div className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <AvatarProfile
+              userId={event.user.id}
               name={event.user.name}
               username={event.user.username}
               image={event.user.avatar}

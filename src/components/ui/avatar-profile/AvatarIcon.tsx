@@ -6,7 +6,7 @@ import {
 
 interface Props {
   name: string;
-  image: string;
+  image?: string;
   className?: React.StyleHTMLAttributes<HTMLImageElement>['className'];
 }
 

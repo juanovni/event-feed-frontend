@@ -16,4 +16,5 @@ export * from './ticket/get-tickets-by-id';
 export * from './ticket/get-tickets';
 export * from './ticket/placer-order';
 export * from './user/get-user-suggestion';
+export * from './user/get-user-by-id';
 export * from './verification/verify-code';

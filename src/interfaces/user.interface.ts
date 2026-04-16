@@ -2,12 +2,19 @@ export interface User {
   id: string;
   name: string;
   username: string;
-  lastName: string;
+  lastName?: string;
   description?: string;
-  avatar: string;
+  avatar?: string;
   isFollowing?: boolean;
-  interests: string[];
-  role: UserRole
+  interests?: string[];
+  role?: UserRole | string;
+  role_type?: UserRole | string;
+  location?: string;
+  createdAt?: string;
+  categories?: {
+    id: string;
+    name: string;
+  }[];
 }
 
 export interface PreRegisterData {

@@ -1,16 +1,18 @@
+import Link from "next/link";
 import { AvatarIcon } from "@/components"
 import { formatTime } from "@/utils";
 
 interface Props {
+  userId?: string;
   name: string;
   username?: string;
-  image: string;
+  image?: string;
   timestamp?: Date;
   className?: React.StyleHTMLAttributes<HTMLImageElement>['className'];
 }
 
-export const AvatarProfile = ({ name, image, username, timestamp, className }: Props) => {
-  return (
+export const AvatarProfile = ({ userId, name, image, username, timestamp, className }: Props) => {
+  const content = (
     <div className="flex items-center space-x-2">
       <AvatarIcon
         name={name}
@@ -32,5 +34,15 @@ export const AvatarProfile = ({ name, image, username, timestamp, className }: P
         </p>
       </div>
     </div>
-  )
+  );
+
+  if (!userId) {
+    return content;
+  }
+
+  return (
+    <Link href={`/profile/${userId}`} className="block transition-opacity hover:opacity-80">
+      {content}
+    </Link>
+  );
 }
