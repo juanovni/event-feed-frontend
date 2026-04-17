@@ -23,7 +23,7 @@ export const InterestedButton = ({ event }: Props) => {
     const nextValue = !isInterested;
 
     requireAuth(
-      () => {
+      async () => {
         setLocalInterest(event.id, nextValue);
         toggleInterest(event.id, {
           onError: () => {
@@ -34,6 +34,7 @@ export const InterestedButton = ({ event }: Props) => {
       {
         event,
         action: "INTEREST",
+        redirectTo: `/p/${event.slug}`,
       });
   };
 
