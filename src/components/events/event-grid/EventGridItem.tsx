@@ -27,16 +27,20 @@ import { useEventImages, useRequireAuth, useToggleAttend } from "@/hooks";
 import { getTotalPrice } from "@/utils";
 import { useAuthStore } from '@/store';
 import { EventMediaBlock } from "../event-detail/EventMediaBlock";
+import SuccessModal from "../components/processing-modal/SuccessModal";
 
 interface Props {
   event: Event;
 }
+
+const ATTENDANCE_PROCESSING_DELAY_MS = 2000;
 
 export const EventGridItem = ({ event }: Props) => {
   const { user } = useAuthStore();
   const { requireAuth } = useRequireAuth();
   const { mutateAsync: attendEvent } = useToggleAttend();
   const [assist, setAssist] = useState(event.hasPaid || event.isAttending);
+  const [success, setSuccess] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [openUpload, setOpenUpload] = useState(false);
   const [isSubmittingAttendance, setIsSubmittingAttendance] = useState(false);
@@ -65,6 +69,7 @@ export const EventGridItem = ({ event }: Props) => {
 
           if (response?.attending) {
             setAssist(true);
+            setSuccess(true);
           }
         } catch (error) {
           console.error("Error al confirmar asistencia", error);
@@ -185,6 +190,8 @@ export const EventGridItem = ({ event }: Props) => {
         onOpenChange={setOpenUpload}
         eventId={event.id}
       />
+
+      {success  && <SuccessModal onClose={() => setSuccess(false)} />}
 
     </>
   )

@@ -126,3 +126,20 @@
 .swiper-button-prev {
   color: black;
 }
+
+@keyframes drawCheck {
+  0% {
+    stroke-dasharray: 0, 50;
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dasharray: 50, 0;
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-drawCheck path {
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  animation: drawCheck 0.5s ease forwards;
+}

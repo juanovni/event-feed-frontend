@@ -47,10 +47,13 @@ import {
 } from "@/hooks";
 import ExpandableText from "@/components/ui/expandable-text/ExpandableText";
 import { EventMediaBlock } from "./EventMediaBlock";
+import SuccessModal from "../components/processing-modal/SuccessModal";
 
 interface Props {
   event: Event;
 }
+
+const ATTENDANCE_PROCESSING_DELAY_MS = 2000;
 
 const getPriceLabel = (event: Event) => {
   if (!event.eventTicketTypes?.length) {
@@ -210,6 +213,7 @@ export function EventDetailPage({ event }: Props) {
   const { requireAuth } = useRequireAuth();
   const { mutateAsync: attendEvent } = useToggleAttend();
   const [assist, setAssist] = useState(event.hasPaid || event.isAttending);
+  const [success, setSuccess] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [openUpload, setOpenUpload] = useState(false);
   const [isSubmittingAttendance, setIsSubmittingAttendance] = useState(false);
@@ -266,6 +270,7 @@ export function EventDetailPage({ event }: Props) {
 
           if (response?.attending) {
             setAssist(true);
+            setSuccess(true);
           }
         } catch (error) {
           console.error("Error al confirmar asistencia", error);
@@ -462,7 +467,7 @@ export function EventDetailPage({ event }: Props) {
                       <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
                         Evento en QueBuenPlan!
                       </p>
-                      <h1 className="text-3xl font-semibold tracking-tight text-foreground">
+                      <h1 className="text-2xl font-semibold tracking-tight text-foreground">
                         {event.title}
                       </h1>
                     </div>
@@ -646,6 +651,8 @@ export function EventDetailPage({ event }: Props) {
       />
 
       {canViewAttendees && <EventAttendeesDialog />}
+      {success && <SuccessModal onClose={() => setSuccess(false)} />}
+
     </>
   );
 }

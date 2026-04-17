@@ -46,3 +46,4 @@ export * from './ui/verification-modal/VerificationModal';
 export * from './ui/widgets/AvatarsFriendsWidget';
 export * from './ui/widgets/NavigationWidget';
 export * from './users/user-suggestion/UserSuggestions';
+export * from './events/components/processing-modal/SuccessModal'
