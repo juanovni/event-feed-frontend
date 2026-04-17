@@ -5,11 +5,21 @@ import { useAuthModalStore } from "@/store";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { getSafeRedirectPath } from "@/utils";
 
 export const AuthRequiredModal = () => {
   const { isOpen, closeModal, payload } = useAuthModalStore();
   const event = payload?.event;
   const router = useRouter();
+  const redirectTo = getSafeRedirectPath(payload?.redirectTo, "");
+
+  const getAuthRoute = (basePath: string) => {
+    if (!redirectTo) {
+      return basePath;
+    }
+
+    return `${basePath}?redirect=${encodeURIComponent(redirectTo)}`;
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={closeModal}>
@@ -55,7 +65,7 @@ export const AuthRequiredModal = () => {
             className="w-full bg-black text-white py-[21.1px] rounded-full text-sm cursor-pointer hover:text-white hover:bg-gray-800 transition mt-4"
             onClick={() => {
               closeModal();
-              router.push("/auth/register");
+              router.push(getAuthRoute("/auth/register"));
             }}
           >
             Registrarte
@@ -66,7 +76,7 @@ export const AuthRequiredModal = () => {
             className="w-full text-black py-[21.1px] rounded-full text-sm cursor-pointer transition"
             onClick={() => {
               closeModal();
-              router.push("/auth/login");
+              router.push(getAuthRoute("/auth/login"));
             }}
           >
             Iniciar sesión

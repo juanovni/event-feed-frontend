@@ -6,4 +6,5 @@ export * from './access-pass';
 export * from './getStatusText';
 export * from './getTicketStatus';
 export * from './getTotalPrice';
+export * from './getSafeRedirectPath';
 export * from './phone';

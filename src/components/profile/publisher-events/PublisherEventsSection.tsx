@@ -136,7 +136,7 @@ export const PublisherEventsSection = ({ events, isLoading = false }: Props) => 
   const groupedEvents = groupEventsByDate(events);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mb-4">
       {groupedEvents.map((group) => (
         <section key={group.label} className="space-y-1">
           <div className="flex items-center gap-3">
@@ -158,10 +158,10 @@ export const PublisherEventsSection = ({ events, isLoading = false }: Props) => 
                 <Link
                   key={event.id}
                   href={href}
-                  className={`group flex gap-4 rounded-xl p-3 transition hover:-translate-y-0.5 hover:shadow-md sm:p-4 ${event.slug ? "" : "pointer-events-none"
+                  className={`group flex gap-3 md:gap-4 rounded-xl md:p-2 transition hover:-translate-y-0.5 hover:shadow-md sm:p-4 ${event.slug ? "" : "pointer-events-none"
                     }`}
                 >
-                  <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-gray-100 sm:h-44 sm:w-44">
+                  <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-xl bg-gray-100 sm:h-44 sm:w-44">
                     {event.mediaUrl ? (
                       <Image
                         src={event.mediaUrl}

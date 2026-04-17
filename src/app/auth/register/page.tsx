@@ -1,19 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
 import { Logo } from "@/components/ui/logo/Logo";
 import { Category } from "@/interfaces";
 import { VerificationModal } from "@/components";
-import { buildPhoneNumber, DEFAULT_PHONE_COUNTRY_CODE, PHONE_COUNTRY_CODES } from "@/utils";
+import { buildPhoneNumber, DEFAULT_PHONE_COUNTRY_CODE, getSafeRedirectPath, PHONE_COUNTRY_CODES } from "@/utils";
 
 export default function RegisterStepper() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { register, preRegister } = useAuthStore();
   const { data: categories } = useCategories();
+  const redirectTo = getSafeRedirectPath(searchParams.get("redirect"));
 
   const [step, setStep] = useState(0);
   const [showVerification, setShowVerification] = useState(false);
@@ -87,7 +89,7 @@ export default function RegisterStepper() {
         categories: form.categories,
       });
 
-      router.push("/");
+      router.push(redirectTo);
     } catch (error) {
       console.error(error);
     } finally {
@@ -364,7 +366,7 @@ export default function RegisterStepper() {
             ¿Ya tienes cuenta?{" "}
             <button
               type="button"
-              onClick={() => router.push("/auth/login")}
+              onClick={() => router.push(`/auth/login?redirect=${encodeURIComponent(redirectTo)}`)}
               className="text-black font-medium hover:underline cursor-pointer"
             >
               Inicia sesión

@@ -1,25 +1,28 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuthStore } from "@/store";
 import { ImageAccordion } from "@/components/ui/image-accordion/ImageAccordion";
 import { Logo } from "@/components/ui/logo/Logo";
+import { getSafeRedirectPath } from "@/utils";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { login } = useAuthStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const isFormValid = email.trim() !== "" && password.trim() !== "";
+  const redirectTo = getSafeRedirectPath(searchParams.get("redirect"));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setLoading(true);
       await login(email, password);
-      router.push("/");
+      router.push(redirectTo);
     } catch (err) {
       console.log(err);
       alert("Credenciales incorrectas");
@@ -80,7 +83,7 @@ export default function LoginPage() {
             ¿No tienes cuenta?{" "}
             <button
               type="button"
-              onClick={() => router.push("/auth/register")}
+              onClick={() => router.push(`/auth/register?redirect=${encodeURIComponent(redirectTo)}`)}
               className="text-black font-medium hover:underline cursor-pointer"
             >
               Regístrate

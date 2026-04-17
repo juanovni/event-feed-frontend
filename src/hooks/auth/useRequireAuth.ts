@@ -1,5 +1,4 @@
-import { useAuthStore, useAuthModalStore } from "@/store";
-import { AuthAction, Event } from "@/interfaces";
+import { useAuthStore, useAuthModalStore, AuthModalPayload } from "@/store";
 
 export const useRequireAuth = () => {
   const { user } = useAuthStore();
@@ -7,7 +6,7 @@ export const useRequireAuth = () => {
 
   const requireAuth = (
     callback?: () => void,
-    payload?: { event?: Event; action?: AuthAction }
+    payload?: AuthModalPayload
   ) => {
     if (!user) {
       openModal(callback, payload);

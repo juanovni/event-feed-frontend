@@ -281,12 +281,15 @@ export function EventDetailPage({ event }: Props) {
       {
         event,
         action: "JOIN",
+        redirectTo: `/p/${event.slug}`,
       }
     );
   };
 
   const handleOpenUpload = () => {
-    requireAuth(() => setOpenUpload(true));
+    requireAuth(() => setOpenUpload(true), {
+      redirectTo: `/p/${event.slug}`,
+    });
   };
 
   const handleOpenAttendees = () => {

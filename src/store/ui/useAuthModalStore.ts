@@ -2,16 +2,19 @@
 import { create } from "zustand";
 import { AuthAction, Event } from "@/interfaces";
 
+export interface AuthModalPayload {
+  event?: Event;
+  action?: AuthAction;
+  redirectTo?: string;
+}
+
 interface AuthModalState {
   isOpen: boolean;
   callback?: () => void;
-  payload?: {
-    event?: Event;
-    action?: AuthAction;
-  };
+  payload?: AuthModalPayload;
   openModal: (
     cb?: () => void,
-    payload?: AuthModalState["payload"]
+    payload?: AuthModalPayload
   ) => void;
 
   closeModal: () => void;
