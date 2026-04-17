@@ -1,23 +1,23 @@
 'use client';
 
-import { useConfirmedFriends } from '@/hooks';
+import { useEventAttendees } from '@/hooks';
 import { EventConfirmedTooltip } from '@/components/events/event-confirmed-friends/EventConfirmedTooltip';
 
 interface Props {
   eventId: string;
 }
 export const AvatarsFriendsWidget = ({ eventId }: Props) => {
-  const { data: users, isLoading, isError } = useConfirmedFriends(eventId);
+  const { data: attendees = [], isLoading, isError } = useEventAttendees(eventId);
 
   if (isLoading) return <p>Cargando.</p>;
   if (isError) return <p>Error al cargar los eventos.</p>;
 
   return (
-    <div className="flex items-center gap-2">
-      {users.length > 0 && (
+    <div className="flex items-center gap-2 py-2">
+      {attendees.length > 0 && (
         <>
-          <EventConfirmedTooltip users={users} />
-          <p className="text-muted-foreground text-sm">tus amigos ya confirmaron</p>
+          <EventConfirmedTooltip users={attendees} />
+          <p className="text-black font-semibold text-sm">{attendees.length} asistirán</p>
         </>
       )}
     </div>

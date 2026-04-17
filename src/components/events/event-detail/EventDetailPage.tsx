@@ -360,7 +360,7 @@ export function EventDetailPage({ event }: Props) {
                       </div>
 
                       {/* Organizer block */}
-                      <div className="space-y-3 rounded-3xl border border-black/6 bg-white p-4">
+                      <div className="space-y-3 rounded-xl border border-black/6 bg-white p-4">
                         <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
                           Organiza
                         </p>
@@ -380,41 +380,20 @@ export function EventDetailPage({ event }: Props) {
                       </div>
 
                       {/* Social affinity block */}
-                      {user && (
-                        <div className="space-y-3 rounded-3xl border border-black/6 bg-muted/50 p-4">
-                          <div className="flex items-center justify-between">
-                            <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
-                              Ya confirmaron
-                            </p>
-                            {canViewAttendees ? (
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="sm"
-                                className="h-auto rounded-full bg-white px-2.5 py-1 shadow-sm hover:bg-white"
-                                onClick={handleOpenAttendees}
-                              >
-                                <Users className="h-3.5 w-3.5 text-muted-foreground" />
-                                <span className="text-xs font-semibold text-foreground">{event.attendees}</span>
-                              </Button>
-                            ) : (
-                              <div className="flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1 shadow-sm">
-                                <Users className="h-3.5 w-3.5 text-muted-foreground" />
-                                <span className="text-xs font-semibold text-foreground">{event.attendees}</span>
-                              </div>
-                            )}
-                          </div>
-                          <AvatarsFriendsWidget eventId={event.id} />
-                        </div>
-                      )}
+                      <div className="space-y-3 rounded-xl border border-black/6 bg-white p-4">
+                        <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
+                          Ya confirmaron
+                        </p>
+                        <AvatarsFriendsWidget eventId={event.id} />
+                      </div>
 
                       {/* Stats row */}
                       <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div className="rounded-2xl bg-muted px-4 py-3">
+                        <div className="rounded-xl bg-muted px-4 py-3">
                           <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Interesados</p>
                           <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">{event.interested}</p>
                         </div>
-                        <div className="rounded-2xl bg-muted px-4 py-3">
+                        <div className="rounded-xl bg-muted px-4 py-3">
                           <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Asistentes</p>
                           <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">{event.attendees}</p>
                           {canViewAttendees && isEventOwner && (
