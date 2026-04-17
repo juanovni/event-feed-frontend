@@ -30,7 +30,7 @@ export function EventMediaBlock({ event, galleryImages, className, objectFit = "
               height={1400}
               alt={event.title}
               priority
-              className={`w-full aspect-[4/5] max-h-[80vh] ${objectFit === "cover" ? "object-cover" : "object-contain"} transition-transform duration-300 hover:scale-105 cursor-pointer`}
+              className={`w-full aspect-[4/5] md:aspect-[4/7] max-h-[80vh] md:max-h-[74vh] ${objectFit === "cover" ? "object-cover" : "object-contain"} transition-transform duration-300 hover:scale-105 cursor-pointer`}
             />
             {event.gallery && <GalleryPopup images={galleryImages} />}
           </>
