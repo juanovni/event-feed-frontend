@@ -15,6 +15,7 @@ export interface Event {
   gallery?: string[];
   location: string;
   lat?: number;
+  log?: number;
   lon?: number;
   eventDate: Date;
   timestamp: Date;

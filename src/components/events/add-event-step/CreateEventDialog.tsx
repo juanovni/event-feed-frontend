@@ -26,7 +26,6 @@ export interface EventFormValues {
   eventDate: string;
   mediaType: string;
   eventTime: string;
-  mediaUrl: string,
   cost: number,
   currency: string,
   attendees: number,
@@ -55,7 +54,6 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       locationLon: "",
       eventDate: "",
       mediaType: "image",
-      mediaUrl: "",
       cost: 0,
       currency: "USA",
       attendees: 0,
@@ -68,17 +66,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
 
   const { handleSubmit, getValues, setValue } = methods;
 
-  const hasMedia = (file: EventFormValues["mediaFile"], url: string) => {
-    if (file) return true;
-    try {
-      const parsedUrl = new URL(url.trim());
-      return parsedUrl.protocol === "https:" &&
-        parsedUrl.hostname !== "instagram.com" &&
-        !parsedUrl.hostname.endsWith(".instagram.com");
-    } catch {
-      return false;
-    }
-  };
+  const hasMedia = (file: EventFormValues["mediaFile"]) => Boolean(file);
 
   const onSubmit = (data: EventFormValues) => {
     const formData = new FormData();
@@ -88,8 +76,8 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     };
     const eventDateTime = combineDateAndTime(eventToSave.eventDate, eventToSave.eventTime);
 
-    if (!hasMedia(data.mediaFile, data.mediaUrl)) {
-      toast.error("Sube un archivo o ingresa una URL HTTPS directa de la imagen");
+    if (!hasMedia(data.mediaFile)) {
+      toast.error("Sube una imagen o un video para el evento");
       return;
     }
 
@@ -100,11 +88,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     formData.append("log", eventToSave.locationLon);
     formData.append("eventDate", eventDateTime.toISOString());
     formData.append("mediaType", eventToSave.mediaType);
-    if (data.mediaFile) {
-      formData.append("mediaFile", data.mediaFile);
-    } else {
-      formData.append("mediaUrl", data.mediaUrl.trim());
-    }
+    formData.append("mediaFile", data.mediaFile!);
     formData.append("cost", Math.max(0, ...eventToSave.tickets.map((ticket) => ticket.price)).toString());
     formData.append("currency", eventToSave.currency);
     formData.append("attendees", eventToSave.attendees.toString());
@@ -119,8 +103,8 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
   };
 
   const handleNextFormStep = () => {
-    if (!hasMedia(getValues("mediaFile"), getValues("mediaUrl"))) {
-      toast.error("Sube un archivo o ingresa una URL HTTPS directa de la imagen");
+    if (!hasMedia(getValues("mediaFile"))) {
+      toast.error("Sube una imagen o un video para el evento");
       return;
     }
     setStep(2);

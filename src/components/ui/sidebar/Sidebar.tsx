@@ -8,6 +8,7 @@ import {
   Bell,
   HomeIcon,
   LogOut,
+  MapPin,
   Plus,
   TicketCheckIcon,
   UserPlus
@@ -59,6 +60,11 @@ export const Sidebar = () => {
       label: 'Inicio',
       path: '/',
       icon: <HomeIcon />
+    },
+    {
+      label: 'Cerca de ti',
+      path: '/nearby',
+      icon: <MapPin />
     },
    /*  {
       label: 'Notificaciones',

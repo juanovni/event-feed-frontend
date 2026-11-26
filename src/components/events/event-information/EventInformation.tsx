@@ -14,12 +14,18 @@ import ExpandableText from "@/components/ui/expandable-text/ExpandableText";
 
 interface Props {
   event: Event;
+  distanceKm?: number;
 }
 
-export const EventInformation = ({ event }: Props) => {
+const formatDistance = (distanceKm: number) => (
+  distanceKm < 1
+    ? `A ${Math.max(1, Math.round(distanceKm * 1000))} m de ti`
+    : `A ${distanceKm.toLocaleString("es-EC", { maximumFractionDigits: 1 })} km de ti`
+);
+
+export const EventInformation = ({ event, distanceKm }: Props) => {
   const [expanded, setExpanded] = useState(false);
   const { user } = useAuthStore();
-  const distanceKm = 4;
   const isEventOwner = user?.id === event.user.id;
 
   return (
@@ -38,6 +44,11 @@ export const EventInformation = ({ event }: Props) => {
         <div className="flex items-center gap-2 text-smtext-muted-foreground">
           <Map size={18} className="shrink-0 text-primary font-bold" />
           <span className="font-medium">{event.location}</span>
+          {typeof distanceKm === "number" && (
+            <Badge variant="secondary" className="ml-auto shrink-0 font-medium">
+              {formatDistance(distanceKm)}
+            </Badge>
+          )}
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Calendar size={18} className="shrink-0 text-primary font-bold" />

@@ -13,7 +13,7 @@ interface MediaUploadStepProps {
 }
 
 export function MediaUploadStep({ setValue }: MediaUploadStepProps) {
-  const { watch, register } = useFormContext<EventFormValues>();
+  const { watch } = useFormContext<EventFormValues>();
   const mediaFile = watch("mediaFile");
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -91,16 +91,6 @@ export function MediaUploadStep({ setValue }: MediaUploadStepProps) {
         </div>
         <input id="media-upload" type="file" accept="image/*,video/*" onChange={handleUpload} className="hidden" />
       </div>
-      <label className="block space-y-2 p-4 text-sm">
-        <span>O pega la URL HTTPS de una imagen</span>
-        <input
-          {...register("mediaUrl")}
-          type="text"
-          inputMode="url"
-          placeholder="https://res.cloudinary.com/…"
-          className="w-full rounded-md border bg-background px-3 py-2"
-        />
-      </label>
     </>
   );
 }

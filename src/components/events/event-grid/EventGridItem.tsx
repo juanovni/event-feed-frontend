@@ -31,11 +31,12 @@ import SuccessModal from "../components/processing-modal/SuccessModal";
 
 interface Props {
   event: Event;
+  distanceKm?: number;
 }
 
 const ATTENDANCE_PROCESSING_DELAY_MS = 2000;
 
-export const EventGridItem = ({ event }: Props) => {
+export const EventGridItem = ({ event, distanceKm }: Props) => {
   const { user } = useAuthStore();
   const { requireAuth } = useRequireAuth();
   const { mutateAsync: attendEvent } = useToggleAttend();
@@ -121,7 +122,7 @@ export const EventGridItem = ({ event }: Props) => {
 
 
         {/* Informations */}
-        <EventInformation event={event} />
+        <EventInformation event={event} distanceKm={distanceKm} />
 
         {/* Publisher Stats */}
         {isEventOwner && (
