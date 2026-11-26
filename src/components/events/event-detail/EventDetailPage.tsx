@@ -512,7 +512,8 @@ export function EventDetailPage({ event }: Props) {
                       <div className="mt-4 space-y-3 rounded-2xl border border-black/6 bg-white/80 p-4">
                         {event.eventTicketTypes.map((ticket) => (
                           <p className="text-sm text-muted-foreground" key={ticket.id}>
-                            {ticket.quantity} disponibles
+                            <span className="font-medium text-foreground">{ticket.name}</span>
+                            {" · "}{ticket.quantity} disponibles
                             {ticket.validUntil ? ` · Válido hasta ${formatDate(new Date(ticket.validUntil))}` : ""}
                           </p>
                         ))}

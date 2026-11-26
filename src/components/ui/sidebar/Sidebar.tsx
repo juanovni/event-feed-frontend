@@ -38,6 +38,8 @@ export const Sidebar = () => {
   if (!user) return null;
 
   const menuItems = [
+    ...(user.role === "admin" ? [{ label: "Liquidaciones", path: "/admin/settlements", icon: <TicketCheckIcon /> }] : []),
+    ...(user.role === "publisher" ? [{ label: "Mis ventas", path: "/sales", icon: <TicketCheckIcon /> }] : []),
     {
       label: 'Inicio',
       path: '/',

@@ -45,7 +45,7 @@ export function PaymentModal({ event, open, onOpenChange }: PaymentModalProps) {
     }
   }, [open, user?.name, user?.lastName, user?.email, user?.phone]);
   const [paymentSuccess] = useState(false);
-  const [quote, setQuote] = useState<{ lines: { name: string; quantity: number; amount: number }[]; subtotal: number; tax: number; total: number; taxRate: number } | null>(null);
+  const [quote, setQuote] = useState<{ lines: { name: string; quantity: number; amount: number }[]; subtotal: number; tax: number; total: number; taxRate: number; currency: string } | null>(null);
   const [quoteError, setQuoteError] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -217,7 +217,7 @@ export function PaymentModal({ event, open, onOpenChange }: PaymentModalProps) {
                       </div>
                       <div className="flex justify-between border-t pt-2 font-semibold">
                         <span>Total a pagar</span>
-                        <span>${(quote.total / 100).toFixed(2)} USD</span>
+                        <span>${(quote.total / 100).toFixed(2)} {quote.currency}</span>
                       </div>
                     </div>
                   ) : (
