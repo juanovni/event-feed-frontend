@@ -46,7 +46,7 @@ export default function TicketPage({ params }: Props) {
         url={accessPass.event.mediaUrl}
         title={accessPass.event.title}
       />
-      <div className="max-w-2xl mx-auto px-4 -mt-12 pb-8 space-y-4">
+      <div className="relative z-10 max-w-2xl mx-auto px-4 -mt-12 pb-8 space-y-4">
         <TicketQRCode ticket={accessPass} />
 
         <TicketDetails ticket={accessPass} />

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { eventApi } from "@/api/event.api";
 import {
   Bell,
   HomeIcon,
@@ -23,6 +24,19 @@ export const Sidebar = () => {
   const { user, logout } = useAuthStore();
   const { openDialog, isOpen, closeDialog } = useEventDialogStore();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const { data: canAccessEvents = false } = useQuery({
+    queryKey: ["admission-menu", user?.id],
+    queryFn: async () => {
+      const [assignments, events] = await Promise.all([
+        eventApi.get<unknown[]>("/admission/assignments"),
+        eventApi.get<unknown[]>("/admission/managed-events"),
+      ]);
+      return assignments.data.length > 0 || events.data.length > 0;
+    },
+    enabled: !!user?.id,
+    refetchInterval: 60000,
+    refetchOnWindowFocus: true,
+  });
 
   const handleLogout = () => {
     logout();
@@ -40,6 +54,7 @@ export const Sidebar = () => {
   const menuItems = [
     ...(user.role === "admin" ? [{ label: "Liquidaciones", path: "/admin/settlements", icon: <TicketCheckIcon /> }] : []),
     ...(user.role === "publisher" ? [{ label: "Mis ventas", path: "/sales", icon: <TicketCheckIcon /> }] : []),
+    ...(canAccessEvents ? [{ label: "Control de acceso", path: "/access", icon: <TicketCheckIcon /> }] : []),
     {
       label: 'Inicio',
       path: '/',

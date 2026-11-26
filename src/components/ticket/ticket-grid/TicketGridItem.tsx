@@ -22,6 +22,11 @@ export const TicketGridItem = ({ ticket }: Props) => {
       color: "bg-green-50 text-green-800 border-green-200",
       icon: <CheckCircle className="w-4 h-4 text-green-600" />,
     },
+    partial: {
+      label: "Parcialmente canjeado",
+      color: "bg-amber-50 text-amber-800 border-amber-200",
+      icon: <Clock3 className="w-4 h-4 text-amber-600" />,
+    },
     pending: {
       label: "Por canjear",
       color: "bg-yellow-50 text-yellow-800 border-yellow-200",
@@ -94,7 +99,7 @@ export const TicketGridItem = ({ ticket }: Props) => {
 
           <div className="flex items-center text-sm md:text-lg md:justify-end">
             {isAttendancePass ? (
-              <p className="font-semibold text-emerald-700">QR disponible</p>
+              <p className="font-semibold text-emerald-700">{status === "redeemed" ? "Acceso canjeado" : "QR disponible"}</p>
             ) : (
               <>
                 <DollarSign className="h-4 md:h-5 w-4 md:w-5" />

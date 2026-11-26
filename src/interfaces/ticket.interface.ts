@@ -11,4 +11,5 @@ export interface Ticket {
   paidAt: Date;
   event: Event;
   status?: string;
+  redeemedCount?: number;
 }

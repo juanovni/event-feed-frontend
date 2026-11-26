@@ -1,21 +1,32 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { eventApi } from "@/api/event.api";
 import { TicketGrid, TicketEmpty, Title } from "@/components";
 import { useEvents, useTickets } from "@/hooks";
 import { TicketSkeleton } from "./ui/TicketSkeleton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { getTicketStatus, normalizeAccessPasses } from "@/utils";
+import { normalizeAccessPasses } from "@/utils";
 import FilterCarousel from "@/components/ui/filter-carousel/FilterCarousel";
 
 export default function TicketsPage() {
   const { data: tickets = [], isLoading: isLoadingTickets, isError: isErrorTickets } = useTickets();
+  const { data: redemptionCounts = {}, isLoading: isLoadingRedemptions, isError: isErrorRedemptions } = useQuery({
+    queryKey: ["admission-redemption-status"],
+    queryFn: async () => (await eventApi.get<Record<string, number>>("/admission/redemption-status")).data,
+    refetchOnWindowFocus: true,
+    refetchInterval: 30000,
+  });
   const { data: events = [], isLoading: isLoadingEvents, isError: isErrorEvents } = useEvents();
 
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [sortOrder, setSortOrder] = useState<string>("desc");
 
-  const accessPasses = useMemo(() => normalizeAccessPasses(tickets, events), [tickets, events]);
+  const accessPasses = useMemo(
+    () => normalizeAccessPasses(tickets, events).map(ticket => ({ ...ticket, redeemedCount: redemptionCounts[ticket.id] ?? 0 })),
+    [tickets, events, redemptionCounts]
+  );
 
   const filteredTickets = useMemo(() => {
     if (!accessPasses.length) return [];
@@ -23,7 +34,13 @@ export default function TicketsPage() {
     let result = [...accessPasses];
 
     if (statusFilter !== "all") {
-      result = result.filter((ticket) => getTicketStatus(ticket) === statusFilter);
+      result = result.filter((ticket) => {
+        const redeemed = ticket.redeemedCount ?? 0;
+        const total = Math.max(ticket.itemsInOrder || 1, 1);
+        if (statusFilter === "redeemed") return redeemed > 0;
+        if (statusFilter === "pending") return redeemed < total;
+        return redeemed < total && new Date(ticket.event.eventDate) > new Date();
+      });
     }
 
     result.sort((a, b) => {
@@ -35,8 +52,8 @@ export default function TicketsPage() {
     return result;
   }, [accessPasses, statusFilter, sortOrder]);
 
-  const isLoading = isLoadingTickets || isLoadingEvents;
-  const isError = isErrorTickets && isErrorEvents;
+  const isLoading = isLoadingTickets || isLoadingEvents || isLoadingRedemptions;
+  const isError = (isErrorTickets && isErrorEvents) || isErrorRedemptions;
 
   if (isLoading) {
     return (
@@ -89,7 +106,9 @@ export default function TicketsPage() {
       </div>
 
       {filteredTickets.length === 0 ? (
-        <TicketEmpty />
+        statusFilter === "all" ? <TicketEmpty /> : (
+          <p className="py-16 text-center text-muted-foreground">No hay entradas en este filtro.</p>
+        )
       ) : (
         <TicketGrid tickets={filteredTickets} />
       )}
