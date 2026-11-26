@@ -2,7 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Check, Plus, Minus } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Check, Plus, Minus } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -15,6 +17,9 @@ import { formatDate } from "@/utils";
 import { Button } from "../ui/button";
 import { eventApi } from "@/api/event.api";
 import { toast } from "sonner";
+import { useAuthStore } from "@/store";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface PaymentModalProps {
   event: Event;
@@ -25,6 +30,20 @@ interface PaymentModalProps {
 
 export function PaymentModal({ event, open, onOpenChange }: PaymentModalProps) {
   const router = useRouter();
+  const user = useAuthStore(state => state.user);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [step, setStep] = useState<"tickets" | "details">("tickets");
+  const [billing, setBilling] = useState({
+    name: "", email: "", phone: "", documentType: "cedula", documentNumber: "", billingName: "",
+  });
+  useEffect(() => {
+    if (open) {
+      const name = [user?.name, user?.lastName].filter(Boolean).join(" ");
+      setBilling({ name, email: user?.email ?? "", phone: user?.phone ?? "", documentType: "cedula", documentNumber: "", billingName: name });
+      setStep("tickets");
+      setTermsAccepted(false);
+    }
+  }, [open, user?.name, user?.lastName, user?.email, user?.phone]);
   const [paymentSuccess] = useState(false);
   const [quote, setQuote] = useState<{ lines: { name: string; quantity: number; amount: number }[]; subtotal: number; tax: number; total: number; taxRate: number } | null>(null);
   const [quoteError, setQuoteError] = useState(false);
@@ -77,10 +96,16 @@ export function PaymentModal({ event, open, onOpenChange }: PaymentModalProps) {
   }, [open, items]);
 
   const handlePayment = async () => {
-    if (!items.length || !quote) return;
+    if (!items.length || !quote || !termsAccepted) return;
+    const idPattern = billing.documentType === "cedula" ? /^\d{10}$/ : billing.documentType === "ruc" ? /^\d{13}$/ : /^[a-zA-Z0-9-]{3,30}$/;
+    if (!billing.name.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(billing.email.trim()) ||
+        billing.phone.trim().length < 5 || !billing.billingName.trim() || !idPattern.test(billing.documentNumber.trim())) {
+      toast.error("Completa tus datos y revisa el número de identificación.");
+      return;
+    }
     setIsProcessing(true);
     try {
-      const { data } = await eventApi.post("/payments/prepare", { items, expectedTotal: quote.total });
+      const { data } = await eventApi.post("/payments/prepare", { items, expectedTotal: quote.total, billingData: billing, termsAccepted });
       if (data.status === "approved" && typeof data.ticketId === "string") {
         router.push(`/ticket/${encodeURIComponent(data.ticketId)}`);
         return;
@@ -98,13 +123,13 @@ export function PaymentModal({ event, open, onOpenChange }: PaymentModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-full max-w-lg md:max-w-3xl lg:max-w-5xl h-[90vh] md:h-auto overflow-y-auto">
+      <DialogContent className="w-full max-w-lg md:max-w-4xl lg:max-w-6xl max-h-[90vh] overflow-y-auto">
         {!paymentSuccess ? (
           <>
             <DialogHeader>
-              <DialogTitle>Selecciona tus Tickets</DialogTitle>
+              <DialogTitle>{step === "tickets" ? "Selecciona tus entradas" : "Datos de compra"}</DialogTitle>
               <DialogDescription>
-                Escoge la cantidad de tickets que deseas comprar
+                {step === "tickets" ? "Escoge la cantidad de entradas que deseas comprar" : "Confirma tus datos de contacto y facturación"}
               </DialogDescription>
             </DialogHeader>
 
@@ -112,7 +137,7 @@ export function PaymentModal({ event, open, onOpenChange }: PaymentModalProps) {
 
               {/* COLUMNA IZQUIERDA: LISTA DE TICKETS */}
               <div className="space-y-4">
-                {(event.eventTicketTypes ?? []).map((ticket) => (
+                {step === "tickets" ? (event.eventTicketTypes ?? []).map((ticket) => (
                   <div
                     key={ticket.id}
                     className="flex justify-between items-center border p-3 rounded-lg"
@@ -134,7 +159,34 @@ export function PaymentModal({ event, open, onOpenChange }: PaymentModalProps) {
                       </Button>
                     </div>
                   </div>
-                ))}
+                )) : (
+                  <div className="space-y-5">
+                    <div>
+                      <h3 className="font-semibold">Contacto</h3>
+                      <p className="text-sm text-muted-foreground">Las entradas estarán disponibles en tu cuenta.</p>
+                    </div>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div className="space-y-2"><Label htmlFor="checkout-name">Nombre completo</Label><Input id="checkout-name" value={billing.name} maxLength={150} onChange={e => setBilling({ ...billing, name: e.target.value })} /></div>
+                      <div className="space-y-2"><Label htmlFor="checkout-email">Correo electrónico</Label><Input id="checkout-email" type="email" value={billing.email} maxLength={254} onChange={e => setBilling({ ...billing, email: e.target.value })} /></div>
+                      <div className="space-y-2"><Label htmlFor="checkout-phone">Teléfono</Label><Input id="checkout-phone" type="tel" value={billing.phone} maxLength={30} onChange={e => setBilling({ ...billing, phone: e.target.value })} /></div>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">Facturación</h3>
+                      <p className="text-sm text-muted-foreground">Guarda los datos de facturación de esta compra.</p>
+                    </div>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div className="space-y-2">
+                        <Label htmlFor="checkout-document-type">Tipo de identificación</Label>
+                        <select id="checkout-document-type" value={billing.documentType} onChange={e => setBilling({ ...billing, documentType: e.target.value })} className="flex h-9 w-full rounded-md border border-input bg-background px-3 text-sm">
+                          <option value="cedula">Cédula</option><option value="ruc">RUC</option><option value="passport">Pasaporte</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2"><Label htmlFor="checkout-document">Número de identificación</Label><Input id="checkout-document" value={billing.documentNumber} maxLength={30} onChange={e => setBilling({ ...billing, documentNumber: e.target.value })} /></div>
+                      <div className="space-y-2 sm:col-span-2"><Label htmlFor="checkout-billing-name">Nombre o razón social</Label><Input id="checkout-billing-name" value={billing.billingName} maxLength={150} onChange={e => setBilling({ ...billing, billingName: e.target.value })} /></div>
+                    </div>
+                    <Button type="button" variant="outline" onClick={() => setStep("tickets")}>Volver a las entradas</Button>
+                  </div>
+                )}
               </div>
 
               {/* COLUMNA DERECHA: RESUMEN + FORMULARIO */}
@@ -175,14 +227,43 @@ export function PaymentModal({ event, open, onOpenChange }: PaymentModalProps) {
                   )}
                 </div>
 
+                {step === "details" && (
+                  <label className="flex items-start gap-3 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={termsAccepted}
+                      onChange={event => setTermsAccepted(event.target.checked)}
+                      className="mt-1 h-4 w-4 accent-foreground"
+                    />
+                    <span>
+                      He leído y acepto los{" "}
+                      <Link href="/terms-and-conditions" target="_blank" rel="noopener noreferrer" className="font-medium underline underline-offset-2">
+                        Términos y Condiciones
+                      </Link>{" "}y la{" "}
+                      <Link href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="font-medium underline underline-offset-2">
+                        Política de Privacidad
+                      </Link>{" "}(obligatorio).
+                    </span>
+                  </label>
+                )}
                 <Button
                   type="button"
                   className="w-full h-12 rounded-full bg-foreground text-background hover:bg-foreground/90"
-                  disabled={isProcessing || !quote}
-                  onClick={handlePayment}
+                  disabled={isProcessing || !quote || (step === "details" && !termsAccepted)}
+                  onClick={step === "tickets" ? () => setStep("details") : handlePayment}
                 >
-                  {isProcessing ? "Preparando pago..." : "Continuar al pago"}
+                  {isProcessing ? "Preparando pago..." : step === "tickets" ? "Continuar al checkout" : quote?.total === 0 ? "Confirmar entradas" : quote ? `Continuar a PayPhone - $${(quote.total / 100).toFixed(2)}` : "Continuar a PayPhone"}
+                  {step === "tickets" && <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" />}
                 </Button>
+                {(!quote || quote.total > 0) && (
+                  <div className="space-y-2 pt-1 text-center text-xs text-muted-foreground">
+                    <div className="flex items-center justify-center gap-2">
+                      <span>Continuarás en</span>
+                      <Image src="/images/payphone-logo.svg" alt="Payphone" width={92} height={16} className="h-4 w-auto" />
+                    </div>
+                    <p>Tarjetas aceptadas: Visa · Mastercard · Diners Club · Discover</p>
+                  </div>
+                )}
               </div>
             </div>
           </>

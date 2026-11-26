@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from "framer-motion";
+import { Eye, EyeOff } from "lucide-react";
 import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
 import { Logo } from "@/components/ui/logo/Logo";
@@ -19,6 +20,7 @@ export default function RegisterStepper() {
 
   const [step, setStep] = useState(0);
   const [showVerification, setShowVerification] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [phoneCountryCode, setPhoneCountryCode] = useState(DEFAULT_PHONE_COUNTRY_CODE);
   const [form, setForm] = useState({
     email: "",
@@ -167,16 +169,26 @@ export default function RegisterStepper() {
                     <label className="block text-sm text-gray-600">
                       Contraseña
                     </label>
-                    <div className="flex gap-2">
+                    <div className="relative">
                       <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         placeholder="Contraseña"
-                        className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                        autoComplete="new-password"
+                        className="w-full border rounded-md px-3 py-2 pr-11 text-sm focus:outline-none focus:ring-1 focus:ring-black"
                         value={form.password}
                         onChange={(e) =>
                           setForm({ ...form, password: e.target.value })
                         }
                       />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((visible) => !visible)}
+                        aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                        aria-pressed={showPassword}
+                        className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-600 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                      >
+                        {showPassword ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+                      </button>
                     </div>
                   </div>
                   <button
