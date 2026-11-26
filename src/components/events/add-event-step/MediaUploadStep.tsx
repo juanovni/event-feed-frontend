@@ -13,7 +13,7 @@ interface MediaUploadStepProps {
 }
 
 export function MediaUploadStep({ setValue }: MediaUploadStepProps) {
-  const { watch } = useFormContext();
+  const { watch, register } = useFormContext<EventFormValues>();
   const mediaFile = watch("mediaFile");
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -72,23 +72,35 @@ export function MediaUploadStep({ setValue }: MediaUploadStepProps) {
   }
 
   return (
-    <div
-      className="relative border-2 border-dashed rounded-lg p-12 text-center hover:border-primary transition-colors cursor-pointer"
-      onClick={() => document.getElementById("media-upload")?.click()}
-    >
-      <div className="space-y-4">
-        <div className="flex justify-center">
-          <div className="h-28 w-28 rounded-full bg-black flex items-center justify-center transition-transform hover:scale-110">
-            <ImageUpIcon className="h-14 w-14 text-primary-foreground" />
+    <>
+      <div
+        className="relative border-2 border-dashed rounded-lg p-12 text-center hover:border-primary transition-colors cursor-pointer"
+        onClick={() => document.getElementById("media-upload")?.click()}
+      >
+        <div className="space-y-4">
+          <div className="flex justify-center">
+            <div className="h-28 w-28 rounded-full bg-black flex items-center justify-center transition-transform hover:scale-110">
+              <ImageUpIcon className="h-14 w-14 text-primary-foreground" />
+            </div>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Arrastra tu archivo aquí</h3>
+            <p className="text-sm text-muted-foreground">o haz clic para seleccionar</p>
+            <p className="text-xs text-muted-foreground mt-2">Soporta imágenes</p>
           </div>
         </div>
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Arrastra tu archivo aquí</h3>
-          <p className="text-sm text-muted-foreground">o haz clic para seleccionar</p>
-          <p className="text-xs text-muted-foreground mt-2">Soporta imágenes</p>
-        </div>
+        <input id="media-upload" type="file" accept="image/*,video/*" onChange={handleUpload} className="hidden" />
       </div>
-      <input id="media-upload" type="file" accept="image/*,video/*" onChange={handleUpload} className="hidden" />
-    </div>
+      <label className="block space-y-2 p-4 text-sm">
+        <span>O pega la URL HTTPS de una imagen</span>
+        <input
+          {...register("mediaUrl")}
+          type="text"
+          inputMode="url"
+          placeholder="https://res.cloudinary.com/…"
+          className="w-full rounded-md border bg-background px-3 py-2"
+        />
+      </label>
+    </>
   );
 }

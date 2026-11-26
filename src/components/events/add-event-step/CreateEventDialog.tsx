@@ -55,7 +55,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       locationLon: "",
       eventDate: "",
       mediaType: "image",
-      mediaUrl: "https://scontent.cdninstagram.com/v/t51.82787-15/569176248_18067982831584200_8285398647440749845_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ig_cache_key=Mzc1MDAyODY4MDk3NTE2ODEwMg%3D%3D.3-ccb1-7&ccb=1-7&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwODB4MTM1MC5zZHIuQzMifQ%3D%3D&_nc_ohc=RwSfuHU776oQ7kNvwF19-NR&_nc_oc=AdkD1ALPRuoWARM5gNm8LpKrIfF2uIr-B4ILfo_7MGTBFOWw-u6BzMYZ4R38BAaSFg8&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=ehnVMZiT0sYZWzERZ7h0KA&oh=00_AfebIvWZps5LqkVa0VOeIa-ub4OcEUwENsE3T6Rg9z_5lg&oe=690B62E3",
+      mediaUrl: "",
       cost: 0,
       currency: "USA",
       attendees: 0,
@@ -68,6 +68,15 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
 
   const { handleSubmit, getValues, setValue } = methods;
 
+  const hasMedia = (file: EventFormValues["mediaFile"], url: string) => {
+    if (file) return true;
+    try {
+      return new URL(url.trim()).protocol === "https:";
+    } catch {
+      return false;
+    }
+  };
+
   const onSubmit = (data: EventFormValues) => {
     const formData = new FormData();
     const eventToSave = {
@@ -79,8 +88,8 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     };
     const eventDateTime = combineDateAndTime(eventToSave.eventDate, eventToSave.eventTime);
 
-    if (!data.mediaFile) {
-      toast('Por favor sube una imagen o video"')
+    if (!hasMedia(data.mediaFile, data.mediaUrl)) {
+      toast.error("Sube un archivo o ingresa una URL HTTPS válida");
       return;
     }
 
@@ -91,13 +100,16 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     formData.append("log", eventToSave.locationLon);
     formData.append("eventDate", eventDateTime.toISOString());
     formData.append("mediaType", eventToSave.mediaType);
-    formData.append("mediaUrl", eventToSave.mediaUrl);
+    if (data.mediaFile) {
+      formData.append("mediaFile", data.mediaFile);
+    } else {
+      formData.append("mediaUrl", data.mediaUrl.trim());
+    }
     formData.append("cost", "0".toString());
     formData.append("currency", eventToSave.currency);
     formData.append("attendees", eventToSave.attendees.toString());
     formData.append("userStatus", eventToSave.userStatus);
     formData.append("categoryId", eventToSave.categoryId);
-    formData.append("mediaFile", data.mediaFile);
     formData.append("eventTicketTypes", JSON.stringify(eventToSave.tickets));
     mutate(formData);
 
@@ -107,9 +119,8 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
   };
 
   const handleNextFormStep = () => {
-    const file = getValues("mediaFile");
-    if (!file) {
-      toast.error("Por favor sube una imagen o video");
+    if (!hasMedia(getValues("mediaFile"), getValues("mediaUrl"))) {
+      toast.error("Sube un archivo o ingresa una URL HTTPS válida");
       return;
     }
     setStep(2);
