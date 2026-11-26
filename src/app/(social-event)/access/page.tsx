@@ -7,7 +7,17 @@ import { useAuthStore } from "@/store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-type Event = { id: string; title: string; eventDate: string };
+type Event = {
+  id: string;
+  title: string;
+  eventDate: string;
+  user: { name: string | null; username: string };
+};
+
+function eventLabel(event: Event) {
+  const organizer = event.user?.name?.trim() || event.user?.username;
+  return organizer ? `${event.title} — ${organizer}` : event.title;
+}
 type Assignment = { id: string; status: string; event: Event };
 type Staff = { id: string; status: string; user: { name: string | null; email: string } };
 type Result = { status: string; redeemedAt?: string; ticketName?: string };
@@ -133,7 +143,7 @@ export default function AccessPage() {
         <section className="space-y-3 rounded-2xl border bg-card p-5">
           <h2 className="font-semibold">Invitaciones</h2>
           {assignments.filter(item => item.status === "pending").map(item => (
-            <div key={item.id} className="flex flex-wrap items-center justify-between gap-3"><span>{item.event.title}</span><Button type="button" variant="outline" onClick={() => accept(item.id)}>Aceptar invitación</Button></div>
+            <div key={item.id} className="flex flex-wrap items-center justify-between gap-3"><span>{eventLabel(item.event)}</span><Button type="button" variant="outline" onClick={() => accept(item.id)}>Aceptar invitación</Button></div>
           ))}
         </section>
       )}
@@ -141,7 +151,7 @@ export default function AccessPage() {
         <label htmlFor="access-event" className="block text-sm font-medium">Evento</label>
         <select id="access-event" className="h-10 w-full rounded-md border bg-background px-3" value={selected} onChange={event => { void stop(); setSelected(event.target.value); }}>
           <option value="">Selecciona un evento</option>
-          {events.map(event => <option key={event.id} value={event.id}>{event.title}</option>)}
+          {events.map(event => <option key={event.id} value={event.id}>{eventLabel(event)}</option>)}
         </select>
         {!loading && !events.length && <p className="text-sm text-muted-foreground">No tienes eventos asignados para controlar acceso.</p>}
       </section>
