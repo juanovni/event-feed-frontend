@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 import { useAuthStore } from "@/store";
 import { ImageAccordion } from "@/components/ui/image-accordion/ImageAccordion";
 import { Logo } from "@/components/ui/logo/Logo";
@@ -13,6 +14,7 @@ export default function LoginPage() {
   const { login } = useAuthStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const isFormValid = email.trim() !== "" && password.trim() !== "";
   const redirectTo = getSafeRedirectPath(searchParams.get("redirect"));
@@ -60,13 +62,25 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <input
-            type="password"
-            placeholder="Contraseña"
-            className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Contraseña"
+              autoComplete="current-password"
+              className="w-full border rounded-md px-3 py-2 pr-11 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((visible) => !visible)}
+              aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              aria-pressed={showPassword}
+              className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-600 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            >
+              {showPassword ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+            </button>
+          </div>
 
           <button
             className={`w-full bg-black text-white py-3 rounded-full text-sm cursor-pointer ${!isFormValid || loading
