@@ -1,6 +1,7 @@
 'use client';
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { Event, User } from "@/interfaces";
 import { GalleryPopup } from "@/components/ui/gallery/GalleryPopup";
 import { Badge } from "@/components/ui/badge";
@@ -19,13 +20,21 @@ interface EventMediaBlockProps {
 }
 
 export function EventMediaBlock({ event, galleryImages, className, objectFit = "contain" }: EventMediaBlockProps) {
+  const [imageFailed, setImageFailed] = useState(false);
+
+  useEffect(() => {
+    setImageFailed(false);
+  }, [event.mediaUrl]);
+
   return (
     <div className={className}>
       <div className="relative">
         {event.mediaType === "image" ? (
           <>
             <Image
-              src={event.mediaUrl}
+              src={imageFailed ? "/images/event1.jpg" : event.mediaUrl}
+              unoptimized
+              onError={() => setImageFailed(true)}
               width={1400}
               height={1400}
               alt={event.title}

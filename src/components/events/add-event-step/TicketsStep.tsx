@@ -29,16 +29,12 @@ export function TicketsStep() {
         <div className="flex items-center gap-2">
           <Button
             type="button"
-            disabled
-            /*  onClick={() =>
-               append({
-                 name: "",
-                 price: 0,
-                 quantity: 0,
-                 validUntil: null,
-               })
-             } */
-            onClick={() => setOpenSupportModal(true)}
+            onClick={() => append({
+              name: "",
+              price: 0,
+              quantity: 0,
+              validUntil: null,
+            })}
           >
             Agregar entrada
           </Button>
@@ -57,7 +53,7 @@ export function TicketsStep() {
       </div>
 
       <p className="text-sm text-muted-foreground">
-        Todas las entradas creadas desde este formulario son gratis.
+        Puedes crear entradas gratuitas o indicar un precio. Los pagos están en preparación.
       </p>
 
       {fields.length === 0 && (
@@ -91,17 +87,19 @@ export function TicketsStep() {
               <div className="space-y-2">
                 <Label>Precio</Label>
                 <Input
-                  value="Gratis"
-                  disabled
-                  className="bg-muted"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  {...register(`tickets.${index}.price`, { required: true, min: 0, valueAsNumber: true })}
                 />
-                <input type="hidden" {...register(`tickets.${index}.price`, { valueAsNumber: true })} defaultValue={0} />
               </div>
 
               <div className="space-y-2">
                 <Label>Cantidad disponible</Label>
                 <Input
                   type="number"
+                  min="0"
+                  step="1"
                   placeholder="0"
                   {...register(`tickets.${index}.quantity`, {
                     required: true,
@@ -150,10 +148,10 @@ export function TicketsStep() {
                 Actualmente, todas las entradas creadas desde este formulario son gratis.
               </p>
               <p>
-                En nuestra plataforma usamos Payphone para los cobros, pero esta opcion se encuentra en desarrollo y todavia no esta disponible para todos los eventos.
+                La integración de pagos con Payphone está en desarrollo.
               </p>
               <p>
-                Para habilitar esta funcionalidad, por favor comunicate con el equipo de soporte: constantinemurillo@gmail.com.
+                Las compras de entradas de pago estarán disponibles cuando se complete la integración.
               </p>
             </DialogDescription>
           </DialogHeader>

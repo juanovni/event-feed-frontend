@@ -1,24 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { CreditCard, Lock, Check, Plus, Minus } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Check, Plus, Minus } from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Event } from "@/interfaces";
-import { useEventsStore } from "@/store";
 import { formatDate } from "@/utils";
 import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
-import { useCreateTicket } from "@/hooks/tickets/useCreateTicket";
-import { useToggleAttend } from "@/hooks";
+import { eventApi } from "@/api/event.api";
+import { toast } from "sonner";
 
 interface PaymentModalProps {
   event: Event;
@@ -27,10 +23,12 @@ interface PaymentModalProps {
   onSuccess?: () => void;
 }
 
-export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentModalProps) {
+export function PaymentModal({ event, open, onOpenChange }: PaymentModalProps) {
   const router = useRouter();
+  const [paymentSuccess] = useState(false);
+  const [quote, setQuote] = useState<{ lines: { name: string; quantity: number; amount: number }[]; subtotal: number; tax: number; total: number; taxRate: number } | null>(null);
+  const [quoteError, setQuoteError] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   // Cantidades por cada tipo de ticket
   const [quantities, setQuantities] = useState<Record<string, number>>(() => {
@@ -41,9 +39,6 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
     return q;
   });
 
-  const { mutateAsync } = useCreateTicket();
-  const { updateEventAsPaid } = useEventsStore();
-  const { mutateAsync: attendEvent } = useToggleAttend();
 
   // Incrementar
   const increment = (id: string) => {
@@ -61,47 +56,43 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
     }));
   };
 
-  // Total
-  const total = (event.eventTicketTypes ?? []).reduce((acc, ticket) => {
-    return acc + ticket.price * (quantities[ticket.id] ?? 0);
-  }, 0);
+  const items = useMemo(() => (event.eventTicketTypes ?? [])
+    .filter(ticket => (quantities[ticket.id] ?? 0) > 0)
+    .map(ticket => ({
+      eventId: event.id,
+      eventTicketTypeId: ticket.id,
+      quantity: quantities[ticket.id],
+    })), [event.id, event.eventTicketTypes, quantities]);
 
-  const totalWithTax = total + total * 0.15;
+  useEffect(() => {
+    let active = true;
+    setQuote(null);
+    setQuoteError(false);
+    if (open && items.length) {
+      eventApi.post("/payments/quote", { items })
+        .then(({ data }) => { if (active) setQuote(data); })
+        .catch(() => { if (active) setQuoteError(true); });
+    }
+    return () => { active = false; };
+  }, [open, items]);
 
-  const handlePayment = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handlePayment = async () => {
+    if (!items.length || !quote) return;
     setIsProcessing(true);
-
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // Items para API
-      const items = (event.eventTicketTypes ?? [])
-        .filter((t) => (quantities[t.id] ?? 0) > 0)
-        .map((t) => ({
-          eventId: event.id,
-          eventTicketTypeId: t.id,
-          quantity: quantities[t.id] ?? 0,
-          price: t.price,
-        }));
-
-      const resp = await mutateAsync({ items });
-
-      if (resp?.ok) {
-        await attendEvent(event.id);
-        updateEventAsPaid(event.id);
-        router.replace("/ticket/" + resp.ticket?.id);
+      const { data } = await eventApi.post("/payments/prepare", { items, expectedTotal: quote.total });
+      if (data.status === "approved" && typeof data.ticketId === "string") {
+        router.push(`/ticket/${encodeURIComponent(data.ticketId)}`);
+        return;
       }
-
-      setPaymentSuccess(true);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setTimeout(() => {
-        onSuccess?.();
-        onOpenChange(false);
-        setPaymentSuccess(false);
-      }, 2000);
+      const url = new URL(data.paymentUrl);
+      if (url.protocol !== "https:" || !["pay.payphonetodoesposible.com", "payphonetodoesposible.com"].includes(url.hostname)) {
+        throw new Error("La dirección de pago no es válida");
+      }
+      window.location.assign(url.href);
+    } catch {
+      toast.error("No se pudo iniciar el pago. Inténtalo nuevamente.");
+      setIsProcessing(false);
     }
   };
 
@@ -156,57 +147,42 @@ export function PaymentModal({ event, open, onOpenChange, onSuccess }: PaymentMo
                     {formatDate(event.eventDate)}
                   </p>
 
-                  <div className="flex justify-between items-center pt-2">
-                    <span className="text-sm font-medium">Total a pagar</span>
-                    <span className="text-lg font-bold">
-                      ${totalWithTax.toFixed(2)} {event.currency}
-                    </span>
-                  </div>
-                  <span className="text-xs text-muted-foreground">incluido Impuestos</span>
+                  {quote ? (
+                    <div className="space-y-2 pt-2 text-sm">
+                      {quote.lines.map((line, index) => (
+                        <div key={index} className="flex justify-between gap-4">
+                          <span>{line.name} × {line.quantity}</span>
+                          <span>${(line.amount / 100).toFixed(2)}</span>
+                        </div>
+                      ))}
+                      <div className="flex justify-between border-t pt-2">
+                        <span>Subtotal</span>
+                        <span>${(quote.subtotal / 100).toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>IVA ({(quote.taxRate * 100).toLocaleString("es-EC")} %)</span>
+                        <span>${(quote.tax / 100).toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between border-t pt-2 font-semibold">
+                        <span>Total a pagar</span>
+                        <span>${(quote.total / 100).toFixed(2)} USD</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground" role="status">
+                      {quoteError ? "No se pudo calcular el resumen." : items.length ? "Calculando resumen..." : "Selecciona tus entradas."}
+                    </p>
+                  )}
                 </div>
 
-                {/* FORMULARIO DE PAGO */}
-                <form onSubmit={handlePayment} className="space-y-4">
-
-                  <div className="space-y-2">
-                    <Label htmlFor="cardNumber">Número de tarjeta</Label>
-                    <div className="relative">
-                      <Input id="cardNumber" placeholder="1234 5678 9012 3456" required />
-                      <CreditCard className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="expiry">Vencimiento</Label>
-                      <Input id="expiry" placeholder="MM/AA" required />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="cvv">CVV</Label>
-                      <Input id="cvv" placeholder="123" type="password" maxLength={3} required />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Nombre en la tarjeta</Label>
-                    <Input id="name" placeholder="Juan Pérez" required />
-                  </div>
-
-                  <DialogFooter className="sticky bottom-0 bg-background pt-4">
-                    <Button
-                      type="submit"
-                      size={"lg"}
-                      className="w-full bg-black text-white py-[21.99px] rounded-full text-sm cursor-pointer hover:text-white hover:bg-gray-800 transition" 
-                      disabled={isProcessing || total === 0}>
-                      {isProcessing ? "Procesando..." : `Pagar $${totalWithTax.toFixed(2)}`}
-                    </Button>
-                  </DialogFooter>
-
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <Lock className="h-3 w-3" />
-                    <span>Pago seguro y encriptado</span>
-                  </div>
-                </form>
+                <Button
+                  type="button"
+                  className="w-full h-12 rounded-full bg-foreground text-background hover:bg-foreground/90"
+                  disabled={isProcessing || !quote}
+                  onClick={handlePayment}
+                >
+                  {isProcessing ? "Preparando pago..." : "Continuar al pago"}
+                </Button>
               </div>
             </div>
           </>

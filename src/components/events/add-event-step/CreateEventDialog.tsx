@@ -71,7 +71,10 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
   const hasMedia = (file: EventFormValues["mediaFile"], url: string) => {
     if (file) return true;
     try {
-      return new URL(url.trim()).protocol === "https:";
+      const parsedUrl = new URL(url.trim());
+      return parsedUrl.protocol === "https:" &&
+        parsedUrl.hostname !== "instagram.com" &&
+        !parsedUrl.hostname.endsWith(".instagram.com");
     } catch {
       return false;
     }
@@ -81,15 +84,12 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     const formData = new FormData();
     const eventToSave = {
       ...data,
-      tickets: data.tickets.map((ticket) => ({
-        ...ticket,
-        price: 0,
-      })),
+      tickets: data.tickets,
     };
     const eventDateTime = combineDateAndTime(eventToSave.eventDate, eventToSave.eventTime);
 
     if (!hasMedia(data.mediaFile, data.mediaUrl)) {
-      toast.error("Sube un archivo o ingresa una URL HTTPS válida");
+      toast.error("Sube un archivo o ingresa una URL HTTPS directa de la imagen");
       return;
     }
 
@@ -105,7 +105,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     } else {
       formData.append("mediaUrl", data.mediaUrl.trim());
     }
-    formData.append("cost", "0".toString());
+    formData.append("cost", Math.max(0, ...eventToSave.tickets.map((ticket) => ticket.price)).toString());
     formData.append("currency", eventToSave.currency);
     formData.append("attendees", eventToSave.attendees.toString());
     formData.append("userStatus", eventToSave.userStatus);
@@ -120,7 +120,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
 
   const handleNextFormStep = () => {
     if (!hasMedia(getValues("mediaFile"), getValues("mediaUrl"))) {
-      toast.error("Sube un archivo o ingresa una URL HTTPS válida");
+      toast.error("Sube un archivo o ingresa una URL HTTPS directa de la imagen");
       return;
     }
     setStep(2);
