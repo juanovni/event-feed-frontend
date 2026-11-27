@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { eventApi } from "@/api/event.api";
 import { useAuthStore } from "@/store";
+import { Title } from "@/components/ui/title/Title";
 
 type Sale = {
   id: string;
@@ -71,10 +72,10 @@ export default function SalesPage() {
   }
 
   return (
-    <main className="mx-auto max-w-5xl space-y-6 px-4 py-8 sm:px-6">
+    <main className="space-y-6">
       <header className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight">Mis ventas</h1>
-        <p className="text-sm text-muted-foreground">Consulta las entradas vendidas y los importes de tus eventos.</p>
+        <Title title="Mis ventas">{null}</Title>
+        <p className="px-2 text-sm text-muted-foreground md:px-0">Consulta las entradas vendidas y los importes de tus eventos.</p>
       </header>
 
       {loading && <p role="status" className="text-sm text-muted-foreground">Cargando ventas...</p>}

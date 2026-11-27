@@ -6,6 +6,7 @@ import { eventApi } from "@/api/event.api";
 import { useAuthStore } from "@/store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Title } from "@/components/ui/title/Title";
 
 type Event = {
   id: string;
@@ -135,8 +136,8 @@ export default function AccessPage() {
   };
 
   return (
-    <main className="mx-auto max-w-4xl space-y-6 px-4 py-8 sm:px-6">
-      <header><h1 className="text-2xl font-semibold">Control de acceso</h1><p className="mt-2 text-sm text-muted-foreground">Gestiona el personal y valida las entradas de cada evento.</p></header>
+    <main className="space-y-6">
+      <header className="space-y-2"><Title title="Control de acceso">{null}</Title><p className="px-2 text-sm text-muted-foreground md:px-0">Gestiona el personal y valida las entradas de cada evento.</p></header>
       {error && <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm text-red-700">{error}</p>}
       {loading && <p role="status">Cargando eventos...</p>}
       {assignments.some(item => item.status === "pending") && (
