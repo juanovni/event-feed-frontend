@@ -15,6 +15,7 @@ import {
 import { InterestedEventsGrid, PublisherEventsSection, Title } from "@/components";
 import { Category, User } from "@/interfaces";
 import { useEventsByUser, useInterestedEvents } from "@/hooks";
+import { useSavedEvents } from "@/hooks/event/useSavedEvents";
 
 interface Props {
   profile: User;
@@ -38,6 +39,7 @@ export const ProfileView = ({ profile, isOwnProfile = false }: Props) => {
     isPublisher ? "created" : "interested"
   );
   const interestedEvents = isOwnProfile ? interestedEventsResponse?.items ?? [] : [];
+  const savedEvents = useSavedEvents(isOwnProfile && activeTab === "saved");
 
   useEffect(() => {
     if (!isOwnProfile && activeTab !== "created" && isPublisher) {
@@ -220,9 +222,7 @@ export const ProfileView = ({ profile, isOwnProfile = false }: Props) => {
         )}
 
         {activeTab === 'saved' && showSavedTab && (
-          <div className="rounded-[28px] border border-dashed border-gray-200 px-6 py-12 text-center text-sm text-gray-500">
-            Próximamente verás aquí tus eventos guardados.
-          </div>
+          savedEvents.isLoading ? <p role="status" className="p-6 text-sm text-muted-foreground">Cargando eventos guardados...</p> : savedEvents.isError ? <p role="alert" className="p-6 text-sm text-destructive">No se pudieron cargar tus eventos guardados.</p> : savedEvents.data?.length ? <InterestedEventsGrid events={savedEvents.data} /> : <div className="rounded-[28px] border border-dashed border-gray-200 px-6 py-12 text-center text-sm text-gray-500">Aún no has guardado eventos.</div>
         )}
 
         {!showCreatedTab && !showInterestedTab && !showSavedTab && (
