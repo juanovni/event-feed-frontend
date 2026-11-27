@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Calendar, CalendarDays, ChevronRight, Clock, Map as MapIcon, ThumbsUp, Users } from "lucide-react";
+import { ArrowUpRight, Calendar, CalendarDays, ChevronRight, Clock, MapPin, ThumbsUp, Users } from "lucide-react";
 import { Event } from "@/interfaces";
 import { formatDate, formatTime } from "@/utils";
 
@@ -195,7 +195,7 @@ export const PublisherEventsSection = ({ events, isLoading = false }: Props) => 
                             className="flex min-w-0 max-w-full items-center gap-1.5 rounded-full bg-gray-50  py-1 text-gray-600 transition hover:bg-gray-100 hover:text-gray-900"
                             title={`Ver ${event.location} en OpenStreetMap`}
                           >
-                            <MapIcon className="h-[18px] w-[18px] shrink-0 text-primary" />
+                            <MapPin className="size-5 shrink-0 text-primary" />
                             <span className="min-w-0 truncate">{event.location}</span>
                             <ArrowUpRight className="h-3.5 w-3.5 shrink-0" />
                           </a>

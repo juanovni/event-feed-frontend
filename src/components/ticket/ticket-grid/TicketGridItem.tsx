@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { Calendar, Clock, CreditCard, Map, DollarSign, CheckCircle, Ticket as TickeIcon, Clock3 } from "lucide-react";
+import { Calendar, Clock, CreditCard, MapPin, DollarSign, CheckCircle, Ticket as TickeIcon, Clock3 } from "lucide-react";
 import { AccessPass } from "@/interfaces";
 import { currencyFormat, formatDate, formatTime, getTicketStatus } from "@/utils";
 import { Card, CardContent } from "@/components/ui/card";
@@ -77,7 +77,7 @@ export const TicketGridItem = ({ ticket }: Props) => {
         )}
 
         <div className="flex items-center gap-2 text-smtext-muted-foreground">
-          <Map size={18} className="shrink-0 text-primary font-bold" />
+          <MapPin className="size-5 shrink-0 text-primary" />
           <span className="font-medium">{ticket.event.location}</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">

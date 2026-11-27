@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AvatarsFriendsWidget } from "@/components/ui/widgets/AvatarsFriendsWidget";
 import { NavigationWidget } from "@/components/ui/widgets/NavigationWidget";
 import { currencyFormat, formatDate, formatTime } from "@/utils";
-import { Calendar, Clock, Heart, Map, ThumbsUp, Users } from "lucide-react";
+import { Calendar, Clock, Heart, MapPin, ThumbsUp, Users } from "lucide-react";
 import { Event } from "@/interfaces";
 import { useAuthStore } from '@/store';
 import { Badge } from "@/components/ui/badge";
@@ -42,7 +42,7 @@ export const EventInformation = ({ event, distanceKm }: Props) => {
       </div>
       <div className="text-sm space-y-2">
         <div className="flex items-center gap-2 text-smtext-muted-foreground">
-          <Map size={18} className="shrink-0 text-primary font-bold" />
+          <MapPin className="size-5 shrink-0 text-primary" />
           <span className="font-medium">{event.location}</span>
           {typeof distanceKm === "number" && (
             <Badge variant="secondary" className="ml-auto shrink-0 font-medium">
