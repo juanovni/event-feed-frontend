@@ -61,21 +61,21 @@ export const Sidebar = () => {
       path: '/',
       icon: <HomeIcon />
     },
-    {
+    ...(user.role !== 'publisher' ? [{
       label: 'Cerca de ti',
       path: '/nearby',
       icon: <MapPin />
-    },
+    }] : []),
    /*  {
       label: 'Notificaciones',
       path: '/notifications',
       icon: <Bell />,
     }, */
-    {
+    ...(user.role !== 'publisher' ? [{
       label: 'Tickets',
       path: '/tickets',
       icon: <TicketCheckIcon />
-    },
+    }] : []),
     {
       label: 'Perfil',
       path: `/profile/${user.id}`,

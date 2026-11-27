@@ -10,6 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
 import { Category } from "@/interfaces";
 import { LocationInput } from "@/components/locations/LocationInput";
@@ -97,11 +98,11 @@ export function EventDetailsStep({ categories }: Props) {
                 className={cn("w-full justify-start text-left font-normal", !eventDate && "text-muted-foreground")}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {eventDate ? format(eventDate, "PPP") : "Selecciona fecha"}
+                {eventDate ? format(eventDate, "PPP", { locale: es }) : "Selecciona fecha"}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
-              <Calendar mode="single" selected={eventDate} onSelect={(v) => setValue("eventDate", v)} initialFocus />
+              <Calendar mode="single" locale={es} selected={eventDate || undefined} onSelect={(v) => setValue("eventDate", v)} disabled={{ before: new Date(new Date().setHours(0, 0, 0, 0)) }} initialFocus />
             </PopoverContent>
           </Popover>
         </div>

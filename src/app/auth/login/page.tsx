@@ -54,16 +54,24 @@ export default function LoginPage() {
             </p>
           </div>
 
+          <div className="space-y-2">
+          <label htmlFor="login-email" className="block text-sm text-gray-600">Correo electrónico</label>
           <input
+            id="login-email"
             type="email"
             placeholder="Correo"
+            autoComplete="email"
             className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          </div>
 
+          <div className="space-y-2">
+          <label htmlFor="login-password" className="block text-sm text-gray-600">Contraseña</label>
           <div className="relative">
             <input
+              id="login-password"
               type={showPassword ? "text" : "password"}
               placeholder="Contraseña"
               autoComplete="current-password"
@@ -80,6 +88,7 @@ export default function LoginPage() {
             >
               {showPassword ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
             </button>
+          </div>
           </div>
 
           <button

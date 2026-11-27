@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, CalendarDays, ChevronRight, MapPin, Users } from "lucide-react";
+import { ArrowUpRight, Calendar, CalendarDays, ChevronRight, Clock, Map as MapIcon, ThumbsUp, Users } from "lucide-react";
 import { Event } from "@/interfaces";
+import { formatDate, formatTime } from "@/utils";
 
 interface Props {
   events: Event[];
@@ -87,12 +88,6 @@ const groupEventsByDate = (events: Event[]) => {
 
   return Array.from(grouped.values()).sort((a, b) => a.sortValue - b.sortValue);
 };
-
-const formatTimeLabel = (date: Date) =>
-  date.toLocaleTimeString("es-ES", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 
 const PublisherEventsSkeleton = () => (
   <div className="space-y-4">
@@ -183,9 +178,11 @@ export const PublisherEventsSection = ({ events, isLoading = false }: Props) => 
                           {event.title}
                         </p>
                         <div className="mt-2 space-y-2 text-xs text-gray-500 sm:text-sm">
-                          <div className="inline-flex items-center gap-1.5">
-                            <CalendarDays className="h-3.5 w-3.5" />
-                            {formatTimeLabel(eventDate)}
+                          <div className="flex flex-wrap items-center gap-2">
+                            <Calendar className="h-[18px] w-[18px] shrink-0 text-primary" />
+                            {formatDate(eventDate)}
+                            <Clock className="h-[18px] w-[18px] shrink-0 text-primary" />
+                            {formatTime(eventDate)}
                           </div>
 
                         </div>
@@ -198,14 +195,14 @@ export const PublisherEventsSection = ({ events, isLoading = false }: Props) => 
                             className="flex min-w-0 max-w-full items-center gap-1.5 rounded-full bg-gray-50  py-1 text-gray-600 transition hover:bg-gray-100 hover:text-gray-900"
                             title={`Ver ${event.location} en OpenStreetMap`}
                           >
-                            <MapPin className="h-3.5 w-3.5 shrink-0" />
+                            <MapIcon className="h-[18px] w-[18px] shrink-0 text-primary" />
                             <span className="min-w-0 truncate">{event.location}</span>
                             <ArrowUpRight className="h-3.5 w-3.5 shrink-0" />
                           </a>
                         )}
-                        <div className="flex items-center gap-1.5">
-                          <Users className="h-3.5 w-3.5" />
-                          {event.attendees ?? 0} asistentes
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                          <span className="inline-flex items-center gap-1.5"><ThumbsUp className="h-[18px] w-[18px] text-primary" />{event.interested ?? 0} interesados</span>
+                          <span className="inline-flex items-center gap-1.5"><Users className="h-[18px] w-[18px] text-primary" />{event.attendees ?? 0} confirmados</span>
                         </div>
                       </div>
 

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from "framer-motion";
-import { Eye, EyeOff } from "lucide-react";
+import { CheckCircle2, Circle, Eye, EyeOff } from "lucide-react";
 import { useAuthStore } from "@/store";
 import { useCategories } from "@/hooks";
 import { Logo } from "@/components/ui/logo/Logo";
@@ -50,7 +50,16 @@ export default function RegisterStepper() {
     });
   };
 
-  const canContinueStep0 = form.email && form.password;
+  const passwordLength = [...form.password].length;
+  const passwordBytes = new TextEncoder().encode(form.password).length;
+  const passwordRules = [
+    { label: `Al menos 15 caracteres (${Math.min(passwordLength, 15)}/15)`, valid: passwordLength >= 15 },
+    { label: "Al menos 1 número", valid: /[0-9]/.test(form.password) },
+    { label: "Al menos 1 letra minúscula", valid: /\p{Ll}/u.test(form.password) },
+    { label: "Al menos 1 letra mayúscula", valid: /\p{Lu}/u.test(form.password) },
+  ];
+  const passwordValid = passwordRules.every((rule) => rule.valid) && passwordBytes <= 72;
+  const canContinueStep0 = form.email && passwordValid;
   const canContinueStep1 = form.name && form.birthdate;
   const canContinueStep2 = form.gender !== "";
   const canContinueStep3 = form.categories.length >= 3;
@@ -189,6 +198,17 @@ export default function RegisterStepper() {
                       >
                         {showPassword ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
                       </button>
+                    </div>
+                    <div className="space-y-2 text-xs text-gray-600" aria-live="polite">
+                      <p className="font-medium text-gray-700">Requisitos de la contraseña:</p>
+                      {passwordRules.map((rule) => (
+                        <p key={rule.label} className={`flex items-center gap-2 ${rule.valid ? "text-green-700" : "text-gray-600"}`}>
+                          {rule.valid ? <CheckCircle2 size={16} aria-hidden="true" /> : <Circle size={16} aria-hidden="true" />}
+                          <span>{rule.label} <span className="sr-only">{rule.valid ? "cumplido" : "pendiente"}</span></span>
+                        </p>
+                      ))}
+                      <p>Puedes usar una frase con espacios, números o símbolos.</p>
+                      {passwordBytes > 72 && <p role="alert" className="text-red-600">La contraseña es demasiado larga. Prueba una más corta.</p>}
                     </div>
                   </div>
                   <button

@@ -74,12 +74,13 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       ...data,
       tickets: data.tickets,
     };
-    const eventDateTime = combineDateAndTime(eventToSave.eventDate, eventToSave.eventTime);
-
     if (!hasMedia(data.mediaFile)) {
       toast.error("Sube una imagen o un video para el evento");
       return;
     }
+
+    const eventDateTime = getFutureEventDate(data.eventDate, data.eventTime);
+    if (!eventDateTime) return;
 
     formData.append("title", eventToSave.title);
     formData.append("description", eventToSave.description);
@@ -111,8 +112,21 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
   };
 
   const handleNextTicketStep = () => {
+    if (!getFutureEventDate(getValues("eventDate"), getValues("eventTime"))) return;
     setStep(3);
   };
+
+  function getFutureEventDate(date: string, time: string): Date | null {
+    try {
+      if (!date || !time) throw new Error();
+      const result = combineDateAndTime(date, time);
+      if (!Number.isFinite(result.getTime()) || result.getTime() <= Date.now()) throw new Error();
+      return result;
+    } catch {
+      toast.error("Selecciona una fecha y hora futuras para el evento.");
+      return null;
+    }
+  }
 
   if (isLoading) return <p></p>;
 
