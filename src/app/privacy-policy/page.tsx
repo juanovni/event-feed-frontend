@@ -5,9 +5,9 @@ export default function PrivacyPolicyPage() {
     <main className="min-h-screen bg-background px-5 py-12 text-foreground sm:py-16">
       <article className="mx-auto max-w-3xl space-y-8">
         <header className="space-y-3 border-b pb-8">
-          <Link href="/" className="text-sm font-medium underline underline-offset-4">QueBuenPlan</Link>
+          <Link href="/" className="text-sm font-medium underline underline-offset-4">TheNextTicket</Link>
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Política de privacidad</h1>
-          <p className="text-sm text-muted-foreground">Tratamiento de datos personales en QueBuenPlan</p>
+          <p className="text-sm text-muted-foreground">Tratamiento de datos personales en TheNextTicket</p>
         </header>
         <div className="rounded-lg border bg-muted/40 p-4 text-sm">
           Este documento está en revisión. Debe completarse y revisarse antes de publicar la política definitiva.
@@ -18,7 +18,7 @@ export default function PrivacyPolicyPage() {
         <section className="space-y-3"><h2 className="text-xl font-semibold">Pagos y proveedores</h2><p>Cuando pagas una entrada, la transacción se procesa a través de PayPhone. PayPhone solicita los datos necesarios para procesar el pago en su formulario. La aplicación registra el resultado y los identificadores necesarios para relacionar el pago con la compra.</p><p>El sitio utiliza Cloudinary para alojar imágenes y un servicio de correo para enviar códigos de verificación. La información que aparece en tu perfil y la relacionada con eventos puede mostrarse a otros usuarios según las funciones de la plataforma.</p></section>
         <section className="space-y-3"><h2 className="text-xl font-semibold">Almacenamiento en tu navegador</h2><p>La aplicación utiliza almacenamiento local del navegador para conservar información de sesión y de algunas funciones, como eventos y favoritos. Puedes borrar estos datos desde la configuración de tu navegador; hacerlo puede cerrar tu sesión o eliminar preferencias locales.</p></section>
         <section className="space-y-3"><h2 className="text-xl font-semibold">Tus derechos y solicitudes</h2><p>Puedes solicitar información sobre el tratamiento de tus datos y ejercer los derechos que correspondan conforme a la normativa ecuatoriana, incluidos acceso, rectificación, eliminación, oposición y portabilidad, cuando sean aplicables. Para presentar una solicitud, escríbenos al correo indicado y describe tu petición.</p><p>También puedes acudir a la autoridad ecuatoriana de protección de datos personales si consideras que tus derechos no han sido atendidos.</p></section>
-        <section className="space-y-3"><h2 className="text-xl font-semibold">Conservación y seguridad</h2><p>Los plazos de conservación, los destinatarios concretos, las transferencias internacionales y las medidas aplicables deben completarse tras revisar la operación y los proveedores de QueBuenPlan. Algunas obligaciones legales pueden requerir conservar información durante períodos determinados.</p></section>
+        <section className="space-y-3"><h2 className="text-xl font-semibold">Conservación y seguridad</h2><p>Los plazos de conservación, los destinatarios concretos, las transferencias internacionales y las medidas aplicables deben completarse tras revisar la operación y los proveedores de TheNextTicket. Algunas obligaciones legales pueden requerir conservar información durante períodos determinados.</p></section>
       </article>
     </main>
   );

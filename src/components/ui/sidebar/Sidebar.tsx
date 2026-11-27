@@ -112,8 +112,8 @@ export const Sidebar = () => {
     `}
       >
 
-        <div className="p-8 h-10 md:p-8 border-b border-gray-200">
-          <Logo className="top-4.5 md:top-4 left-6 md:left-6" />
+        <div className="flex h-16 items-center justify-center border-b border-gray-200 px-4">
+          <Logo className="!relative justify-center" />
         </div>
 
         {user && (

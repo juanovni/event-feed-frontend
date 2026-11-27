@@ -6,9 +6,9 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-const SITE_NAME = "QueBuenPlan!";
+const SITE_NAME = "TheNextTicket";
 const DEFAULT_TITLE = "Evento no encontrado";
-const DEFAULT_DESCRIPTION = "El evento que buscas no existe o ya no está disponible en QueBuenPlan!.";
+const DEFAULT_DESCRIPTION = "El evento que buscas no existe o ya no está disponible en TheNextTicket.";
 
 const buildEventDescription = (event: Awaited<ReturnType<typeof getEventBySlug>>) => {
   const pieces = [
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       event.user.name,
       "eventos",
       "planes",
-      "QueBuenPlan",
+      "TheNextTicket",
     ].filter(Boolean) as string[];
 
     return {

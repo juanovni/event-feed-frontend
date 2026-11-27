@@ -447,7 +447,7 @@ export function EventDetailPage({ event }: Props) {
                   <div className="space-y-4 border-b border-black/6 pb-6">
                     <div className="space-y-3">
                       <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
-                        Evento en QueBuenPlan!
+                        Evento en TheNextTicket
                       </p>
                       <h1 className="text-2xl font-semibold tracking-tight text-foreground">
                         {event.title}

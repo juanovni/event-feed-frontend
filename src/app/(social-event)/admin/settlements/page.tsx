@@ -39,7 +39,7 @@ type OrganizerSummary = {
 };
 
 const labels: Record<keyof Rates, string> = {
-  commissionRate: "Comisión de QueBuenPlan",
+  commissionRate: "Comisión de TheNextTicket",
   commissionTaxRate: "IVA de la comisión",
   processingRate: "Tarifa estimada de PayPhone",
   processingTaxRate: "IVA de la tarifa de PayPhone",
@@ -164,7 +164,7 @@ export default function SettlementAdminPage() {
               <dl className="space-y-2 text-sm">
                 <div className="flex justify-between gap-3"><dt>Entradas vendidas</dt><dd>{item.ticketsSold}</dd></div>
                 <div className="flex justify-between gap-3"><dt>Total pagado por compradores</dt><dd>{money(item.salesCents, item.currency)}</dd></div>
-                <div className="flex justify-between gap-3"><dt>Comisión de QueBuenPlan sin IVA</dt><dd>{money(item.commissionCents, item.currency)}</dd></div>
+                <div className="flex justify-between gap-3"><dt>Comisión de TheNextTicket sin IVA</dt><dd>{money(item.commissionCents, item.currency)}</dd></div>
                 <div className="flex justify-between gap-3 border-t pt-2 font-semibold"><dt>Liquidación calculada</dt><dd>{money(item.estimatedPayoutCents, item.currency)}</dd></div>
               </dl>
               <p className="text-xs text-muted-foreground">

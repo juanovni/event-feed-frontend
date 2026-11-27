@@ -44,7 +44,7 @@ export const TicketQRCode = ({ ticket }: { ticket: AccessPass }) => {
       context.textAlign = "center";
       context.fillStyle = "#111111";
       context.font = "700 32px sans-serif";
-      context.fillText("QueBuenPlan!", 480, 85);
+      context.fillText("TheNextTicket", 480, 85);
       context.font = "700 42px sans-serif";
 
       const drawWrapped = (text: string, y: number, maxLines: number, lineHeight: number) => {

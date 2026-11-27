@@ -4,11 +4,11 @@ export const Logo = ({className}: {className?: string}) => {
   return (
     <div className={`fixed flex items-center w-full md:w-auto ${className}`}>
       <Image
-        width={100}
-        height={100}
-        src="/images/logo/logo_qbuenplan_400.png"
-        alt="QueBuenPlan! "
-        className="w-auto"
+        width={2027}
+        height={337}
+        src="/images/logo/thenextticket-logo.png"
+        alt="TheNextTicket"
+        className="h-auto w-48 max-w-full"
       />
     </div>
   )
