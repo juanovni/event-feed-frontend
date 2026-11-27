@@ -18,31 +18,7 @@ export function LocationInput({ value, onChange, onLocationSelect, placeholder, 
   const { suggestions, loading, searchLocations, clearSuggestions } = useLocationSearch();
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState(value);
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Debounce para búsqueda
-  useEffect(() => {
-    if (debounceTimerRef.current) {
-      clearTimeout(debounceTimerRef.current);
-    }
-
-    debounceTimerRef.current = setTimeout(() => {
-      if (inputValue.length >= 2) {
-        searchLocations(inputValue);
-        setIsOpen(true);
-      } else {
-        clearSuggestions();
-        setIsOpen(false);
-      }
-    }, 300);
-
-    return () => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-    };
-  }, [inputValue, searchLocations, clearSuggestions]);
 
   // Sincronizar inputValue con value prop
   useEffect(() => {
@@ -64,6 +40,8 @@ export function LocationInput({ value, onChange, onLocationSelect, placeholder, 
   const handleInputChange = (text: string) => {
     setInputValue(text);
     onChange(text);
+    clearSuggestions();
+    setIsOpen(false);
   };
 
   const handleClickOutside = (e: MouseEvent) => {
@@ -86,10 +64,12 @@ export function LocationInput({ value, onChange, onLocationSelect, placeholder, 
           placeholder={placeholder}
           disabled={disabled}
           onFocus={() => inputValue.length >= 2 && suggestions.length > 0 && setIsOpen(true)}
-          className="pr-10"
+          className="pr-24"
+          onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); if (inputValue.trim().length >= 2) { setIsOpen(true); void searchLocations(inputValue); } } }}
         />
+        <button type="button" disabled={disabled || loading || inputValue.trim().length < 2} onClick={() => { setIsOpen(true); void searchLocations(inputValue); }} className="absolute right-2 top-1/2 -translate-y-1/2 rounded px-2 py-1 text-xs font-medium hover:bg-gray-100 disabled:opacity-50">Buscar</button>
         {loading && (
-          <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-muted-foreground" />
+          <Loader2 className="absolute right-16 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-muted-foreground" />
         )}
       </div>
 
