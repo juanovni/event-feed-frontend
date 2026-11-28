@@ -24,6 +24,8 @@ export interface EventFormValues {
   locationLat: string;
   locationLon: string;
   eventDate: string;
+  endDate: string;
+  endTime: string;
   mediaType: string;
   eventTime: string;
   cost: number,
@@ -53,6 +55,8 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
       locationLat: "",
       locationLon: "",
       eventDate: "",
+      endDate: "",
+      endTime: "",
       mediaType: "image",
       cost: 0,
       currency: "USA",
@@ -81,6 +85,8 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
 
     const eventDateTime = getFutureEventDate(data.eventDate, data.eventTime);
     if (!eventDateTime) return;
+    const endDateTime = getEndEventDate(data.endDate, data.endTime, eventDateTime);
+    if (!endDateTime) return;
 
     formData.append("title", eventToSave.title);
     formData.append("description", eventToSave.description);
@@ -88,6 +94,7 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
     formData.append("lat", eventToSave.locationLat);
     formData.append("log", eventToSave.locationLon);
     formData.append("eventDate", eventDateTime.toISOString());
+    formData.append("endDate", endDateTime.toISOString());
     formData.append("mediaType", eventToSave.mediaType);
     formData.append("mediaFile", data.mediaFile!);
     formData.append("cost", Math.max(0, ...eventToSave.tickets.map((ticket) => ticket.price)).toString());
@@ -112,9 +119,22 @@ export function CreateEventDialog({ open, onOpenChange }: CreateEventDialogProps
   };
 
   const handleNextTicketStep = () => {
-    if (!getFutureEventDate(getValues("eventDate"), getValues("eventTime"))) return;
+    const start = getFutureEventDate(getValues("eventDate"), getValues("eventTime"));
+    if (!start || !getEndEventDate(getValues("endDate"), getValues("endTime"), start)) return;
     setStep(3);
   };
+
+  function getEndEventDate(date: string, time: string, start: Date): Date | null {
+    try {
+      if (!date || !time) throw new Error();
+      const end = combineDateAndTime(date, time);
+      if (!Number.isFinite(end.getTime()) || end.getTime() <= start.getTime()) throw new Error();
+      return end;
+    } catch {
+      toast.error("Selecciona una fecha y hora de finalización posteriores al inicio.");
+      return null;
+    }
+  }
 
   function getFutureEventDate(date: string, time: string): Date | null {
     try {

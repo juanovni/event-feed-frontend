@@ -18,6 +18,7 @@ export interface Event {
   log?: number;
   lon?: number;
   eventDate: Date;
+  endDate?: Date | null;
   timestamp: Date;
   category?: EventCategory;
   attendees: number;

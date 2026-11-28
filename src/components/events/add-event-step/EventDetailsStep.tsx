@@ -23,6 +23,7 @@ interface Props {
 export function EventDetailsStep({ categories }: Props) {
   const { register, setValue, watch } = useFormContext();
   const eventDate = watch("eventDate");
+  const endDate = watch("endDate");
   const categoryId = watch("categoryId");
   const locationLat = watch("locationLat");
   const locationLon = watch("locationLon");
@@ -111,6 +112,13 @@ export function EventDetailsStep({ categories }: Props) {
           <Label htmlFor="eventTime">Hora del evento</Label>
           <Input {...register("eventTime", { required: true })} type="time" />
         </div>
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label>Fecha de finalización</Label>
+          <Popover><PopoverTrigger asChild><Button type="button" variant="outline" className={cn("w-full justify-start text-left font-normal", !endDate && "text-muted-foreground")}><CalendarIcon className="mr-2 h-4 w-4" />{endDate ? format(endDate, "PPP", { locale: es }) : "Selecciona fecha"}</Button></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar mode="single" locale={es} selected={endDate || undefined} onSelect={(value) => setValue("endDate", value)} disabled={{ before: eventDate ? new Date(new Date(eventDate).setHours(0, 0, 0, 0)) : new Date(new Date().setHours(0, 0, 0, 0)) }} initialFocus /></PopoverContent></Popover>
+        </div>
+        <div className="space-y-2"><Label htmlFor="endTime">Hora de finalización</Label><Input id="endTime" {...register("endTime", { required: true })} type="time" /></div>
       </div>
     </div>
   );
